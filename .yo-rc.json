@@ -35,7 +35,9 @@
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
-    "blueprints": []
+    "blueprints": [],
+    "herokuAppName": "powerful-scrubland-73452",
+    "herokuDeployType": "git"
   },
   "git-provider": "GitHub",
   "git-company": "rubendelcastillo",
