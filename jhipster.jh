@@ -1,0 +1,125 @@
+
+
+entity Region {
+	regionName String
+}
+
+entity Country {
+	countryName String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Location {
+	streetAddress String,
+    complementaryInfo String,
+    number String,
+    mainDoor String,
+    flatDoor String, 
+    level String,
+    stair String,
+	postalCode String,
+	city String,
+	stateProvince String
+}
+
+entity  ModoEnvio{
+	modoEnvio String required
+}
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+entity Product {
+	title String,
+	description String,
+    stock Long,
+    precioConIva Double
+}
+
+/**
+ * The Employee entity.
+ */
+entity Client {
+	/**
+	* The firstname attribute.
+	*/
+    idClient Long,
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+	creationDate Instant,
+	endDate Long,
+	documentId String,
+    documentType DocumentType
+}
+entity ModoPago {
+	idModoPago Integer,
+	descripcion String
+}
+entity Pedido {
+	idPedido BigDecimal,
+    idCliente Long,
+    idTienda Long,
+    fechaPedido LocalDate,
+    fechaNotificacion LocalDate,
+    IdModoPago Integer,
+	CargoPorCoste Double,
+	GastosEnvio Double,
+    IdModoEnvio Long,
+	jobTitle String,
+	idEstado Integer,
+	fechaConfirmacion LocalDate
+}
+entity DetallePedido {
+	IdPedido Long,
+	IdProducto Long,
+	PrecioCompra Double,
+	
+}
+entity EstadoPedido {
+	idEstado Integer,
+    descripcion String
+
+}
+
+
+
+enum DocumentType {
+    PASSPORT, IDENTITY_CARD, SOCIAL_SECURITY_NUMBER,NIF
+}
+
+relationship OneToMany {
+	Country{region} to Region
+}
+
+relationship OneToOne {
+	Location{country} to Region,
+    Product to DetallePedido,
+    ModoEnvio to Pedido,
+    Pedido to ModoPago,
+    Pedido to EstadoPedido
+}
+relationship OneToMany {
+	Client{country} to Location
+}
+relationship OneToMany {
+	Pedido{idPedido} to DetallePedido
+}
+// defining multiple oneToOne relationships
+relationship ManyToOne {
+	Pedido{idCliente} to Client
+}
+
+// Set pagination options
+paginate ModoEnvio, Location with infinite-scroll
+paginate Product with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+// Set an angular suffix
+angularSuffix * with mySuffix

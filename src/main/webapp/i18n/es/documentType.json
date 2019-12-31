@@ -1,0 +1,11 @@
+{
+  "multishopApp": {
+    "DocumentType": {
+      "null": "",
+      "PASSPORT": "PASSPORT",
+      "IDENTITY_CARD": "IDENTITY_CARD",
+      "SOCIAL_SECURITY_NUMBER": "SOCIAL_SECURITY_NUMBER",
+      "NIF": "NIF"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-detalle-pedido-my-suffix-heading" jhiTranslate="multishopApp.detallePedido.home.createOrEditLabel">Create or edit a Detalle Pedido</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.detallePedido.idPedido" for="field_idPedido">Id Pedido</label>
+                    <input type="number" class="form-control" name="idPedido" id="field_idPedido"
+                           formControlName="idPedido"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.detallePedido.idProducto" for="field_idProducto">Id Producto</label>
+                    <input type="number" class="form-control" name="idProducto" id="field_idProducto"
+                           formControlName="idProducto"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.detallePedido.precioCompra" for="field_precioCompra">Precio Compra</label>
+                    <input type="number" class="form-control" name="precioCompra" id="field_precioCompra"
+                           formControlName="precioCompra"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.detallePedido.pedido" for="field_pedido">Pedido</label>
+                    <select class="form-control" id="field_pedido" name="pedido" formControlName="pedidoId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pedidoOption.id" *ngFor="let pedidoOption of pedidos; trackBy: trackById">{{pedidoOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

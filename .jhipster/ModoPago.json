@@ -1,0 +1,33 @@
+{
+    "name": "ModoPago",
+    "fields": [
+        {
+            "fieldName": "idModoPago",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "descripcion",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "pedido",
+            "otherEntityRelationshipName": "modoPago",
+            "relationshipName": "pedido",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191231080342",
+    "entityTableName": "modo_pago",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

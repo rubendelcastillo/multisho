@@ -1,0 +1,85 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="multishopApp.location.home.title">Locations</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-location-my-suffix" [routerLink]="['/location-my-suffix/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="multishopApp.location.home.createLabel">
+            Create a new Location
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="locations?.length === 0">
+        <span jhiTranslate="multishopApp.location.home.notFound">No locations found</span>
+    </div>
+    <div class="table-responsive" *ngIf="locations?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="streetAddress"><span jhiTranslate="multishopApp.location.streetAddress">Street Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="complementaryInfo"><span jhiTranslate="multishopApp.location.complementaryInfo">Complementary Info</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="number"><span jhiTranslate="multishopApp.location.number">Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="mainDoor"><span jhiTranslate="multishopApp.location.mainDoor">Main Door</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="flatDoor"><span jhiTranslate="multishopApp.location.flatDoor">Flat Door</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="level"><span jhiTranslate="multishopApp.location.level">Level</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="stair"><span jhiTranslate="multishopApp.location.stair">Stair</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="postalCode"><span jhiTranslate="multishopApp.location.postalCode">Postal Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="city"><span jhiTranslate="multishopApp.location.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="stateProvince"><span jhiTranslate="multishopApp.location.stateProvince">State Province</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="countryId"><span jhiTranslate="multishopApp.location.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="clientId"><span jhiTranslate="multishopApp.location.client">Client</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let location of locations ;trackBy: trackId">
+                <td><a [routerLink]="['/location-my-suffix', location.id, 'view' ]">{{location.id}}</a></td>
+                <td>{{location.streetAddress}}</td>
+                <td>{{location.complementaryInfo}}</td>
+                <td>{{location.number}}</td>
+                <td>{{location.mainDoor}}</td>
+                <td>{{location.flatDoor}}</td>
+                <td>{{location.level}}</td>
+                <td>{{location.stair}}</td>
+                <td>{{location.postalCode}}</td>
+                <td>{{location.city}}</td>
+                <td>{{location.stateProvince}}</td>
+                <td>
+                    <div *ngIf="location.countryId">
+                        <a [routerLink]="['/region-my-suffix', location.countryId , 'view' ]" >{{location.countryId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="location.clientId">
+                        <a [routerLink]="['/client-my-suffix', location.clientId , 'view' ]" >{{location.clientId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/location-my-suffix', location.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/location-my-suffix', location.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit" (click)="delete(location)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

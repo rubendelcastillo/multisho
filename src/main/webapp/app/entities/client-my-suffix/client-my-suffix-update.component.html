@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-client-my-suffix-heading" jhiTranslate="multishopApp.client.home.createOrEditLabel">Create or edit a Client</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.idClient" for="field_idClient" [ngbTooltip]="'multishopApp.client.help.idClient' | translate">Id Client</label>
+                    <input type="number" class="form-control" name="idClient" id="field_idClient"
+                           formControlName="idClient"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.firstName" for="field_firstName">First Name</label>
+                    <input type="text" class="form-control" name="firstName" id="field_firstName"
+                           formControlName="firstName"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.lastName" for="field_lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" id="field_lastName"
+                           formControlName="lastName"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.email" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                           formControlName="email"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.phoneNumber" for="field_phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
+                           formControlName="phoneNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.creationDate" for="field_creationDate">Creation Date</label>
+                    <div class="d-flex">
+                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.endDate" for="field_endDate">End Date</label>
+                    <input type="number" class="form-control" name="endDate" id="field_endDate"
+                           formControlName="endDate"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.documentId" for="field_documentId">Document Id</label>
+                    <input type="text" class="form-control" name="documentId" id="field_documentId"
+                           formControlName="documentId"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.client.documentType" for="field_documentType">Document Type</label>
+                    <select class="form-control" name="documentType" formControlName="documentType" id="field_documentType">
+                        <option value="PASSPORT">{{'multishopApp.DocumentType.PASSPORT' | translate}}</option>
+                        <option value="IDENTITY_CARD">{{'multishopApp.DocumentType.IDENTITY_CARD' | translate}}</option>
+                        <option value="SOCIAL_SECURITY_NUMBER">{{'multishopApp.DocumentType.SOCIAL_SECURITY_NUMBER' | translate}}</option>
+                        <option value="NIF">{{'multishopApp.DocumentType.NIF' | translate}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

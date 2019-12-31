@@ -1,0 +1,38 @@
+{
+  "multishopApp": {
+    "pedido": {
+      "home": {
+        "title": "Pedidos",
+        "createLabel": "Crear nuevo Pedido",
+        "createOrEditLabel": "Crear o editar Pedido",
+        "notFound": "Ningún Pedidos encontrado"
+      },
+      "created": "Un nuevo Pedido ha sido creado con el identificador {{ param }}",
+      "updated": "Un Pedido ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Pedido ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Pedido {{ id }}?"
+      },
+      "detail": {
+        "title": "Pedido"
+      },
+      "idPedido": "Id Pedido",
+      "idCliente": "Id Cliente",
+      "idTienda": "Id Tienda",
+      "fechaPedido": "Fecha Pedido",
+      "fechaNotificacion": "Fecha Notificacion",
+      "idModoPago": "Id Modo Pago",
+      "cargoPorCoste": "Cargo Por Coste",
+      "gastosEnvio": "Gastos Envio",
+      "idModoEnvio": "Id Modo Envio",
+      "jobTitle": "Job Title",
+      "idEstado": "Id Estado",
+      "fechaConfirmacion": "Fecha Confirmacion",
+      "modoPago": "Modo Pago",
+      "estadoPedido": "Estado Pedido",
+      "idPedido": "Id Pedido",
+      "idCliente": "Id Cliente",
+      "modoEnvio": "Modo Envio"
+    }
+  }
+}

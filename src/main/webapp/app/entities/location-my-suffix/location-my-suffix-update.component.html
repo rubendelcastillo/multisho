@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-location-my-suffix-heading" jhiTranslate="multishopApp.location.home.createOrEditLabel">Create or edit a Location</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.streetAddress" for="field_streetAddress">Street Address</label>
+                    <input type="text" class="form-control" name="streetAddress" id="field_streetAddress"
+                           formControlName="streetAddress"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.complementaryInfo" for="field_complementaryInfo">Complementary Info</label>
+                    <input type="text" class="form-control" name="complementaryInfo" id="field_complementaryInfo"
+                           formControlName="complementaryInfo"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.number" for="field_number">Number</label>
+                    <input type="text" class="form-control" name="number" id="field_number"
+                           formControlName="number"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.mainDoor" for="field_mainDoor">Main Door</label>
+                    <input type="text" class="form-control" name="mainDoor" id="field_mainDoor"
+                           formControlName="mainDoor"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.flatDoor" for="field_flatDoor">Flat Door</label>
+                    <input type="text" class="form-control" name="flatDoor" id="field_flatDoor"
+                           formControlName="flatDoor"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.level" for="field_level">Level</label>
+                    <input type="text" class="form-control" name="level" id="field_level"
+                           formControlName="level"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.stair" for="field_stair">Stair</label>
+                    <input type="text" class="form-control" name="stair" id="field_stair"
+                           formControlName="stair"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.postalCode" for="field_postalCode">Postal Code</label>
+                    <input type="text" class="form-control" name="postalCode" id="field_postalCode"
+                           formControlName="postalCode"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                           formControlName="city"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.stateProvince" for="field_stateProvince">State Province</label>
+                    <input type="text" class="form-control" name="stateProvince" id="field_stateProvince"
+                           formControlName="stateProvince"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.country" for="field_country">Country</label>
+                    <select class="form-control" id="field_country" name="country" formControlName="countryId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="regionOption.id" *ngFor="let regionOption of countries; trackBy: trackById">{{regionOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.location.client" for="field_client">Client</label>
+                    <select class="form-control" id="field_client" name="client" formControlName="clientId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackById">{{clientOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

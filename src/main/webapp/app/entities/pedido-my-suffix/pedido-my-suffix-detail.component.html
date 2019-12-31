@@ -1,0 +1,89 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="pedido">
+            <h2><span jhiTranslate="multishopApp.pedido.detail.title">Pedido</span> {{pedido.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="multishopApp.pedido.idPedido">Id Pedido</span></dt>
+                <dd>
+                    <span>{{pedido.idPedido}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idCliente">Id Cliente</span></dt>
+                <dd>
+                    <span>{{pedido.idCliente}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idTienda">Id Tienda</span></dt>
+                <dd>
+                    <span>{{pedido.idTienda}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.fechaPedido">Fecha Pedido</span></dt>
+                <dd>
+                    <span>{{pedido.fechaPedido}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.fechaNotificacion">Fecha Notificacion</span></dt>
+                <dd>
+                    <span>{{pedido.fechaNotificacion}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idModoPago">Id Modo Pago</span></dt>
+                <dd>
+                    <span>{{pedido.idModoPago}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.cargoPorCoste">Cargo Por Coste</span></dt>
+                <dd>
+                    <span>{{pedido.cargoPorCoste}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.gastosEnvio">Gastos Envio</span></dt>
+                <dd>
+                    <span>{{pedido.gastosEnvio}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idModoEnvio">Id Modo Envio</span></dt>
+                <dd>
+                    <span>{{pedido.idModoEnvio}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.jobTitle">Job Title</span></dt>
+                <dd>
+                    <span>{{pedido.jobTitle}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idEstado">Id Estado</span></dt>
+                <dd>
+                    <span>{{pedido.idEstado}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.fechaConfirmacion">Fecha Confirmacion</span></dt>
+                <dd>
+                    <span>{{pedido.fechaConfirmacion}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.modoPago">Modo Pago</span></dt>
+                <dd>
+                    <div *ngIf="pedido.modoPagoId">
+                        <a [routerLink]="['/modo-pago-my-suffix', pedido.modoPagoId, 'view']">{{pedido.modoPagoId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.estadoPedido">Estado Pedido</span></dt>
+                <dd>
+                    <div *ngIf="pedido.estadoPedidoId">
+                        <a [routerLink]="['/estado-pedido-my-suffix', pedido.estadoPedidoId, 'view']">{{pedido.estadoPedidoId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.idCliente">Id Cliente</span></dt>
+                <dd>
+                    <div *ngIf="pedido.idClienteId">
+                        <a [routerLink]="['/client-my-suffix', pedido.idClienteId, 'view']">{{pedido.idClienteId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/pedido-my-suffix', pedido.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

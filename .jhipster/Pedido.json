@@ -1,0 +1,102 @@
+{
+    "name": "Pedido",
+    "fields": [
+        {
+            "fieldName": "idPedido",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "idCliente",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "idTienda",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "fechaPedido",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "fechaNotificacion",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "idModoPago",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "cargoPorCoste",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "gastosEnvio",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "idModoEnvio",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "jobTitle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idEstado",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "fechaConfirmacion",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "modoPago",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "modoPago",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "estadoPedido",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "estadoPedido",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "detallePedido",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "idPedido"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "client",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "idCliente",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "modoEnvio",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "modoEnvio",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191231080343",
+    "entityTableName": "pedido",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

@@ -1,0 +1,33 @@
+{
+    "name": "ModoEnvio",
+    "fields": [
+        {
+            "fieldName": "modoEnvio",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "pedido",
+            "otherEntityRelationshipName": "modoEnvio",
+            "relationshipName": "pedido",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20191231080339",
+    "entityTableName": "modo_envio",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

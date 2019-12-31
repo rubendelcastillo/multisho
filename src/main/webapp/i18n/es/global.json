@@ -7,6 +7,16 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
+        "regionMySuffix": "Region",
+        "countryMySuffix": "Country",
+        "locationMySuffix": "Location",
+        "modoEnvioMySuffix": "Modo Envio",
+        "productMySuffix": "Product",
+        "clientMySuffix": "Client",
+        "modoPagoMySuffix": "Modo Pago",
+        "pedidoMySuffix": "Pedido",
+        "detallePedidoMySuffix": "Detalle Pedido",
+        "estadoPedidoMySuffix": "Estado Pedido",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

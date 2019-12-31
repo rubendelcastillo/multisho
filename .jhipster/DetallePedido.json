@@ -1,0 +1,44 @@
+{
+    "name": "DetallePedido",
+    "fields": [
+        {
+            "fieldName": "idPedido",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "idProducto",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "precioCompra",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "detallePedido",
+            "relationshipName": "product",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pedido",
+            "otherEntityRelationshipName": "idPedido",
+            "relationshipName": "pedido",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191231080344",
+    "entityTableName": "detalle_pedido",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

@@ -1,0 +1,63 @@
+{
+    "name": "Client",
+    "fields": [
+        {
+            "fieldName": "idClient",
+            "javadoc": "The firstname attribute.",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "creationDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "documentId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "documentType",
+            "fieldType": "DocumentType",
+            "fieldValues": "PASSPORT,IDENTITY_CARD,SOCIAL_SECURITY_NUMBER,NIF"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "location",
+            "otherEntityRelationshipName": "client",
+            "relationshipName": "country"
+        }
+    ],
+    "changelogDate": "20191231080341",
+    "javadoc": "The Employee entity.",
+    "entityTableName": "client",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

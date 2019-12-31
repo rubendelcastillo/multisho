@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="detallePedido">
+            <h2><span jhiTranslate="multishopApp.detallePedido.detail.title">Detalle Pedido</span> {{detallePedido.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="multishopApp.detallePedido.idPedido">Id Pedido</span></dt>
+                <dd>
+                    <span>{{detallePedido.idPedido}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.detallePedido.idProducto">Id Producto</span></dt>
+                <dd>
+                    <span>{{detallePedido.idProducto}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.detallePedido.precioCompra">Precio Compra</span></dt>
+                <dd>
+                    <span>{{detallePedido.precioCompra}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.detallePedido.pedido">Pedido</span></dt>
+                <dd>
+                    <div *ngIf="detallePedido.pedidoId">
+                        <a [routerLink]="['/pedido-my-suffix', detallePedido.pedidoId, 'view']">{{detallePedido.pedidoId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/detalle-pedido-my-suffix', detallePedido.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

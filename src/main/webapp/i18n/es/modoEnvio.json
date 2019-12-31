@@ -1,0 +1,23 @@
+{
+  "multishopApp": {
+    "modoEnvio": {
+      "home": {
+        "title": "Modo Envios",
+        "createLabel": "Crear nuevo Modo Envio",
+        "createOrEditLabel": "Crear o editar Modo Envio",
+        "notFound": "Ningún Modo Envios encontrado"
+      },
+      "created": "Un nuevo Modo Envio ha sido creado con el identificador {{ param }}",
+      "updated": "Un Modo Envio ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Modo Envio ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Modo Envio {{ id }}?"
+      },
+      "detail": {
+        "title": "Modo Envio"
+      },
+      "modoEnvio": "Modo Envio",
+      "pedido": "Pedido"
+    }
+  }
+}

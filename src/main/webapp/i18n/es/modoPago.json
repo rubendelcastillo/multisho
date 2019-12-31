@@ -1,0 +1,24 @@
+{
+  "multishopApp": {
+    "modoPago": {
+      "home": {
+        "title": "Modo Pagos",
+        "createLabel": "Crear nuevo Modo Pago",
+        "createOrEditLabel": "Crear o editar Modo Pago",
+        "notFound": "Ningún Modo Pagos encontrado"
+      },
+      "created": "Un nuevo Modo Pago ha sido creado con el identificador {{ param }}",
+      "updated": "Un Modo Pago ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Modo Pago ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Modo Pago {{ id }}?"
+      },
+      "detail": {
+        "title": "Modo Pago"
+      },
+      "idModoPago": "Id Modo Pago",
+      "descripcion": "Descripcion",
+      "pedido": "Pedido"
+    }
+  }
+}

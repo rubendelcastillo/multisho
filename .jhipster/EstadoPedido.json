@@ -1,0 +1,33 @@
+{
+    "name": "EstadoPedido",
+    "fields": [
+        {
+            "fieldName": "idEstado",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "descripcion",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "pedido",
+            "otherEntityRelationshipName": "estadoPedido",
+            "relationshipName": "pedido",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191231080345",
+    "entityTableName": "estado_pedido",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "mySuffix"
+}

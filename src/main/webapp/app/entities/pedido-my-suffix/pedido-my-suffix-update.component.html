@@ -1,0 +1,117 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-pedido-my-suffix-heading" jhiTranslate="multishopApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idPedido" for="field_idPedido">Id Pedido</label>
+                    <input type="number" class="form-control" name="idPedido" id="field_idPedido"
+                           formControlName="idPedido"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idCliente" for="field_idCliente">Id Cliente</label>
+                    <input type="number" class="form-control" name="idCliente" id="field_idCliente"
+                           formControlName="idCliente"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idTienda" for="field_idTienda">Id Tienda</label>
+                    <input type="number" class="form-control" name="idTienda" id="field_idTienda"
+                           formControlName="idTienda"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.fechaPedido" for="field_fechaPedido">Fecha Pedido</label>
+                    <div class="input-group">
+                        <input id="field_fechaPedido" type="text" class="form-control" name="fechaPedido" ngbDatepicker  #fechaPedidoDp="ngbDatepicker" formControlName="fechaPedido"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaPedidoDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.fechaNotificacion" for="field_fechaNotificacion">Fecha Notificacion</label>
+                    <div class="input-group">
+                        <input id="field_fechaNotificacion" type="text" class="form-control" name="fechaNotificacion" ngbDatepicker  #fechaNotificacionDp="ngbDatepicker" formControlName="fechaNotificacion"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaNotificacionDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idModoPago" for="field_idModoPago">Id Modo Pago</label>
+                    <input type="number" class="form-control" name="idModoPago" id="field_idModoPago"
+                           formControlName="idModoPago"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.cargoPorCoste" for="field_cargoPorCoste">Cargo Por Coste</label>
+                    <input type="number" class="form-control" name="cargoPorCoste" id="field_cargoPorCoste"
+                           formControlName="cargoPorCoste"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.gastosEnvio" for="field_gastosEnvio">Gastos Envio</label>
+                    <input type="number" class="form-control" name="gastosEnvio" id="field_gastosEnvio"
+                           formControlName="gastosEnvio"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idModoEnvio" for="field_idModoEnvio">Id Modo Envio</label>
+                    <input type="number" class="form-control" name="idModoEnvio" id="field_idModoEnvio"
+                           formControlName="idModoEnvio"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.jobTitle" for="field_jobTitle">Job Title</label>
+                    <input type="text" class="form-control" name="jobTitle" id="field_jobTitle"
+                           formControlName="jobTitle"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idEstado" for="field_idEstado">Id Estado</label>
+                    <input type="number" class="form-control" name="idEstado" id="field_idEstado"
+                           formControlName="idEstado"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.fechaConfirmacion" for="field_fechaConfirmacion">Fecha Confirmacion</label>
+                    <div class="input-group">
+                        <input id="field_fechaConfirmacion" type="text" class="form-control" name="fechaConfirmacion" ngbDatepicker  #fechaConfirmacionDp="ngbDatepicker" formControlName="fechaConfirmacion"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaConfirmacionDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.modoPago" for="field_modoPago">Modo Pago</label>
+                    <select class="form-control" id="field_modoPago" name="modoPago" formControlName="modoPagoId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="modoPagoOption.id" *ngFor="let modoPagoOption of modopagos; trackBy: trackById">{{modoPagoOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.estadoPedido" for="field_estadoPedido">Estado Pedido</label>
+                    <select class="form-control" id="field_estadoPedido" name="estadoPedido" formControlName="estadoPedidoId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="estadoPedidoOption.id" *ngFor="let estadoPedidoOption of estadopedidos; trackBy: trackById">{{estadoPedidoOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idCliente" for="field_idCliente">Id Cliente</label>
+                    <select class="form-control" id="field_idCliente" name="idCliente" formControlName="idClienteId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackById">{{clientOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

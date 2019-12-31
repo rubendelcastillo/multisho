@@ -1,0 +1,23 @@
+{
+  "multishopApp": {
+    "modoEnvio": {
+      "home": {
+        "title": "Modo Envios",
+        "createLabel": "Create a new Modo Envio",
+        "createOrEditLabel": "Create or edit a Modo Envio",
+        "notFound": "No Modo Envios found"
+      },
+      "created": "A new Modo Envio is created with identifier {{ param }}",
+      "updated": "A Modo Envio is updated with identifier {{ param }}",
+      "deleted": "A Modo Envio is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Modo Envio {{ id }}?"
+      },
+      "detail": {
+        "title": "Modo Envio"
+      },
+      "modoEnvio": "Modo Envio",
+      "pedido": "Pedido"
+    }
+  }
+}
