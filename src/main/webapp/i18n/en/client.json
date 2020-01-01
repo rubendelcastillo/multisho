@@ -26,6 +26,7 @@
       "documentId": "Document Id",
       "documentType": "Document Type",
       "country": "Country",
+      "idClient": "Id Client",
       "help": {
         "idClient": "The firstname attribute."
       }

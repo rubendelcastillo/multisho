@@ -20,9 +20,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="estado_pedido"/>
 
-        <addForeignKeyConstraint baseColumnNames="id_cliente_id"
+        <addForeignKeyConstraint baseColumnNames="client_id"
                                  baseTableName="pedido"
-                                 constraintName="fk_pedido_id_cliente_id"
+                                 constraintName="fk_pedido_client_id"
                                  referencedColumnNames="id"
                                  referencedTableName="client"/>
 

@@ -46,6 +46,12 @@
             "otherEntityName": "location",
             "otherEntityRelationshipName": "client",
             "relationshipName": "country"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "pedido",
+            "otherEntityRelationshipName": "client",
+            "relationshipName": "idClient"
         }
     ],
     "changelogDate": "20191231080341",

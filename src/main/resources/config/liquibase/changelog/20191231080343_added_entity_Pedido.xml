@@ -18,7 +18,7 @@
             <column name="id_pedido" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="id_cliente" type="bigint">
+            <column name="id_client" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="id_tienda" type="bigint">
@@ -57,7 +57,7 @@
             <column name="estado_pedido_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_pedido_estado_pedido_id" />
             </column>
-            <column name="id_cliente_id" type="bigint">
+            <column name="client_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -84,7 +84,7 @@
                   tableName="pedido">
             <column name="id" type="numeric"/>
             <column name="id_pedido" type="numeric"/>
-            <column name="id_cliente" type="numeric"/>
+            <column name="id_client" type="numeric"/>
             <column name="id_tienda" type="numeric"/>
             <column name="fecha_pedido" type="date"/>
             <column name="fecha_notificacion" type="date"/>

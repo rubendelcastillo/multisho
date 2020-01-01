@@ -14,6 +14,8 @@ public interface ClientMapper extends EntityMapper<ClientDTO, Client> {
 
     @Mapping(target = "countries", ignore = true)
     @Mapping(target = "removeCountry", ignore = true)
+    @Mapping(target = "idClients", ignore = true)
+    @Mapping(target = "removeIdClient", ignore = true)
     Client toEntity(ClientDTO clientDTO);
 
     default Client fromId(Long id) {

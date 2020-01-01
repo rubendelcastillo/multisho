@@ -61,7 +61,7 @@ entity ModoPago {
 }
 entity Pedido {
 	idPedido BigDecimal,
-    idClient Long,
+    idCliente Long,
     idTienda Long,
     fechaPedido LocalDate,
     fechaNotificacion LocalDate,
@@ -107,10 +107,11 @@ relationship OneToMany {
 }
 relationship OneToMany {
 	Pedido{idPedido} to DetallePedido
-    Client{idClient} to Pedido
 }
 // defining multiple oneToOne relationships
-
+relationship ManyToOne {
+	Pedido{idCliente} to Client{idClient}
+}
 
 // Set pagination options
 paginate ModoEnvio, Location with infinite-scroll

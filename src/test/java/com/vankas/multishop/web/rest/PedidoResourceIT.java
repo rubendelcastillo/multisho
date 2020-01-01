@@ -42,8 +42,8 @@ public class PedidoResourceIT {
     private static final BigDecimal DEFAULT_ID_PEDIDO = new BigDecimal(1);
     private static final BigDecimal UPDATED_ID_PEDIDO = new BigDecimal(2);
 
-    private static final Long DEFAULT_ID_CLIENTE = 1L;
-    private static final Long UPDATED_ID_CLIENTE = 2L;
+    private static final Long DEFAULT_ID_CLIENT = 1L;
+    private static final Long UPDATED_ID_CLIENT = 2L;
 
     private static final Long DEFAULT_ID_TIENDA = 1L;
     private static final Long UPDATED_ID_TIENDA = 2L;
@@ -124,7 +124,7 @@ public class PedidoResourceIT {
     public static Pedido createEntity(EntityManager em) {
         Pedido pedido = new Pedido()
             .idPedido(DEFAULT_ID_PEDIDO)
-            .idCliente(DEFAULT_ID_CLIENTE)
+            .idClient(DEFAULT_ID_CLIENT)
             .idTienda(DEFAULT_ID_TIENDA)
             .fechaPedido(DEFAULT_FECHA_PEDIDO)
             .fechaNotificacion(DEFAULT_FECHA_NOTIFICACION)
@@ -146,7 +146,7 @@ public class PedidoResourceIT {
     public static Pedido createUpdatedEntity(EntityManager em) {
         Pedido pedido = new Pedido()
             .idPedido(UPDATED_ID_PEDIDO)
-            .idCliente(UPDATED_ID_CLIENTE)
+            .idClient(UPDATED_ID_CLIENT)
             .idTienda(UPDATED_ID_TIENDA)
             .fechaPedido(UPDATED_FECHA_PEDIDO)
             .fechaNotificacion(UPDATED_FECHA_NOTIFICACION)
@@ -182,7 +182,7 @@ public class PedidoResourceIT {
         assertThat(pedidoList).hasSize(databaseSizeBeforeCreate + 1);
         Pedido testPedido = pedidoList.get(pedidoList.size() - 1);
         assertThat(testPedido.getIdPedido()).isEqualTo(DEFAULT_ID_PEDIDO);
-        assertThat(testPedido.getIdCliente()).isEqualTo(DEFAULT_ID_CLIENTE);
+        assertThat(testPedido.getIdClient()).isEqualTo(DEFAULT_ID_CLIENT);
         assertThat(testPedido.getIdTienda()).isEqualTo(DEFAULT_ID_TIENDA);
         assertThat(testPedido.getFechaPedido()).isEqualTo(DEFAULT_FECHA_PEDIDO);
         assertThat(testPedido.getFechaNotificacion()).isEqualTo(DEFAULT_FECHA_NOTIFICACION);
@@ -228,7 +228,7 @@ public class PedidoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(pedido.getId().intValue())))
             .andExpect(jsonPath("$.[*].idPedido").value(hasItem(DEFAULT_ID_PEDIDO.intValue())))
-            .andExpect(jsonPath("$.[*].idCliente").value(hasItem(DEFAULT_ID_CLIENTE.intValue())))
+            .andExpect(jsonPath("$.[*].idClient").value(hasItem(DEFAULT_ID_CLIENT.intValue())))
             .andExpect(jsonPath("$.[*].idTienda").value(hasItem(DEFAULT_ID_TIENDA.intValue())))
             .andExpect(jsonPath("$.[*].fechaPedido").value(hasItem(DEFAULT_FECHA_PEDIDO.toString())))
             .andExpect(jsonPath("$.[*].fechaNotificacion").value(hasItem(DEFAULT_FECHA_NOTIFICACION.toString())))
@@ -253,7 +253,7 @@ public class PedidoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(pedido.getId().intValue()))
             .andExpect(jsonPath("$.idPedido").value(DEFAULT_ID_PEDIDO.intValue()))
-            .andExpect(jsonPath("$.idCliente").value(DEFAULT_ID_CLIENTE.intValue()))
+            .andExpect(jsonPath("$.idClient").value(DEFAULT_ID_CLIENT.intValue()))
             .andExpect(jsonPath("$.idTienda").value(DEFAULT_ID_TIENDA.intValue()))
             .andExpect(jsonPath("$.fechaPedido").value(DEFAULT_FECHA_PEDIDO.toString()))
             .andExpect(jsonPath("$.fechaNotificacion").value(DEFAULT_FECHA_NOTIFICACION.toString()))
@@ -288,7 +288,7 @@ public class PedidoResourceIT {
         em.detach(updatedPedido);
         updatedPedido
             .idPedido(UPDATED_ID_PEDIDO)
-            .idCliente(UPDATED_ID_CLIENTE)
+            .idClient(UPDATED_ID_CLIENT)
             .idTienda(UPDATED_ID_TIENDA)
             .fechaPedido(UPDATED_FECHA_PEDIDO)
             .fechaNotificacion(UPDATED_FECHA_NOTIFICACION)
@@ -311,7 +311,7 @@ public class PedidoResourceIT {
         assertThat(pedidoList).hasSize(databaseSizeBeforeUpdate);
         Pedido testPedido = pedidoList.get(pedidoList.size() - 1);
         assertThat(testPedido.getIdPedido()).isEqualTo(UPDATED_ID_PEDIDO);
-        assertThat(testPedido.getIdCliente()).isEqualTo(UPDATED_ID_CLIENTE);
+        assertThat(testPedido.getIdClient()).isEqualTo(UPDATED_ID_CLIENT);
         assertThat(testPedido.getIdTienda()).isEqualTo(UPDATED_ID_TIENDA);
         assertThat(testPedido.getFechaPedido()).isEqualTo(UPDATED_FECHA_PEDIDO);
         assertThat(testPedido.getFechaNotificacion()).isEqualTo(UPDATED_FECHA_NOTIFICACION);

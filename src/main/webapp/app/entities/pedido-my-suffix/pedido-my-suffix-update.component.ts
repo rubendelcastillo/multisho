@@ -37,7 +37,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     idPedido: [],
-    idCliente: [],
+    idClient: [],
     idTienda: [],
     fechaPedido: [],
     fechaNotificacion: [],
@@ -50,7 +50,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
     fechaConfirmacion: [],
     modoPagoId: [],
     estadoPedidoId: [],
-    idClienteId: []
+    clientId: []
   });
 
   constructor(
@@ -129,7 +129,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: pedido.id,
       idPedido: pedido.idPedido,
-      idCliente: pedido.idCliente,
+      idClient: pedido.idClient,
       idTienda: pedido.idTienda,
       fechaPedido: pedido.fechaPedido,
       fechaNotificacion: pedido.fechaNotificacion,
@@ -142,7 +142,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       fechaConfirmacion: pedido.fechaConfirmacion,
       modoPagoId: pedido.modoPagoId,
       estadoPedidoId: pedido.estadoPedidoId,
-      idClienteId: pedido.idClienteId
+      clientId: pedido.clientId
     });
   }
 
@@ -165,7 +165,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       ...new PedidoMySuffix(),
       id: this.editForm.get(['id'])!.value,
       idPedido: this.editForm.get(['idPedido'])!.value,
-      idCliente: this.editForm.get(['idCliente'])!.value,
+      idClient: this.editForm.get(['idClient'])!.value,
       idTienda: this.editForm.get(['idTienda'])!.value,
       fechaPedido: this.editForm.get(['fechaPedido'])!.value,
       fechaNotificacion: this.editForm.get(['fechaNotificacion'])!.value,
@@ -178,7 +178,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       fechaConfirmacion: this.editForm.get(['fechaConfirmacion'])!.value,
       modoPagoId: this.editForm.get(['modoPagoId'])!.value,
       estadoPedidoId: this.editForm.get(['estadoPedidoId'])!.value,
-      idClienteId: this.editForm.get(['idClienteId'])!.value
+      clientId: this.editForm.get(['clientId'])!.value
     };
   }
 

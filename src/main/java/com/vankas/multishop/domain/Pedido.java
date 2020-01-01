@@ -27,8 +27,8 @@ public class Pedido implements Serializable {
     @Column(name = "id_pedido", precision = 21, scale = 2)
     private BigDecimal idPedido;
 
-    @Column(name = "id_cliente")
-    private Long idCliente;
+    @Column(name = "id_client")
+    private Long idClient;
 
     @Column(name = "id_tienda")
     private Long idTienda;
@@ -71,13 +71,13 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "pedido")
     private Set<DetallePedido> idPedidos = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("pedidos")
-    private Client idCliente;
-
     @OneToOne(mappedBy = "pedido")
     @JsonIgnore
     private ModoEnvio modoEnvio;
+
+    @ManyToOne
+    @JsonIgnoreProperties("idClients")
+    private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -101,17 +101,17 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public Long getIdClient() {
+        return idClient;
     }
 
-    public Pedido idCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public Pedido idClient(Long idClient) {
+        this.idClient = idClient;
         return this;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setIdClient(Long idClient) {
+        this.idClient = idClient;
     }
 
     public Long getIdTienda() {
@@ -295,19 +295,6 @@ public class Pedido implements Serializable {
         this.idPedidos = detallePedidos;
     }
 
-    public Client getIdCliente() {
-        return idCliente;
-    }
-
-    public Pedido idCliente(Client client) {
-        this.idCliente = client;
-        return this;
-    }
-
-    public void setIdCliente(Client client) {
-        this.idCliente = client;
-    }
-
     public ModoEnvio getModoEnvio() {
         return modoEnvio;
     }
@@ -319,6 +306,19 @@ public class Pedido implements Serializable {
 
     public void setModoEnvio(ModoEnvio modoEnvio) {
         this.modoEnvio = modoEnvio;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Pedido client(Client client) {
+        this.client = client;
+        return this;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -343,7 +343,7 @@ public class Pedido implements Serializable {
         return "Pedido{" +
             "id=" + getId() +
             ", idPedido=" + getIdPedido() +
-            ", idCliente=" + getIdCliente() +
+            ", idClient=" + getIdClient() +
             ", idTienda=" + getIdTienda() +
             ", fechaPedido='" + getFechaPedido() + "'" +
             ", fechaNotificacion='" + getFechaNotificacion() + "'" +

@@ -1,4 +1,4 @@
-id;id_pedido;id_cliente;id_tienda;fecha_pedido;fecha_notificacion;id_modo_pago;cargo_por_coste;gastos_envio;id_modo_envio;job_title;id_estado;fecha_confirmacion
+id;id_pedido;id_client;id_tienda;fecha_pedido;fecha_notificacion;id_modo_pago;cargo_por_coste;gastos_envio;id_modo_envio;job_title;id_estado;fecha_confirmacion
 1;47500;71200;79963;2019-12-31;2019-12-31;18027;61500;77956;62697;District Configuration Supervisor;76288;2019-12-30
 2;55150;27935;84527;2019-12-30;2019-12-31;80768;83795;70887;36323;International Accountability Analyst;65101;2019-12-30
 3;72636;82039;92167;2019-12-30;2019-12-30;15019;93571;75612;29231;Senior Interactions Technician;19534;2019-12-31

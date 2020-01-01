@@ -17,7 +17,7 @@
         "title": "Pedido"
       },
       "idPedido": "Id Pedido",
-      "idCliente": "Id Cliente",
+      "idClient": "Id Client",
       "idTienda": "Id Tienda",
       "fechaPedido": "Fecha Pedido",
       "fechaNotificacion": "Fecha Notificacion",
@@ -31,8 +31,8 @@
       "modoPago": "Modo Pago",
       "estadoPedido": "Estado Pedido",
       "idPedido": "Id Pedido",
-      "idCliente": "Id Cliente",
-      "modoEnvio": "Modo Envio"
+      "modoEnvio": "Modo Envio",
+      "client": "Client"
     }
   }
 }

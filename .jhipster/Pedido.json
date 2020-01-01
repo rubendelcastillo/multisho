@@ -6,7 +6,7 @@
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "idCliente",
+            "fieldName": "idClient",
             "fieldType": "Long"
         },
         {
@@ -74,18 +74,18 @@
             "relationshipName": "idPedido"
         },
         {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "client",
-            "otherEntityRelationshipName": "pedido",
-            "relationshipName": "idCliente",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "one-to-one",
             "otherEntityName": "modoEnvio",
             "otherEntityRelationshipName": "pedido",
             "relationshipName": "modoEnvio",
             "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "client",
+            "otherEntityRelationshipName": "idClient",
+            "relationshipName": "client",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20191231080343",

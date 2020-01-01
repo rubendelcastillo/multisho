@@ -13,7 +13,7 @@ public class PedidoDTO implements Serializable {
 
     private BigDecimal idPedido;
 
-    private Long idCliente;
+    private Long idClient;
 
     private Long idTienda;
 
@@ -40,7 +40,7 @@ public class PedidoDTO implements Serializable {
 
     private Long estadoPedidoId;
 
-    private Long idClienteId;
+    private Long clientId;
 
     public Long getId() {
         return id;
@@ -58,12 +58,12 @@ public class PedidoDTO implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public Long getIdClient() {
+        return idClient;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setIdClient(Long idClient) {
+        this.idClient = idClient;
     }
 
     public Long getIdTienda() {
@@ -162,12 +162,12 @@ public class PedidoDTO implements Serializable {
         this.estadoPedidoId = estadoPedidoId;
     }
 
-    public Long getIdClienteId() {
-        return idClienteId;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setIdClienteId(Long clientId) {
-        this.idClienteId = clientId;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     @Override
@@ -196,7 +196,7 @@ public class PedidoDTO implements Serializable {
         return "PedidoDTO{" +
             "id=" + getId() +
             ", idPedido=" + getIdPedido() +
-            ", idCliente=" + getIdCliente() +
+            ", idClient=" + getIdClient() +
             ", idTienda=" + getIdTienda() +
             ", fechaPedido='" + getFechaPedido() + "'" +
             ", fechaNotificacion='" + getFechaNotificacion() + "'" +
@@ -209,7 +209,7 @@ public class PedidoDTO implements Serializable {
             ", fechaConfirmacion='" + getFechaConfirmacion() + "'" +
             ", modoPagoId=" + getModoPagoId() +
             ", estadoPedidoId=" + getEstadoPedidoId() +
-            ", idClienteId=" + getIdClienteId() +
+            ", clientId=" + getClientId() +
             "}";
     }
 }

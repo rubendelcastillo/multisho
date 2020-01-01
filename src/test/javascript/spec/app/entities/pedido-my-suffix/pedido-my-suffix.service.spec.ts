@@ -78,7 +78,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             idPedido: 1,
-            idCliente: 1,
+            idClient: 1,
             idTienda: 1,
             fechaPedido: currentDate.format(DATE_FORMAT),
             fechaNotificacion: currentDate.format(DATE_FORMAT),
@@ -114,7 +114,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             idPedido: 1,
-            idCliente: 1,
+            idClient: 1,
             idTienda: 1,
             fechaPedido: currentDate.format(DATE_FORMAT),
             fechaNotificacion: currentDate.format(DATE_FORMAT),

@@ -15,9 +15,9 @@
                            formControlName="idPedido"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idCliente" for="field_idCliente">Id Cliente</label>
-                    <input type="number" class="form-control" name="idCliente" id="field_idCliente"
-                           formControlName="idCliente"/>
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idClient" for="field_idClient">Id Client</label>
+                    <input type="number" class="form-control" name="idClient" id="field_idClient"
+                           formControlName="idClient"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.idTienda" for="field_idTienda">Id Tienda</label>
@@ -97,8 +97,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idCliente" for="field_idCliente">Id Cliente</label>
-                    <select class="form-control" id="field_idCliente" name="idCliente" formControlName="idClienteId">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.client" for="field_client">Client</label>
+                    <select class="form-control" id="field_client" name="client" formControlName="clientId">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackById">{{clientOption.id}}</option>
                     </select>

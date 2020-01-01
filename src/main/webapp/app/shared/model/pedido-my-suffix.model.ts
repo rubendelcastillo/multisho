@@ -4,7 +4,7 @@ import { IDetallePedidoMySuffix } from 'app/shared/model/detalle-pedido-my-suffi
 export interface IPedidoMySuffix {
   id?: number;
   idPedido?: number;
-  idCliente?: number;
+  idClient?: number;
   idTienda?: number;
   fechaPedido?: Moment;
   fechaNotificacion?: Moment;
@@ -18,15 +18,15 @@ export interface IPedidoMySuffix {
   modoPagoId?: number;
   estadoPedidoId?: number;
   idPedidos?: IDetallePedidoMySuffix[];
-  idClienteId?: number;
   modoEnvioId?: number;
+  clientId?: number;
 }
 
 export class PedidoMySuffix implements IPedidoMySuffix {
   constructor(
     public id?: number,
     public idPedido?: number,
-    public idCliente?: number,
+    public idClient?: number,
     public idTienda?: number,
     public fechaPedido?: Moment,
     public fechaNotificacion?: Moment,
@@ -40,7 +40,7 @@ export class PedidoMySuffix implements IPedidoMySuffix {
     public modoPagoId?: number,
     public estadoPedidoId?: number,
     public idPedidos?: IDetallePedidoMySuffix[],
-    public idClienteId?: number,
-    public modoEnvioId?: number
+    public modoEnvioId?: number,
+    public clientId?: number
   ) {}
 }

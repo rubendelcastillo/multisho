@@ -57,6 +57,9 @@ public class Client implements Serializable {
     @OneToMany(mappedBy = "client")
     private Set<Location> countries = new HashSet<>();
 
+    @OneToMany(mappedBy = "client")
+    private Set<Pedido> idClients = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -206,6 +209,31 @@ public class Client implements Serializable {
 
     public void setCountries(Set<Location> locations) {
         this.countries = locations;
+    }
+
+    public Set<Pedido> getIdClients() {
+        return idClients;
+    }
+
+    public Client idClients(Set<Pedido> pedidos) {
+        this.idClients = pedidos;
+        return this;
+    }
+
+    public Client addIdClient(Pedido pedido) {
+        this.idClients.add(pedido);
+        pedido.setClient(this);
+        return this;
+    }
+
+    public Client removeIdClient(Pedido pedido) {
+        this.idClients.remove(pedido);
+        pedido.setClient(null);
+        return this;
+    }
+
+    public void setIdClients(Set<Pedido> pedidos) {
+        this.idClients = pedidos;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

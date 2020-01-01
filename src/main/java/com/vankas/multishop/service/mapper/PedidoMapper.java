@@ -13,15 +13,15 @@ public interface PedidoMapper extends EntityMapper<PedidoDTO, Pedido> {
 
     @Mapping(source = "modoPago.id", target = "modoPagoId")
     @Mapping(source = "estadoPedido.id", target = "estadoPedidoId")
-    @Mapping(source = "idCliente.id", target = "idClienteId")
+    @Mapping(source = "client.id", target = "clientId")
     PedidoDTO toDto(Pedido pedido);
 
     @Mapping(source = "modoPagoId", target = "modoPago")
     @Mapping(source = "estadoPedidoId", target = "estadoPedido")
     @Mapping(target = "idPedidos", ignore = true)
     @Mapping(target = "removeIdPedido", ignore = true)
-    @Mapping(source = "idClienteId", target = "idCliente")
     @Mapping(target = "modoEnvio", ignore = true)
+    @Mapping(source = "clientId", target = "client")
     Pedido toEntity(PedidoDTO pedidoDTO);
 
     default Pedido fromId(Long id) {

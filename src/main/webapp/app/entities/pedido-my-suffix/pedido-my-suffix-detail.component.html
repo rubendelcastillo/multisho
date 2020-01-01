@@ -9,9 +9,9 @@
                 <dd>
                     <span>{{pedido.idPedido}}</span>
                 </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.idCliente">Id Cliente</span></dt>
+                <dt><span jhiTranslate="multishopApp.pedido.idClient">Id Client</span></dt>
                 <dd>
-                    <span>{{pedido.idCliente}}</span>
+                    <span>{{pedido.idClient}}</span>
                 </dd>
                 <dt><span jhiTranslate="multishopApp.pedido.idTienda">Id Tienda</span></dt>
                 <dd>
@@ -65,10 +65,10 @@
                         <a [routerLink]="['/estado-pedido-my-suffix', pedido.estadoPedidoId, 'view']">{{pedido.estadoPedidoId}}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.idCliente">Id Cliente</span></dt>
+                <dt><span jhiTranslate="multishopApp.pedido.client">Client</span></dt>
                 <dd>
-                    <div *ngIf="pedido.idClienteId">
-                        <a [routerLink]="['/client-my-suffix', pedido.idClienteId, 'view']">{{pedido.idClienteId}}</a>
+                    <div *ngIf="pedido.clientId">
+                        <a [routerLink]="['/client-my-suffix', pedido.clientId, 'view']">{{pedido.clientId}}</a>
                     </div>
                 </dd>
             </dl>

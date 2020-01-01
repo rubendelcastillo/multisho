@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { ILocationMySuffix } from 'app/shared/model/location-my-suffix.model';
+import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 import { DocumentType } from 'app/shared/model/enumerations/document-type.model';
 
 export interface IClientMySuffix {
@@ -14,6 +15,7 @@ export interface IClientMySuffix {
   documentId?: string;
   documentType?: DocumentType;
   countries?: ILocationMySuffix[];
+  idClients?: IPedidoMySuffix[];
 }
 
 export class ClientMySuffix implements IClientMySuffix {
@@ -28,6 +30,7 @@ export class ClientMySuffix implements IClientMySuffix {
     public endDate?: number,
     public documentId?: string,
     public documentType?: DocumentType,
-    public countries?: ILocationMySuffix[]
+    public countries?: ILocationMySuffix[],
+    public idClients?: IPedidoMySuffix[]
   ) {}
 }
