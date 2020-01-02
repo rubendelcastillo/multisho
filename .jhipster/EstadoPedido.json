@@ -2,10 +2,6 @@
     "name": "EstadoPedido",
     "fields": [
         {
-            "fieldName": "idEstado",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "descripcion",
             "fieldType": "String"
         }

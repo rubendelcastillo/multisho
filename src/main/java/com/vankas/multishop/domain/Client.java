@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,9 +27,6 @@ public class Client implements Serializable {
     /**
      * The firstname attribute.
      */
-    @Column(name = "id_client")
-    private Long idClient;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -45,7 +43,7 @@ public class Client implements Serializable {
     private Instant creationDate;
 
     @Column(name = "end_date")
-    private Long endDate;
+    private LocalDate endDate;
 
     @Column(name = "document_id")
     private String documentId;
@@ -67,19 +65,6 @@ public class Client implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getIdClient() {
-        return idClient;
-    }
-
-    public Client idClient(Long idClient) {
-        this.idClient = idClient;
-        return this;
-    }
-
-    public void setIdClient(Long idClient) {
-        this.idClient = idClient;
     }
 
     public String getFirstName() {
@@ -147,16 +132,16 @@ public class Client implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Long getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public Client endDate(Long endDate) {
+    public Client endDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(Long endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -257,13 +242,12 @@ public class Client implements Serializable {
     public String toString() {
         return "Client{" +
             "id=" + getId() +
-            ", idClient=" + getIdClient() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
-            ", endDate=" + getEndDate() +
+            ", endDate='" + getEndDate() + "'" +
             ", documentId='" + getDocumentId() + "'" +
             ", documentType='" + getDocumentType() + "'" +
             "}";

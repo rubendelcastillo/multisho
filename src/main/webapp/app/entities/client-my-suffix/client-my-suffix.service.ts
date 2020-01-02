@@ -52,7 +52,8 @@ export class ClientMySuffixService {
 
   protected convertDateFromClient(client: IClientMySuffix): IClientMySuffix {
     const copy: IClientMySuffix = Object.assign({}, client, {
-      creationDate: client.creationDate && client.creationDate.isValid() ? client.creationDate.toJSON() : undefined
+      creationDate: client.creationDate && client.creationDate.isValid() ? client.creationDate.toJSON() : undefined,
+      endDate: client.endDate && client.endDate.isValid() ? client.endDate.format(DATE_FORMAT) : undefined
     });
     return copy;
   }
@@ -60,6 +61,7 @@ export class ClientMySuffixService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.creationDate = res.body.creationDate ? moment(res.body.creationDate) : undefined;
+      res.body.endDate = res.body.endDate ? moment(res.body.endDate) : undefined;
     }
     return res;
   }
@@ -68,6 +70,7 @@ export class ClientMySuffixService {
     if (res.body) {
       res.body.forEach((client: IClientMySuffix) => {
         client.creationDate = client.creationDate ? moment(client.creationDate) : undefined;
+        client.endDate = client.endDate ? moment(client.endDate) : undefined;
       });
     }
     return res;

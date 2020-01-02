@@ -15,8 +15,7 @@
             "otherEntityName": "pedido",
             "otherEntityRelationshipName": "modoEnvio",
             "relationshipName": "pedido",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "ownerSide": false
         }
     ],
     "changelogDate": "20191231080339",

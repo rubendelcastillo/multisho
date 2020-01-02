@@ -17,7 +17,6 @@ export class ModoPagoMySuffixUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    idModoPago: [],
     descripcion: []
   });
 
@@ -32,7 +31,6 @@ export class ModoPagoMySuffixUpdateComponent implements OnInit {
   updateForm(modoPago: IModoPagoMySuffix): void {
     this.editForm.patchValue({
       id: modoPago.id,
-      idModoPago: modoPago.idModoPago,
       descripcion: modoPago.descripcion
     });
   }
@@ -55,7 +53,6 @@ export class ModoPagoMySuffixUpdateComponent implements OnInit {
     return {
       ...new ModoPagoMySuffix(),
       id: this.editForm.get(['id'])!.value,
-      idModoPago: this.editForm.get(['idModoPago'])!.value,
       descripcion: this.editForm.get(['descripcion'])!.value
     };
   }

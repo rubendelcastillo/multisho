@@ -19,7 +19,6 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.modoPago.idModoPago">Id Modo Pago</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.modoPago.descripcion">Descripcion</span></th>
             <th scope="col"></th>
             </tr>
@@ -27,7 +26,6 @@
             <tbody>
             <tr *ngFor="let modoPago of modoPagos ;trackBy: trackId">
                 <td><a [routerLink]="['/modo-pago-my-suffix', modoPago.id, 'view' ]">{{modoPago.id}}</a></td>
-                <td>{{modoPago.idModoPago}}</td>
                 <td>{{modoPago.descripcion}}</td>
                 <td class="text-right">
                     <div class="btn-group">

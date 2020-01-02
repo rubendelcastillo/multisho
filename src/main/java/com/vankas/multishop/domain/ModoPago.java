@@ -19,9 +19,6 @@ public class ModoPago implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "id_modo_pago")
-    private Integer idModoPago;
-
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -36,19 +33,6 @@ public class ModoPago implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getIdModoPago() {
-        return idModoPago;
-    }
-
-    public ModoPago idModoPago(Integer idModoPago) {
-        this.idModoPago = idModoPago;
-        return this;
-    }
-
-    public void setIdModoPago(Integer idModoPago) {
-        this.idModoPago = idModoPago;
     }
 
     public String getDescripcion() {
@@ -98,7 +82,6 @@ public class ModoPago implements Serializable {
     public String toString() {
         return "ModoPago{" +
             "id=" + getId() +
-            ", idModoPago=" + getIdModoPago() +
             ", descripcion='" + getDescripcion() + "'" +
             "}";
     }

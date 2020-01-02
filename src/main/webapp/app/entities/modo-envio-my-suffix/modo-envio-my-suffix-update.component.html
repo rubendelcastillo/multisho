@@ -21,13 +21,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.modoEnvio.pedido" for="field_pedido">Pedido</label>
-                    <select class="form-control" id="field_pedido" name="pedido" formControlName="pedidoId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="pedidoOption.id" *ngFor="let pedidoOption of pedidos; trackBy: trackById">{{pedidoOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

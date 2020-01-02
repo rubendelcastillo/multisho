@@ -36,9 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = MultishopApp.class)
 public class ModoPagoResourceIT {
 
-    private static final Integer DEFAULT_ID_MODO_PAGO = 1;
-    private static final Integer UPDATED_ID_MODO_PAGO = 2;
-
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
@@ -90,7 +87,6 @@ public class ModoPagoResourceIT {
      */
     public static ModoPago createEntity(EntityManager em) {
         ModoPago modoPago = new ModoPago()
-            .idModoPago(DEFAULT_ID_MODO_PAGO)
             .descripcion(DEFAULT_DESCRIPCION);
         return modoPago;
     }
@@ -102,7 +98,6 @@ public class ModoPagoResourceIT {
      */
     public static ModoPago createUpdatedEntity(EntityManager em) {
         ModoPago modoPago = new ModoPago()
-            .idModoPago(UPDATED_ID_MODO_PAGO)
             .descripcion(UPDATED_DESCRIPCION);
         return modoPago;
     }
@@ -128,7 +123,6 @@ public class ModoPagoResourceIT {
         List<ModoPago> modoPagoList = modoPagoRepository.findAll();
         assertThat(modoPagoList).hasSize(databaseSizeBeforeCreate + 1);
         ModoPago testModoPago = modoPagoList.get(modoPagoList.size() - 1);
-        assertThat(testModoPago.getIdModoPago()).isEqualTo(DEFAULT_ID_MODO_PAGO);
         assertThat(testModoPago.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
@@ -164,7 +158,6 @@ public class ModoPagoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(modoPago.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idModoPago").value(hasItem(DEFAULT_ID_MODO_PAGO)))
             .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
     
@@ -179,7 +172,6 @@ public class ModoPagoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(modoPago.getId().intValue()))
-            .andExpect(jsonPath("$.idModoPago").value(DEFAULT_ID_MODO_PAGO))
             .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
@@ -204,7 +196,6 @@ public class ModoPagoResourceIT {
         // Disconnect from session so that the updates on updatedModoPago are not directly saved in db
         em.detach(updatedModoPago);
         updatedModoPago
-            .idModoPago(UPDATED_ID_MODO_PAGO)
             .descripcion(UPDATED_DESCRIPCION);
         ModoPagoDTO modoPagoDTO = modoPagoMapper.toDto(updatedModoPago);
 
@@ -217,7 +208,6 @@ public class ModoPagoResourceIT {
         List<ModoPago> modoPagoList = modoPagoRepository.findAll();
         assertThat(modoPagoList).hasSize(databaseSizeBeforeUpdate);
         ModoPago testModoPago = modoPagoList.get(modoPagoList.size() - 1);
-        assertThat(testModoPago.getIdModoPago()).isEqualTo(UPDATED_ID_MODO_PAGO);
         assertThat(testModoPago.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 

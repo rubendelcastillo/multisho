@@ -2,6 +2,7 @@ package com.vankas.multishop.service.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
 import com.vankas.multishop.domain.enumeration.DocumentType;
@@ -18,8 +19,6 @@ public class ClientDTO implements Serializable {
      * The firstname attribute.
      */
     @ApiModelProperty(value = "The firstname attribute.")
-    private Long idClient;
-
     private String firstName;
 
     private String lastName;
@@ -30,7 +29,7 @@ public class ClientDTO implements Serializable {
 
     private Instant creationDate;
 
-    private Long endDate;
+    private LocalDate endDate;
 
     private String documentId;
 
@@ -43,14 +42,6 @@ public class ClientDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(Long idClient) {
-        this.idClient = idClient;
     }
 
     public String getFirstName() {
@@ -93,11 +84,11 @@ public class ClientDTO implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Long getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Long endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -142,13 +133,12 @@ public class ClientDTO implements Serializable {
     public String toString() {
         return "ClientDTO{" +
             "id=" + getId() +
-            ", idClient=" + getIdClient() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
-            ", endDate=" + getEndDate() +
+            ", endDate='" + getEndDate() + "'" +
             ", documentId='" + getDocumentId() + "'" +
             ", documentType='" + getDocumentType() + "'" +
             "}";

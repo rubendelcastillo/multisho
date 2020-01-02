@@ -9,6 +9,8 @@ import * as moment from 'moment';
 
 import { IPedidoMySuffix, PedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 import { PedidoMySuffixService } from './pedido-my-suffix.service';
+import { IModoEnvioMySuffix } from 'app/shared/model/modo-envio-my-suffix.model';
+import { ModoEnvioMySuffixService } from 'app/entities/modo-envio-my-suffix/modo-envio-my-suffix.service';
 import { IModoPagoMySuffix } from 'app/shared/model/modo-pago-my-suffix.model';
 import { ModoPagoMySuffixService } from 'app/entities/modo-pago-my-suffix/modo-pago-my-suffix.service';
 import { IEstadoPedidoMySuffix } from 'app/shared/model/estado-pedido-my-suffix.model';
@@ -16,7 +18,7 @@ import { EstadoPedidoMySuffixService } from 'app/entities/estado-pedido-my-suffi
 import { IClientMySuffix } from 'app/shared/model/client-my-suffix.model';
 import { ClientMySuffixService } from 'app/entities/client-my-suffix/client-my-suffix.service';
 
-type SelectableEntity = IModoPagoMySuffix | IEstadoPedidoMySuffix | IClientMySuffix;
+type SelectableEntity = IModoEnvioMySuffix | IModoPagoMySuffix | IEstadoPedidoMySuffix | IClientMySuffix;
 
 @Component({
   selector: 'jhi-pedido-my-suffix-update',
@@ -24,6 +26,8 @@ type SelectableEntity = IModoPagoMySuffix | IEstadoPedidoMySuffix | IClientMySuf
 })
 export class PedidoMySuffixUpdateComponent implements OnInit {
   isSaving = false;
+
+  modoenvios: IModoEnvioMySuffix[] = [];
 
   modopagos: IModoPagoMySuffix[] = [];
 
@@ -36,9 +40,6 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    idPedido: [],
-    idClient: [],
-    idTienda: [],
     fechaPedido: [],
     fechaNotificacion: [],
     idModoPago: [],
@@ -46,8 +47,8 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
     gastosEnvio: [],
     idModoEnvio: [],
     jobTitle: [],
-    idEstado: [],
     fechaConfirmacion: [],
+    modoEnvioId: [],
     modoPagoId: [],
     estadoPedidoId: [],
     clientId: []
@@ -55,6 +56,7 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
 
   constructor(
     protected pedidoService: PedidoMySuffixService,
+    protected modoEnvioService: ModoEnvioMySuffixService,
     protected modoPagoService: ModoPagoMySuffixService,
     protected estadoPedidoService: EstadoPedidoMySuffixService,
     protected clientService: ClientMySuffixService,
@@ -65,6 +67,30 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ pedido }) => {
       this.updateForm(pedido);
+
+      this.modoEnvioService
+        .query({ filter: 'pedido-is-null' })
+        .pipe(
+          map((res: HttpResponse<IModoEnvioMySuffix[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IModoEnvioMySuffix[]) => {
+          if (!pedido.modoEnvioId) {
+            this.modoenvios = resBody;
+          } else {
+            this.modoEnvioService
+              .find(pedido.modoEnvioId)
+              .pipe(
+                map((subRes: HttpResponse<IModoEnvioMySuffix>) => {
+                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
+                })
+              )
+              .subscribe((concatRes: IModoEnvioMySuffix[]) => {
+                this.modoenvios = concatRes;
+              });
+          }
+        });
 
       this.modoPagoService
         .query({ filter: 'pedido-is-null' })
@@ -128,9 +154,6 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
   updateForm(pedido: IPedidoMySuffix): void {
     this.editForm.patchValue({
       id: pedido.id,
-      idPedido: pedido.idPedido,
-      idClient: pedido.idClient,
-      idTienda: pedido.idTienda,
       fechaPedido: pedido.fechaPedido,
       fechaNotificacion: pedido.fechaNotificacion,
       idModoPago: pedido.idModoPago,
@@ -138,8 +161,8 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       gastosEnvio: pedido.gastosEnvio,
       idModoEnvio: pedido.idModoEnvio,
       jobTitle: pedido.jobTitle,
-      idEstado: pedido.idEstado,
       fechaConfirmacion: pedido.fechaConfirmacion,
+      modoEnvioId: pedido.modoEnvioId,
       modoPagoId: pedido.modoPagoId,
       estadoPedidoId: pedido.estadoPedidoId,
       clientId: pedido.clientId
@@ -164,9 +187,6 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
     return {
       ...new PedidoMySuffix(),
       id: this.editForm.get(['id'])!.value,
-      idPedido: this.editForm.get(['idPedido'])!.value,
-      idClient: this.editForm.get(['idClient'])!.value,
-      idTienda: this.editForm.get(['idTienda'])!.value,
       fechaPedido: this.editForm.get(['fechaPedido'])!.value,
       fechaNotificacion: this.editForm.get(['fechaNotificacion'])!.value,
       idModoPago: this.editForm.get(['idModoPago'])!.value,
@@ -174,8 +194,8 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       gastosEnvio: this.editForm.get(['gastosEnvio'])!.value,
       idModoEnvio: this.editForm.get(['idModoEnvio'])!.value,
       jobTitle: this.editForm.get(['jobTitle'])!.value,
-      idEstado: this.editForm.get(['idEstado'])!.value,
       fechaConfirmacion: this.editForm.get(['fechaConfirmacion'])!.value,
+      modoEnvioId: this.editForm.get(['modoEnvioId'])!.value,
       modoPagoId: this.editForm.get(['modoPagoId'])!.value,
       estadoPedidoId: this.editForm.get(['estadoPedidoId'])!.value,
       clientId: this.editForm.get(['clientId'])!.value

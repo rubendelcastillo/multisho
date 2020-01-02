@@ -9,8 +9,6 @@ public class EstadoPedidoDTO implements Serializable {
 
     private Long id;
 
-    private Integer idEstado;
-
     private String descripcion;
 
 
@@ -20,14 +18,6 @@ public class EstadoPedidoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
     }
 
     public String getDescripcion() {
@@ -63,7 +53,6 @@ public class EstadoPedidoDTO implements Serializable {
     public String toString() {
         return "EstadoPedidoDTO{" +
             "id=" + getId() +
-            ", idEstado=" + getIdEstado() +
             ", descripcion='" + getDescripcion() + "'" +
             "}";
     }

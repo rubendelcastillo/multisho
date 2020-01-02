@@ -2,18 +2,6 @@
     "name": "Pedido",
     "fields": [
         {
-            "fieldName": "idPedido",
-            "fieldType": "BigDecimal"
-        },
-        {
-            "fieldName": "idClient",
-            "fieldType": "Long"
-        },
-        {
-            "fieldName": "idTienda",
-            "fieldType": "Long"
-        },
-        {
             "fieldName": "fechaPedido",
             "fieldType": "LocalDate"
         },
@@ -42,15 +30,19 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "idEstado",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "fechaConfirmacion",
             "fieldType": "LocalDate"
         }
     ],
     "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "modoEnvio",
+            "otherEntityRelationshipName": "pedido",
+            "relationshipName": "modoEnvio",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
         {
             "relationshipType": "one-to-one",
             "otherEntityName": "modoPago",
@@ -72,13 +64,6 @@
             "otherEntityName": "detallePedido",
             "otherEntityRelationshipName": "pedido",
             "relationshipName": "idPedido"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "modoEnvio",
-            "otherEntityRelationshipName": "pedido",
-            "relationshipName": "modoEnvio",
-            "ownerSide": false
         },
         {
             "relationshipType": "many-to-one",

@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing {@link Pedido}.
@@ -63,21 +62,6 @@ public class PedidoServiceImpl implements PedidoService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
-
-    /**
-    *  Get all the pedidos where ModoEnvio is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true) 
-    public List<PedidoDTO> findAllWhereModoEnvioIsNull() {
-        log.debug("Request to get all pedidos where ModoEnvio is null");
-        return StreamSupport
-            .stream(pedidoRepository.findAll().spliterator(), false)
-            .filter(pedido -> pedido.getModoEnvio() == null)
-            .map(pedidoMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 
     /**
      * Get one pedido by id.

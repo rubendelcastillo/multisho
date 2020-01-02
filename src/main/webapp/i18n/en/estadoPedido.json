@@ -16,7 +16,6 @@
       "detail": {
         "title": "Estado Pedido"
       },
-      "idEstado": "Id Estado",
       "descripcion": "Descripcion",
       "pedido": "Pedido"
     }

@@ -2,10 +2,6 @@
     "name": "ModoPago",
     "fields": [
         {
-            "fieldName": "idModoPago",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "descripcion",
             "fieldType": "String"
         }

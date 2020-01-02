@@ -8,13 +8,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ModoEnvio} and its DTO {@link ModoEnvioDTO}.
  */
-@Mapper(componentModel = "spring", uses = {PedidoMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface ModoEnvioMapper extends EntityMapper<ModoEnvioDTO, ModoEnvio> {
 
-    @Mapping(source = "pedido.id", target = "pedidoId")
-    ModoEnvioDTO toDto(ModoEnvio modoEnvio);
 
-    @Mapping(source = "pedidoId", target = "pedido")
+    @Mapping(target = "pedido", ignore = true)
     ModoEnvio toEntity(ModoEnvioDTO modoEnvioDTO);
 
     default ModoEnvio fromId(Long id) {

@@ -14,8 +14,6 @@ public class ModoEnvioDTO implements Serializable {
     private String modoEnvio;
 
 
-    private Long pedidoId;
-
     public Long getId() {
         return id;
     }
@@ -30,14 +28,6 @@ public class ModoEnvioDTO implements Serializable {
 
     public void setModoEnvio(String modoEnvio) {
         this.modoEnvio = modoEnvio;
-    }
-
-    public Long getPedidoId() {
-        return pedidoId;
-    }
-
-    public void setPedidoId(Long pedidoId) {
-        this.pedidoId = pedidoId;
     }
 
     @Override
@@ -66,7 +56,6 @@ public class ModoEnvioDTO implements Serializable {
         return "ModoEnvioDTO{" +
             "id=" + getId() +
             ", modoEnvio='" + getModoEnvio() + "'" +
-            ", pedidoId=" + getPedidoId() +
             "}";
     }
 }

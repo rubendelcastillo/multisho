@@ -16,9 +16,6 @@
       "detail": {
         "title": "Pedido"
       },
-      "idPedido": "Id Pedido",
-      "idClient": "Id Client",
-      "idTienda": "Id Tienda",
       "fechaPedido": "Fecha Pedido",
       "fechaNotificacion": "Fecha Notificacion",
       "idModoPago": "Id Modo Pago",
@@ -26,12 +23,11 @@
       "gastosEnvio": "Gastos Envio",
       "idModoEnvio": "Id Modo Envio",
       "jobTitle": "Job Title",
-      "idEstado": "Id Estado",
       "fechaConfirmacion": "Fecha Confirmacion",
+      "modoEnvio": "Modo Envio",
       "modoPago": "Modo Pago",
       "estadoPedido": "Estado Pedido",
       "idPedido": "Id Pedido",
-      "modoEnvio": "Modo Envio",
       "client": "Client"
     }
   }

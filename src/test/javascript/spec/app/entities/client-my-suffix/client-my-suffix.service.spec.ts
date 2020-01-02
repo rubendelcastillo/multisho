@@ -2,7 +2,7 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ClientMySuffixService } from 'app/entities/client-my-suffix/client-my-suffix.service';
 import { IClientMySuffix, ClientMySuffix } from 'app/shared/model/client-my-suffix.model';
 import { DocumentType } from 'app/shared/model/enumerations/document-type.model';
@@ -25,14 +25,25 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new ClientMySuffix(0, 0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, 0, 'AAAAAAA', DocumentType.PASSPORT);
+      elemDefault = new ClientMySuffix(
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        currentDate,
+        currentDate,
+        'AAAAAAA',
+        DocumentType.PASSPORT
+      );
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            creationDate: currentDate.format(DATE_TIME_FORMAT)
+            creationDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
@@ -50,13 +61,15 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            creationDate: currentDate.format(DATE_TIME_FORMAT)
+            creationDate: currentDate.format(DATE_TIME_FORMAT),
+            endDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            creationDate: currentDate
+            creationDate: currentDate,
+            endDate: currentDate
           },
           returnedFromService
         );
@@ -72,13 +85,12 @@ describe('Service Tests', () => {
       it('should update a ClientMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idClient: 1,
             firstName: 'BBBBBB',
             lastName: 'BBBBBB',
             email: 'BBBBBB',
             phoneNumber: 'BBBBBB',
             creationDate: currentDate.format(DATE_TIME_FORMAT),
-            endDate: 1,
+            endDate: currentDate.format(DATE_FORMAT),
             documentId: 'BBBBBB',
             documentType: 'BBBBBB'
           },
@@ -87,7 +99,8 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
-            creationDate: currentDate
+            creationDate: currentDate,
+            endDate: currentDate
           },
           returnedFromService
         );
@@ -103,13 +116,12 @@ describe('Service Tests', () => {
       it('should return a list of ClientMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idClient: 1,
             firstName: 'BBBBBB',
             lastName: 'BBBBBB',
             email: 'BBBBBB',
             phoneNumber: 'BBBBBB',
             creationDate: currentDate.format(DATE_TIME_FORMAT),
-            endDate: 1,
+            endDate: currentDate.format(DATE_FORMAT),
             documentId: 'BBBBBB',
             documentType: 'BBBBBB'
           },
@@ -117,7 +129,8 @@ describe('Service Tests', () => {
         );
         const expected = Object.assign(
           {
-            creationDate: currentDate
+            creationDate: currentDate,
+            endDate: currentDate
           },
           returnedFromService
         );

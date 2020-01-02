@@ -15,15 +15,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="id_pedido" type="decimal(21,2)">
-                <constraints nullable="true" />
-            </column>
-            <column name="id_client" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="id_tienda" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="fecha_pedido" type="date">
                 <constraints nullable="true" />
             </column>
@@ -45,11 +36,11 @@
             <column name="job_title" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="id_estado" type="integer">
-                <constraints nullable="true" />
-            </column>
             <column name="fecha_confirmacion" type="date">
                 <constraints nullable="true" />
+            </column>
+            <column name="modo_envio_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_pedido_modo_envio_id" />
             </column>
             <column name="modo_pago_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_pedido_modo_pago_id" />
@@ -83,9 +74,6 @@
                   separator=";"
                   tableName="pedido">
             <column name="id" type="numeric"/>
-            <column name="id_pedido" type="numeric"/>
-            <column name="id_client" type="numeric"/>
-            <column name="id_tienda" type="numeric"/>
             <column name="fecha_pedido" type="date"/>
             <column name="fecha_notificacion" type="date"/>
             <column name="id_modo_pago" type="numeric"/>
@@ -93,7 +81,6 @@
             <column name="gastos_envio" type="numeric"/>
             <column name="id_modo_envio" type="numeric"/>
             <column name="job_title" type="string"/>
-            <column name="id_estado" type="numeric"/>
             <column name="fecha_confirmacion" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

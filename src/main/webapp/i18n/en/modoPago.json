@@ -16,7 +16,6 @@
       "detail": {
         "title": "Modo Pago"
       },
-      "idModoPago": "Id Modo Pago",
       "descripcion": "Descripcion",
       "pedido": "Pedido"
     }

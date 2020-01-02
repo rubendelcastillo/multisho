@@ -2,12 +2,8 @@
     "name": "Client",
     "fields": [
         {
-            "fieldName": "idClient",
-            "javadoc": "The firstname attribute.",
-            "fieldType": "Long"
-        },
-        {
             "fieldName": "firstName",
+            "javadoc": "The firstname attribute.",
             "fieldType": "String"
         },
         {
@@ -28,7 +24,7 @@
         },
         {
             "fieldName": "endDate",
-            "fieldType": "Long"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "documentId",

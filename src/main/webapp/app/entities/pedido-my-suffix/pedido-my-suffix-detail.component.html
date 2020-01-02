@@ -5,18 +5,6 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="multishopApp.pedido.idPedido">Id Pedido</span></dt>
-                <dd>
-                    <span>{{pedido.idPedido}}</span>
-                </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.idClient">Id Client</span></dt>
-                <dd>
-                    <span>{{pedido.idClient}}</span>
-                </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.idTienda">Id Tienda</span></dt>
-                <dd>
-                    <span>{{pedido.idTienda}}</span>
-                </dd>
                 <dt><span jhiTranslate="multishopApp.pedido.fechaPedido">Fecha Pedido</span></dt>
                 <dd>
                     <span>{{pedido.fechaPedido}}</span>
@@ -45,13 +33,15 @@
                 <dd>
                     <span>{{pedido.jobTitle}}</span>
                 </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.idEstado">Id Estado</span></dt>
-                <dd>
-                    <span>{{pedido.idEstado}}</span>
-                </dd>
                 <dt><span jhiTranslate="multishopApp.pedido.fechaConfirmacion">Fecha Confirmacion</span></dt>
                 <dd>
                     <span>{{pedido.fechaConfirmacion}}</span>
+                </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.modoEnvio">Modo Envio</span></dt>
+                <dd>
+                    <div *ngIf="pedido.modoEnvioId">
+                        <a [routerLink]="['/modo-envio-my-suffix', pedido.modoEnvioId, 'view']">{{pedido.modoEnvioId}}</a>
+                    </div>
                 </dd>
                 <dt><span jhiTranslate="multishopApp.pedido.modoPago">Modo Pago</span></dt>
                 <dd>

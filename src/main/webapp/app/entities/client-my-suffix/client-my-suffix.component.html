@@ -19,7 +19,6 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.idClient">Id Client</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.client.firstName">First Name</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.client.lastName">Last Name</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.client.email">Email</span></th>
@@ -34,13 +33,12 @@
             <tbody>
             <tr *ngFor="let client of clients ;trackBy: trackId">
                 <td><a [routerLink]="['/client-my-suffix', client.id, 'view' ]">{{client.id}}</a></td>
-                <td>{{client.idClient}}</td>
                 <td>{{client.firstName}}</td>
                 <td>{{client.lastName}}</td>
                 <td>{{client.email}}</td>
                 <td>{{client.phoneNumber}}</td>
                 <td>{{client.creationDate | date:'medium'}}</td>
-                <td>{{client.endDate}}</td>
+                <td>{{client.endDate | date:'mediumDate'}}</td>
                 <td>{{client.documentId}}</td>
                 <td jhiTranslate="{{'multishopApp.DocumentType.' + client.documentType}}">{{client.documentType}}</td>
                 <td class="text-right">

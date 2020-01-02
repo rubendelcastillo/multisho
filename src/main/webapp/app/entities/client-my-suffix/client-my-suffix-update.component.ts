@@ -16,10 +16,10 @@ import { ClientMySuffixService } from './client-my-suffix.service';
 })
 export class ClientMySuffixUpdateComponent implements OnInit {
   isSaving = false;
+  endDateDp: any;
 
   editForm = this.fb.group({
     id: [],
-    idClient: [],
     firstName: [],
     lastName: [],
     email: [],
@@ -41,7 +41,6 @@ export class ClientMySuffixUpdateComponent implements OnInit {
   updateForm(client: IClientMySuffix): void {
     this.editForm.patchValue({
       id: client.id,
-      idClient: client.idClient,
       firstName: client.firstName,
       lastName: client.lastName,
       email: client.email,
@@ -71,7 +70,6 @@ export class ClientMySuffixUpdateComponent implements OnInit {
     return {
       ...new ClientMySuffix(),
       id: this.editForm.get(['id'])!.value,
-      idClient: this.editForm.get(['idClient'])!.value,
       firstName: this.editForm.get(['firstName'])!.value,
       lastName: this.editForm.get(['lastName'])!.value,
       email: this.editForm.get(['email'])!.value,

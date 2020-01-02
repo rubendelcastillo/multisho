@@ -1,7 +1,6 @@
 package com.vankas.multishop.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -10,12 +9,6 @@ import java.util.Objects;
 public class PedidoDTO implements Serializable {
 
     private Long id;
-
-    private BigDecimal idPedido;
-
-    private Long idClient;
-
-    private Long idTienda;
 
     private LocalDate fechaPedido;
 
@@ -31,10 +24,10 @@ public class PedidoDTO implements Serializable {
 
     private String jobTitle;
 
-    private Integer idEstado;
-
     private LocalDate fechaConfirmacion;
 
+
+    private Long modoEnvioId;
 
     private Long modoPagoId;
 
@@ -48,30 +41,6 @@ public class PedidoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BigDecimal getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(BigDecimal idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(Long idClient) {
-        this.idClient = idClient;
-    }
-
-    public Long getIdTienda() {
-        return idTienda;
-    }
-
-    public void setIdTienda(Long idTienda) {
-        this.idTienda = idTienda;
     }
 
     public LocalDate getFechaPedido() {
@@ -130,20 +99,20 @@ public class PedidoDTO implements Serializable {
         this.jobTitle = jobTitle;
     }
 
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
     public LocalDate getFechaConfirmacion() {
         return fechaConfirmacion;
     }
 
     public void setFechaConfirmacion(LocalDate fechaConfirmacion) {
         this.fechaConfirmacion = fechaConfirmacion;
+    }
+
+    public Long getModoEnvioId() {
+        return modoEnvioId;
+    }
+
+    public void setModoEnvioId(Long modoEnvioId) {
+        this.modoEnvioId = modoEnvioId;
     }
 
     public Long getModoPagoId() {
@@ -195,9 +164,6 @@ public class PedidoDTO implements Serializable {
     public String toString() {
         return "PedidoDTO{" +
             "id=" + getId() +
-            ", idPedido=" + getIdPedido() +
-            ", idClient=" + getIdClient() +
-            ", idTienda=" + getIdTienda() +
             ", fechaPedido='" + getFechaPedido() + "'" +
             ", fechaNotificacion='" + getFechaNotificacion() + "'" +
             ", idModoPago=" + getIdModoPago() +
@@ -205,8 +171,8 @@ public class PedidoDTO implements Serializable {
             ", gastosEnvio=" + getGastosEnvio() +
             ", idModoEnvio=" + getIdModoEnvio() +
             ", jobTitle='" + getJobTitle() + "'" +
-            ", idEstado=" + getIdEstado() +
             ", fechaConfirmacion='" + getFechaConfirmacion() + "'" +
+            ", modoEnvioId=" + getModoEnvioId() +
             ", modoPagoId=" + getModoPagoId() +
             ", estadoPedidoId=" + getEstadoPedidoId() +
             ", clientId=" + getClientId() +

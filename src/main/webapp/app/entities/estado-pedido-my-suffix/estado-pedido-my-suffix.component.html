@@ -19,7 +19,6 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.estadoPedido.idEstado">Id Estado</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.estadoPedido.descripcion">Descripcion</span></th>
             <th scope="col"></th>
             </tr>
@@ -27,7 +26,6 @@
             <tbody>
             <tr *ngFor="let estadoPedido of estadoPedidos ;trackBy: trackId">
                 <td><a [routerLink]="['/estado-pedido-my-suffix', estadoPedido.id, 'view' ]">{{estadoPedido.id}}</a></td>
-                <td>{{estadoPedido.idEstado}}</td>
                 <td>{{estadoPedido.descripcion}}</td>
                 <td class="text-right">
                     <div class="btn-group">

@@ -24,12 +24,6 @@ public interface PedidoService {
      * @return the list of entities.
      */
     List<PedidoDTO> findAll();
-    /**
-     * Get all the PedidoDTO where ModoEnvio is {@code null}.
-     *
-     * @return the list of entities.
-     */
-    List<PedidoDTO> findAllWhereModoEnvioIsNull();
 
 
     /**

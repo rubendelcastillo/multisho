@@ -19,9 +19,6 @@ public class EstadoPedido implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "id_estado")
-    private Integer idEstado;
-
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -36,19 +33,6 @@ public class EstadoPedido implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public EstadoPedido idEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-        return this;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
     }
 
     public String getDescripcion() {
@@ -98,7 +82,6 @@ public class EstadoPedido implements Serializable {
     public String toString() {
         return "EstadoPedido{" +
             "id=" + getId() +
-            ", idEstado=" + getIdEstado() +
             ", descripcion='" + getDescripcion() + "'" +
             "}";
     }

@@ -45,24 +45,19 @@ entity Client {
 	/**
 	* The firstname attribute.
 	*/
-    idClient Long,
 	firstName String,
 	lastName String,
 	email String,
 	phoneNumber String,
 	creationDate Instant,
-	endDate Long,
+	endDate LocalDate,
 	documentId String,
     documentType DocumentType
 }
 entity ModoPago {
-	idModoPago Integer,
 	descripcion String
 }
 entity Pedido {
-	idPedido BigDecimal,
-    idClient Long,
-    idTienda Long,
     fechaPedido LocalDate,
     fechaNotificacion LocalDate,
     IdModoPago Integer,
@@ -70,7 +65,6 @@ entity Pedido {
 	GastosEnvio Double,
     IdModoEnvio Long,
 	jobTitle String,
-	idEstado Integer,
 	fechaConfirmacion LocalDate
 }
 entity DetallePedido {
@@ -80,7 +74,6 @@ entity DetallePedido {
 	
 }
 entity EstadoPedido {
-	idEstado Integer,
     descripcion String
 
 }
@@ -98,7 +91,7 @@ relationship OneToMany {
 relationship OneToOne {
 	Location{country} to Region,
     Product to DetallePedido,
-    ModoEnvio to Pedido,
+    Pedido to ModoEnvio,
     Pedido to ModoPago,
     Pedido to EstadoPedido
 }

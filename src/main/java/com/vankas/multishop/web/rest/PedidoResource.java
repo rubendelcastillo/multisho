@@ -17,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing {@link com.vankas.multishop.domain.Pedido}.
@@ -83,15 +82,10 @@ public class PedidoResource {
      * {@code GET  /pedidos} : get all the pedidos.
      *
 
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pedidos in body.
      */
     @GetMapping("/pedidos")
-    public List<PedidoDTO> getAllPedidos(@RequestParam(required = false) String filter) {
-        if ("modoenvio-is-null".equals(filter)) {
-            log.debug("REST request to get all Pedidos where modoEnvio is null");
-            return pedidoService.findAllWhereModoEnvioIsNull();
-        }
+    public List<PedidoDTO> getAllPedidos() {
         log.debug("REST request to get all Pedidos");
         return pedidoService.findAll();
     }

@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(ModoPagoMySuffixService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new ModoPagoMySuffix(0, 0, 'AAAAAAA');
+      elemDefault = new ModoPagoMySuffix(0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,7 +56,6 @@ describe('Service Tests', () => {
       it('should update a ModoPagoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idModoPago: 1,
             descripcion: 'BBBBBB'
           },
           elemDefault
@@ -75,7 +74,6 @@ describe('Service Tests', () => {
       it('should return a list of ModoPagoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idModoPago: 1,
             descripcion: 'BBBBBB'
           },
           elemDefault

@@ -19,9 +19,6 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.pedido.idPedido">Id Pedido</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.pedido.idClient">Id Client</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.pedido.idTienda">Id Tienda</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.fechaPedido">Fecha Pedido</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.fechaNotificacion">Fecha Notificacion</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.idModoPago">Id Modo Pago</span></th>
@@ -29,8 +26,8 @@
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.gastosEnvio">Gastos Envio</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.idModoEnvio">Id Modo Envio</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.jobTitle">Job Title</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.pedido.idEstado">Id Estado</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.fechaConfirmacion">Fecha Confirmacion</span></th>
+            <th scope="col" ><span jhiTranslate="multishopApp.pedido.modoEnvio">Modo Envio</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.modoPago">Modo Pago</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.estadoPedido">Estado Pedido</span></th>
             <th scope="col" ><span jhiTranslate="multishopApp.pedido.client">Client</span></th>
@@ -40,9 +37,6 @@
             <tbody>
             <tr *ngFor="let pedido of pedidos ;trackBy: trackId">
                 <td><a [routerLink]="['/pedido-my-suffix', pedido.id, 'view' ]">{{pedido.id}}</a></td>
-                <td>{{pedido.idPedido}}</td>
-                <td>{{pedido.idClient}}</td>
-                <td>{{pedido.idTienda}}</td>
                 <td>{{pedido.fechaPedido | date:'mediumDate'}}</td>
                 <td>{{pedido.fechaNotificacion | date:'mediumDate'}}</td>
                 <td>{{pedido.idModoPago}}</td>
@@ -50,8 +44,12 @@
                 <td>{{pedido.gastosEnvio}}</td>
                 <td>{{pedido.idModoEnvio}}</td>
                 <td>{{pedido.jobTitle}}</td>
-                <td>{{pedido.idEstado}}</td>
                 <td>{{pedido.fechaConfirmacion | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="pedido.modoEnvioId">
+                        <a [routerLink]="['/modo-envio-my-suffix', pedido.modoEnvioId , 'view' ]" >{{pedido.modoEnvioId}}</a>
+                    </div>
+                </td>
                 <td>
                     <div *ngIf="pedido.modoPagoId">
                         <a [routerLink]="['/modo-pago-my-suffix', pedido.modoPagoId , 'view' ]" >{{pedido.modoPagoId}}</a>

@@ -1,4 +1,5 @@
 package com.vankas.multishop.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -23,8 +24,8 @@ public class ModoEnvio implements Serializable {
     @Column(name = "modo_envio", nullable = false)
     private String modoEnvio;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @OneToOne(mappedBy = "modoEnvio")
+    @JsonIgnore
     private Pedido pedido;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -9,8 +9,6 @@ public class ModoPagoDTO implements Serializable {
 
     private Long id;
 
-    private Integer idModoPago;
-
     private String descripcion;
 
 
@@ -20,14 +18,6 @@ public class ModoPagoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getIdModoPago() {
-        return idModoPago;
-    }
-
-    public void setIdModoPago(Integer idModoPago) {
-        this.idModoPago = idModoPago;
     }
 
     public String getDescripcion() {
@@ -63,7 +53,6 @@ public class ModoPagoDTO implements Serializable {
     public String toString() {
         return "ModoPagoDTO{" +
             "id=" + getId() +
-            ", idModoPago=" + getIdModoPago() +
             ", descripcion='" + getDescripcion() + "'" +
             "}";
     }

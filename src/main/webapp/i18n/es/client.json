@@ -16,7 +16,6 @@
       "detail": {
         "title": "Client"
       },
-      "idClient": "Id Client",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",
@@ -28,7 +27,7 @@
       "country": "Country",
       "idClient": "Id Client",
       "help": {
-        "idClient": "The firstname attribute."
+        "firstName": "The firstname attribute."
       }
     }
   }

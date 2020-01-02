@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(EstadoPedidoMySuffixService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new EstadoPedidoMySuffix(0, 0, 'AAAAAAA');
+      elemDefault = new EstadoPedidoMySuffix(0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,7 +56,6 @@ describe('Service Tests', () => {
       it('should update a EstadoPedidoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idEstado: 1,
             descripcion: 'BBBBBB'
           },
           elemDefault
@@ -75,7 +74,6 @@ describe('Service Tests', () => {
       it('should return a list of EstadoPedidoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idEstado: 1,
             descripcion: 'BBBBBB'
           },
           elemDefault

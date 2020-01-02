@@ -36,9 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = MultishopApp.class)
 public class EstadoPedidoResourceIT {
 
-    private static final Integer DEFAULT_ID_ESTADO = 1;
-    private static final Integer UPDATED_ID_ESTADO = 2;
-
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
@@ -90,7 +87,6 @@ public class EstadoPedidoResourceIT {
      */
     public static EstadoPedido createEntity(EntityManager em) {
         EstadoPedido estadoPedido = new EstadoPedido()
-            .idEstado(DEFAULT_ID_ESTADO)
             .descripcion(DEFAULT_DESCRIPCION);
         return estadoPedido;
     }
@@ -102,7 +98,6 @@ public class EstadoPedidoResourceIT {
      */
     public static EstadoPedido createUpdatedEntity(EntityManager em) {
         EstadoPedido estadoPedido = new EstadoPedido()
-            .idEstado(UPDATED_ID_ESTADO)
             .descripcion(UPDATED_DESCRIPCION);
         return estadoPedido;
     }
@@ -128,7 +123,6 @@ public class EstadoPedidoResourceIT {
         List<EstadoPedido> estadoPedidoList = estadoPedidoRepository.findAll();
         assertThat(estadoPedidoList).hasSize(databaseSizeBeforeCreate + 1);
         EstadoPedido testEstadoPedido = estadoPedidoList.get(estadoPedidoList.size() - 1);
-        assertThat(testEstadoPedido.getIdEstado()).isEqualTo(DEFAULT_ID_ESTADO);
         assertThat(testEstadoPedido.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
@@ -164,7 +158,6 @@ public class EstadoPedidoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(estadoPedido.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idEstado").value(hasItem(DEFAULT_ID_ESTADO)))
             .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
     
@@ -179,7 +172,6 @@ public class EstadoPedidoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(estadoPedido.getId().intValue()))
-            .andExpect(jsonPath("$.idEstado").value(DEFAULT_ID_ESTADO))
             .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
@@ -204,7 +196,6 @@ public class EstadoPedidoResourceIT {
         // Disconnect from session so that the updates on updatedEstadoPedido are not directly saved in db
         em.detach(updatedEstadoPedido);
         updatedEstadoPedido
-            .idEstado(UPDATED_ID_ESTADO)
             .descripcion(UPDATED_DESCRIPCION);
         EstadoPedidoDTO estadoPedidoDTO = estadoPedidoMapper.toDto(updatedEstadoPedido);
 
@@ -217,7 +208,6 @@ public class EstadoPedidoResourceIT {
         List<EstadoPedido> estadoPedidoList = estadoPedidoRepository.findAll();
         assertThat(estadoPedidoList).hasSize(databaseSizeBeforeUpdate);
         EstadoPedido testEstadoPedido = estadoPedidoList.get(estadoPedidoList.size() - 1);
-        assertThat(testEstadoPedido.getIdEstado()).isEqualTo(UPDATED_ID_ESTADO);
         assertThat(testEstadoPedido.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 

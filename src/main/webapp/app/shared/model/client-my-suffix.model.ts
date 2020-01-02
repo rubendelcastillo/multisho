@@ -5,13 +5,12 @@ import { DocumentType } from 'app/shared/model/enumerations/document-type.model'
 
 export interface IClientMySuffix {
   id?: number;
-  idClient?: number;
   firstName?: string;
   lastName?: string;
   email?: string;
   phoneNumber?: string;
   creationDate?: Moment;
-  endDate?: number;
+  endDate?: Moment;
   documentId?: string;
   documentType?: DocumentType;
   countries?: ILocationMySuffix[];
@@ -21,13 +20,12 @@ export interface IClientMySuffix {
 export class ClientMySuffix implements IClientMySuffix {
   constructor(
     public id?: number,
-    public idClient?: number,
     public firstName?: string,
     public lastName?: string,
     public email?: string,
     public phoneNumber?: string,
     public creationDate?: Moment,
-    public endDate?: number,
+    public endDate?: Moment,
     public documentId?: string,
     public documentType?: DocumentType,
     public countries?: ILocationMySuffix[],

@@ -8,6 +8,12 @@
     -->
     <changeSet id="20191231080343-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="modo_envio_id"
+                                 baseTableName="pedido"
+                                 constraintName="fk_pedido_modo_envio_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modo_envio"/>
+
         <addForeignKeyConstraint baseColumnNames="modo_pago_id"
                                  baseTableName="pedido"
                                  constraintName="fk_pedido_modo_pago_id"

@@ -1,11 +1,9 @@
 package com.vankas.multishop.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,15 +21,6 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @Column(name = "id_pedido", precision = 21, scale = 2)
-    private BigDecimal idPedido;
-
-    @Column(name = "id_client")
-    private Long idClient;
-
-    @Column(name = "id_tienda")
-    private Long idTienda;
 
     @Column(name = "fecha_pedido")
     private LocalDate fechaPedido;
@@ -54,11 +43,12 @@ public class Pedido implements Serializable {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @Column(name = "id_estado")
-    private Integer idEstado;
-
     @Column(name = "fecha_confirmacion")
     private LocalDate fechaConfirmacion;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ModoEnvio modoEnvio;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -71,10 +61,6 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "pedido")
     private Set<DetallePedido> idPedidos = new HashSet<>();
 
-    @OneToOne(mappedBy = "pedido")
-    @JsonIgnore
-    private ModoEnvio modoEnvio;
-
     @ManyToOne
     @JsonIgnoreProperties("idClients")
     private Client client;
@@ -86,45 +72,6 @@ public class Pedido implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BigDecimal getIdPedido() {
-        return idPedido;
-    }
-
-    public Pedido idPedido(BigDecimal idPedido) {
-        this.idPedido = idPedido;
-        return this;
-    }
-
-    public void setIdPedido(BigDecimal idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Long getIdClient() {
-        return idClient;
-    }
-
-    public Pedido idClient(Long idClient) {
-        this.idClient = idClient;
-        return this;
-    }
-
-    public void setIdClient(Long idClient) {
-        this.idClient = idClient;
-    }
-
-    public Long getIdTienda() {
-        return idTienda;
-    }
-
-    public Pedido idTienda(Long idTienda) {
-        this.idTienda = idTienda;
-        return this;
-    }
-
-    public void setIdTienda(Long idTienda) {
-        this.idTienda = idTienda;
     }
 
     public LocalDate getFechaPedido() {
@@ -218,19 +165,6 @@ public class Pedido implements Serializable {
         this.jobTitle = jobTitle;
     }
 
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public Pedido idEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-        return this;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
     public LocalDate getFechaConfirmacion() {
         return fechaConfirmacion;
     }
@@ -242,6 +176,19 @@ public class Pedido implements Serializable {
 
     public void setFechaConfirmacion(LocalDate fechaConfirmacion) {
         this.fechaConfirmacion = fechaConfirmacion;
+    }
+
+    public ModoEnvio getModoEnvio() {
+        return modoEnvio;
+    }
+
+    public Pedido modoEnvio(ModoEnvio modoEnvio) {
+        this.modoEnvio = modoEnvio;
+        return this;
+    }
+
+    public void setModoEnvio(ModoEnvio modoEnvio) {
+        this.modoEnvio = modoEnvio;
     }
 
     public ModoPago getModoPago() {
@@ -295,19 +242,6 @@ public class Pedido implements Serializable {
         this.idPedidos = detallePedidos;
     }
 
-    public ModoEnvio getModoEnvio() {
-        return modoEnvio;
-    }
-
-    public Pedido modoEnvio(ModoEnvio modoEnvio) {
-        this.modoEnvio = modoEnvio;
-        return this;
-    }
-
-    public void setModoEnvio(ModoEnvio modoEnvio) {
-        this.modoEnvio = modoEnvio;
-    }
-
     public Client getClient() {
         return client;
     }
@@ -342,9 +276,6 @@ public class Pedido implements Serializable {
     public String toString() {
         return "Pedido{" +
             "id=" + getId() +
-            ", idPedido=" + getIdPedido() +
-            ", idClient=" + getIdClient() +
-            ", idTienda=" + getIdTienda() +
             ", fechaPedido='" + getFechaPedido() + "'" +
             ", fechaNotificacion='" + getFechaNotificacion() + "'" +
             ", idModoPago=" + getIdModoPago() +
@@ -352,7 +283,6 @@ public class Pedido implements Serializable {
             ", gastosEnvio=" + getGastosEnvio() +
             ", idModoEnvio=" + getIdModoEnvio() +
             ", jobTitle='" + getJobTitle() + "'" +
-            ", idEstado=" + getIdEstado() +
             ", fechaConfirmacion='" + getFechaConfirmacion() + "'" +
             "}";
     }

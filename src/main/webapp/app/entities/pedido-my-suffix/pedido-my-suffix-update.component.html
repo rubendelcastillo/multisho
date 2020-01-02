@@ -10,21 +10,6 @@
                         readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idPedido" for="field_idPedido">Id Pedido</label>
-                    <input type="number" class="form-control" name="idPedido" id="field_idPedido"
-                           formControlName="idPedido"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idClient" for="field_idClient">Id Client</label>
-                    <input type="number" class="form-control" name="idClient" id="field_idClient"
-                           formControlName="idClient"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idTienda" for="field_idTienda">Id Tienda</label>
-                    <input type="number" class="form-control" name="idTienda" id="field_idTienda"
-                           formControlName="idTienda"/>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.fechaPedido" for="field_fechaPedido">Fecha Pedido</label>
                     <div class="input-group">
                         <input id="field_fechaPedido" type="text" class="form-control" name="fechaPedido" ngbDatepicker  #fechaPedidoDp="ngbDatepicker" formControlName="fechaPedido"/>
@@ -68,11 +53,6 @@
                            formControlName="jobTitle"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.idEstado" for="field_idEstado">Id Estado</label>
-                    <input type="number" class="form-control" name="idEstado" id="field_idEstado"
-                           formControlName="idEstado"/>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.fechaConfirmacion" for="field_fechaConfirmacion">Fecha Confirmacion</label>
                     <div class="input-group">
                         <input id="field_fechaConfirmacion" type="text" class="form-control" name="fechaConfirmacion" ngbDatepicker  #fechaConfirmacionDp="ngbDatepicker" formControlName="fechaConfirmacion"/>
@@ -82,6 +62,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.modoEnvio" for="field_modoEnvio">Modo Envio</label>
+                    <select class="form-control" id="field_modoEnvio" name="modoEnvio" formControlName="modoEnvioId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="modoEnvioOption.id" *ngFor="let modoEnvioOption of modoenvios; trackBy: trackById">{{modoEnvioOption.id}}</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.modoPago" for="field_modoPago">Modo Pago</label>
                     <select class="form-control" id="field_modoPago" name="modoPago" formControlName="modoPagoId">

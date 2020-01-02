@@ -9,12 +9,6 @@
                 <dd>
                     <span>{{modoEnvio.modoEnvio}}</span>
                 </dd>
-                <dt><span jhiTranslate="multishopApp.modoEnvio.pedido">Pedido</span></dt>
-                <dd>
-                    <div *ngIf="modoEnvio.pedidoId">
-                        <a [routerLink]="['/pedido-my-suffix', modoEnvio.pedidoId, 'view']">{{modoEnvio.pedidoId}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new PedidoMySuffix(0, 0, 0, 0, currentDate, currentDate, 0, 0, 0, 0, 'AAAAAAA', 0, currentDate);
+      elemDefault = new PedidoMySuffix(0, currentDate, currentDate, 0, 0, 0, 0, 'AAAAAAA', currentDate);
     });
 
     describe('Service methods', () => {
@@ -77,9 +77,6 @@ describe('Service Tests', () => {
       it('should update a PedidoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idPedido: 1,
-            idClient: 1,
-            idTienda: 1,
             fechaPedido: currentDate.format(DATE_FORMAT),
             fechaNotificacion: currentDate.format(DATE_FORMAT),
             idModoPago: 1,
@@ -87,7 +84,6 @@ describe('Service Tests', () => {
             gastosEnvio: 1,
             idModoEnvio: 1,
             jobTitle: 'BBBBBB',
-            idEstado: 1,
             fechaConfirmacion: currentDate.format(DATE_FORMAT)
           },
           elemDefault
@@ -113,9 +109,6 @@ describe('Service Tests', () => {
       it('should return a list of PedidoMySuffix', () => {
         const returnedFromService = Object.assign(
           {
-            idPedido: 1,
-            idClient: 1,
-            idTienda: 1,
             fechaPedido: currentDate.format(DATE_FORMAT),
             fechaNotificacion: currentDate.format(DATE_FORMAT),
             idModoPago: 1,
@@ -123,7 +116,6 @@ describe('Service Tests', () => {
             gastosEnvio: 1,
             idModoEnvio: 1,
             jobTitle: 'BBBBBB',
-            idEstado: 1,
             fechaConfirmacion: currentDate.format(DATE_FORMAT)
           },
           elemDefault
