@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link LocationResource} REST controller.
+ * Integration tests for the {@Link LocationResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class LocationResourceIT {
@@ -212,16 +212,16 @@ public class LocationResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue())))
-            .andExpect(jsonPath("$.[*].streetAddress").value(hasItem(DEFAULT_STREET_ADDRESS)))
-            .andExpect(jsonPath("$.[*].complementaryInfo").value(hasItem(DEFAULT_COMPLEMENTARY_INFO)))
-            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER)))
-            .andExpect(jsonPath("$.[*].mainDoor").value(hasItem(DEFAULT_MAIN_DOOR)))
-            .andExpect(jsonPath("$.[*].flatDoor").value(hasItem(DEFAULT_FLAT_DOOR)))
-            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL)))
-            .andExpect(jsonPath("$.[*].stair").value(hasItem(DEFAULT_STAIR)))
-            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE)))
-            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
-            .andExpect(jsonPath("$.[*].stateProvince").value(hasItem(DEFAULT_STATE_PROVINCE)));
+            .andExpect(jsonPath("$.[*].streetAddress").value(hasItem(DEFAULT_STREET_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].complementaryInfo").value(hasItem(DEFAULT_COMPLEMENTARY_INFO.toString())))
+            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].mainDoor").value(hasItem(DEFAULT_MAIN_DOOR.toString())))
+            .andExpect(jsonPath("$.[*].flatDoor").value(hasItem(DEFAULT_FLAT_DOOR.toString())))
+            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL.toString())))
+            .andExpect(jsonPath("$.[*].stair").value(hasItem(DEFAULT_STAIR.toString())))
+            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE.toString())))
+            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
+            .andExpect(jsonPath("$.[*].stateProvince").value(hasItem(DEFAULT_STATE_PROVINCE.toString())));
     }
     
     @Test
@@ -235,16 +235,16 @@ public class LocationResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(location.getId().intValue()))
-            .andExpect(jsonPath("$.streetAddress").value(DEFAULT_STREET_ADDRESS))
-            .andExpect(jsonPath("$.complementaryInfo").value(DEFAULT_COMPLEMENTARY_INFO))
-            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER))
-            .andExpect(jsonPath("$.mainDoor").value(DEFAULT_MAIN_DOOR))
-            .andExpect(jsonPath("$.flatDoor").value(DEFAULT_FLAT_DOOR))
-            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL))
-            .andExpect(jsonPath("$.stair").value(DEFAULT_STAIR))
-            .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE))
-            .andExpect(jsonPath("$.city").value(DEFAULT_CITY))
-            .andExpect(jsonPath("$.stateProvince").value(DEFAULT_STATE_PROVINCE));
+            .andExpect(jsonPath("$.streetAddress").value(DEFAULT_STREET_ADDRESS.toString()))
+            .andExpect(jsonPath("$.complementaryInfo").value(DEFAULT_COMPLEMENTARY_INFO.toString()))
+            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()))
+            .andExpect(jsonPath("$.mainDoor").value(DEFAULT_MAIN_DOOR.toString()))
+            .andExpect(jsonPath("$.flatDoor").value(DEFAULT_FLAT_DOOR.toString()))
+            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL.toString()))
+            .andExpect(jsonPath("$.stair").value(DEFAULT_STAIR.toString()))
+            .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE.toString()))
+            .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
+            .andExpect(jsonPath("$.stateProvince").value(DEFAULT_STATE_PROVINCE.toString()));
     }
 
     @Test
@@ -336,5 +336,43 @@ public class LocationResourceIT {
         // Validate the database contains one less item
         List<Location> locationList = locationRepository.findAll();
         assertThat(locationList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Location.class);
+        Location location1 = new Location();
+        location1.setId(1L);
+        Location location2 = new Location();
+        location2.setId(location1.getId());
+        assertThat(location1).isEqualTo(location2);
+        location2.setId(2L);
+        assertThat(location1).isNotEqualTo(location2);
+        location1.setId(null);
+        assertThat(location1).isNotEqualTo(location2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(LocationDTO.class);
+        LocationDTO locationDTO1 = new LocationDTO();
+        locationDTO1.setId(1L);
+        LocationDTO locationDTO2 = new LocationDTO();
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+        locationDTO2.setId(locationDTO1.getId());
+        assertThat(locationDTO1).isEqualTo(locationDTO2);
+        locationDTO2.setId(2L);
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+        locationDTO1.setId(null);
+        assertThat(locationDTO1).isNotEqualTo(locationDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(locationMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(locationMapper.fromId(null)).isNull();
     }
 }

@@ -16,21 +16,20 @@
     ],
     "relationships": [
         {
+            "relationshipName": "pedido",
+            "otherEntityName": "pedido",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
             "relationshipType": "one-to-one",
             "otherEntityName": "product",
             "otherEntityRelationshipName": "detallePedido",
             "relationshipName": "product",
             "ownerSide": false
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "pedido",
-            "otherEntityRelationshipName": "idPedido",
-            "relationshipName": "pedido",
-            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191231080344",
+    "changelogDate": "20200103191128",
     "entityTableName": "detalle_pedido",
     "dto": "mapstruct",
     "pagination": "no",

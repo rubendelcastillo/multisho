@@ -5,7 +5,7 @@
         "title": "Pedidos",
         "createLabel": "Crear nuevo Pedido",
         "createOrEditLabel": "Crear o editar Pedido",
-        "notFound": "Ningún Pedidos encontrado"
+        "notFound": "No Pedido found"
       },
       "created": "Un nuevo Pedido ha sido creado con el identificador {{ param }}",
       "updated": "Un Pedido ha sido actualizado con el identificador {{ param }}",
@@ -24,11 +24,11 @@
       "idModoEnvio": "Id Modo Envio",
       "jobTitle": "Job Title",
       "fechaConfirmacion": "Fecha Confirmacion",
+      "client": "Client",
       "modoEnvio": "Modo Envio",
       "modoPago": "Modo Pago",
       "estadoPedido": "Estado Pedido",
-      "idPedido": "Id Pedido",
-      "client": "Client"
+      "idPedido": "Id Pedido"
     }
   }
 }

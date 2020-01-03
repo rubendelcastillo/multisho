@@ -29,13 +29,13 @@ public class DetallePedido implements Serializable {
     @Column(name = "precio_compra")
     private Double precioCompra;
 
+    @ManyToOne
+    @JsonIgnoreProperties("detallePedidos")
+    private Pedido pedido;
+
     @OneToOne(mappedBy = "detallePedido")
     @JsonIgnore
     private Product product;
-
-    @ManyToOne
-    @JsonIgnoreProperties("idPedidos")
-    private Pedido pedido;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -85,19 +85,6 @@ public class DetallePedido implements Serializable {
         this.precioCompra = precioCompra;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public DetallePedido product(Product product) {
-        this.product = product;
-        return this;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public Pedido getPedido() {
         return pedido;
     }
@@ -109,6 +96,19 @@ public class DetallePedido implements Serializable {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public DetallePedido product(Product product) {
+        this.product = product;
+        return this;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

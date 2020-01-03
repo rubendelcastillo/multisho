@@ -1,30 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { filter, map } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 import { ILocationMySuffix, LocationMySuffix } from 'app/shared/model/location-my-suffix.model';
 import { LocationMySuffixService } from './location-my-suffix.service';
 import { IRegionMySuffix } from 'app/shared/model/region-my-suffix.model';
-import { RegionMySuffixService } from 'app/entities/region-my-suffix/region-my-suffix.service';
+import { RegionMySuffixService } from 'app/entities/region-my-suffix';
 import { IClientMySuffix } from 'app/shared/model/client-my-suffix.model';
-import { ClientMySuffixService } from 'app/entities/client-my-suffix/client-my-suffix.service';
-
-type SelectableEntity = IRegionMySuffix | IClientMySuffix;
+import { ClientMySuffixService } from 'app/entities/client-my-suffix';
 
 @Component({
   selector: 'jhi-location-my-suffix-update',
   templateUrl: './location-my-suffix-update.component.html'
 })
 export class LocationMySuffixUpdateComponent implements OnInit {
-  isSaving = false;
+  isSaving: boolean;
 
-  countries: IRegionMySuffix[] = [];
+  countries: IRegionMySuffix[];
 
-  clients: IClientMySuffix[] = [];
+  clients: IClientMySuffix[];
 
   editForm = this.fb.group({
     id: [],
@@ -43,6 +40,7 @@ export class LocationMySuffixUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected jhiAlertService: JhiAlertService,
     protected locationService: LocationMySuffixService,
     protected regionService: RegionMySuffixService,
     protected clientService: ClientMySuffixService,
@@ -50,46 +48,46 @@ export class LocationMySuffixUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isSaving = false;
     this.activatedRoute.data.subscribe(({ location }) => {
       this.updateForm(location);
-
-      this.regionService
-        .query({ filter: 'location-is-null' })
-        .pipe(
-          map((res: HttpResponse<IRegionMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IRegionMySuffix[]) => {
-          if (!location.countryId) {
-            this.countries = resBody;
+    });
+    this.regionService
+      .query({ filter: 'location-is-null' })
+      .pipe(
+        filter((mayBeOk: HttpResponse<IRegionMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IRegionMySuffix[]>) => response.body)
+      )
+      .subscribe(
+        (res: IRegionMySuffix[]) => {
+          if (!!this.editForm.get('countryId').value) {
+            this.countries = res;
           } else {
             this.regionService
-              .find(location.countryId)
+              .find(this.editForm.get('countryId').value)
               .pipe(
-                map((subRes: HttpResponse<IRegionMySuffix>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
+                filter((subResMayBeOk: HttpResponse<IRegionMySuffix>) => subResMayBeOk.ok),
+                map((subResponse: HttpResponse<IRegionMySuffix>) => subResponse.body)
               )
-              .subscribe((concatRes: IRegionMySuffix[]) => {
-                this.countries = concatRes;
-              });
+              .subscribe(
+                (subRes: IRegionMySuffix) => (this.countries = [subRes].concat(res)),
+                (subRes: HttpErrorResponse) => this.onError(subRes.message)
+              );
           }
-        });
-
-      this.clientService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IClientMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IClientMySuffix[]) => (this.clients = resBody));
-    });
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    this.clientService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IClientMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IClientMySuffix[]>) => response.body)
+      )
+      .subscribe((res: IClientMySuffix[]) => (this.clients = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(location: ILocationMySuffix): void {
+  updateForm(location: ILocationMySuffix) {
     this.editForm.patchValue({
       id: location.id,
       streetAddress: location.streetAddress,
@@ -107,11 +105,11 @@ export class LocationMySuffixUpdateComponent implements OnInit {
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 
-  save(): void {
+  save() {
     this.isSaving = true;
     const location = this.createFromForm();
     if (location.id !== undefined) {
@@ -124,39 +122,43 @@ export class LocationMySuffixUpdateComponent implements OnInit {
   private createFromForm(): ILocationMySuffix {
     return {
       ...new LocationMySuffix(),
-      id: this.editForm.get(['id'])!.value,
-      streetAddress: this.editForm.get(['streetAddress'])!.value,
-      complementaryInfo: this.editForm.get(['complementaryInfo'])!.value,
-      number: this.editForm.get(['number'])!.value,
-      mainDoor: this.editForm.get(['mainDoor'])!.value,
-      flatDoor: this.editForm.get(['flatDoor'])!.value,
-      level: this.editForm.get(['level'])!.value,
-      stair: this.editForm.get(['stair'])!.value,
-      postalCode: this.editForm.get(['postalCode'])!.value,
-      city: this.editForm.get(['city'])!.value,
-      stateProvince: this.editForm.get(['stateProvince'])!.value,
-      countryId: this.editForm.get(['countryId'])!.value,
-      clientId: this.editForm.get(['clientId'])!.value
+      id: this.editForm.get(['id']).value,
+      streetAddress: this.editForm.get(['streetAddress']).value,
+      complementaryInfo: this.editForm.get(['complementaryInfo']).value,
+      number: this.editForm.get(['number']).value,
+      mainDoor: this.editForm.get(['mainDoor']).value,
+      flatDoor: this.editForm.get(['flatDoor']).value,
+      level: this.editForm.get(['level']).value,
+      stair: this.editForm.get(['stair']).value,
+      postalCode: this.editForm.get(['postalCode']).value,
+      city: this.editForm.get(['city']).value,
+      stateProvince: this.editForm.get(['stateProvince']).value,
+      countryId: this.editForm.get(['countryId']).value,
+      clientId: this.editForm.get(['clientId']).value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILocationMySuffix>>): void {
-    result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILocationMySuffix>>) {
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess() {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError(): void {
+  protected onSaveError() {
     this.isSaving = false;
   }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackRegionById(index: number, item: IRegionMySuffix) {
+    return item.id;
+  }
+
+  trackClientById(index: number, item: IClientMySuffix) {
     return item.id;
   }
 }

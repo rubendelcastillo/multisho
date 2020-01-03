@@ -4,7 +4,7 @@
             <h2 id="jhi-location-my-suffix-heading" jhiTranslate="multishopApp.location.home.createOrEditLabel">Create or edit a Location</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
                         readonly />
@@ -64,14 +64,14 @@
                     <label class="form-control-label" jhiTranslate="multishopApp.location.country" for="field_country">Country</label>
                     <select class="form-control" id="field_country" name="country" formControlName="countryId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="regionOption.id" *ngFor="let regionOption of countries; trackBy: trackById">{{regionOption.id}}</option>
+                        <option [ngValue]="regionOption.id" *ngFor="let regionOption of countries; trackBy: trackRegionById">{{regionOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.location.client" for="field_client">Client</label>
                     <select class="form-control" id="field_client" name="client" formControlName="clientId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackById">{{clientOption.id}}</option>
+                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackClientById">{{clientOption.id}}</option>
                     </select>
                 </div>
             </div>

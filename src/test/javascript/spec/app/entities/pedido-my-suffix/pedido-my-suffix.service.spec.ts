@@ -1,5 +1,8 @@
+/* tslint:disable max-line-length */
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
@@ -12,13 +15,13 @@ describe('Service Tests', () => {
     let service: PedidoMySuffixService;
     let httpMock: HttpTestingController;
     let elemDefault: IPedidoMySuffix;
-    let expectedResult: IPedidoMySuffix | IPedidoMySuffix[] | boolean | null;
+    let expectedResult;
     let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-      expectedResult = null;
+      expectedResult = {};
       injector = getTestBed();
       service = injector.get(PedidoMySuffixService);
       httpMock = injector.get(HttpTestingController);
@@ -28,7 +31,7 @@ describe('Service Tests', () => {
     });
 
     describe('Service methods', () => {
-      it('should find an element', () => {
+      it('should find an element', async () => {
         const returnedFromService = Object.assign(
           {
             fechaPedido: currentDate.format(DATE_FORMAT),
@@ -40,14 +43,14 @@ describe('Service Tests', () => {
         service
           .find(123)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+          .subscribe(resp => (expectedResult = resp));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject(elemDefault);
+        expect(expectedResult).toMatchObject({ body: elemDefault });
       });
 
-      it('should create a PedidoMySuffix', () => {
+      it('should create a PedidoMySuffix', async () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
@@ -66,15 +69,15 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .create(new PedidoMySuffix())
+          .create(new PedidoMySuffix(null))
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+          .subscribe(resp => (expectedResult = resp));
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject(expected);
+        expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should update a PedidoMySuffix', () => {
+      it('should update a PedidoMySuffix', async () => {
         const returnedFromService = Object.assign(
           {
             fechaPedido: currentDate.format(DATE_FORMAT),
@@ -100,13 +103,13 @@ describe('Service Tests', () => {
         service
           .update(expected)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp.body));
+          .subscribe(resp => (expectedResult = resp));
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject(expected);
+        expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should return a list of PedidoMySuffix', () => {
+      it('should return a list of PedidoMySuffix', async () => {
         const returnedFromService = Object.assign(
           {
             fechaPedido: currentDate.format(DATE_FORMAT),
@@ -129,7 +132,7 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .query()
+          .query(expected)
           .pipe(
             take(1),
             map(resp => resp.body)
@@ -141,8 +144,8 @@ describe('Service Tests', () => {
         expect(expectedResult).toContainEqual(expected);
       });
 
-      it('should delete a PedidoMySuffix', () => {
-        service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      it('should delete a PedidoMySuffix', async () => {
+        const rxPromise = service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
         const req = httpMock.expectOne({ method: 'DELETE' });
         req.flush({ status: 200 });

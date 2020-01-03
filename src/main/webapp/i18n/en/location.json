@@ -5,7 +5,7 @@
         "title": "Locations",
         "createLabel": "Create a new Location",
         "createOrEditLabel": "Create or edit a Location",
-        "notFound": "No Locations found"
+        "notFound": "No Location found"
       },
       "created": "A new Location is created with identifier {{ param }}",
       "updated": "A Location is updated with identifier {{ param }}",

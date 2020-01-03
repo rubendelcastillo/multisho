@@ -8,17 +8,17 @@ import { IClientMySuffix } from 'app/shared/model/client-my-suffix.model';
   templateUrl: './client-my-suffix-detail.component.html'
 })
 export class ClientMySuffixDetailComponent implements OnInit {
-  client: IClientMySuffix | null = null;
+  client: IClientMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ client }) => {
       this.client = client;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

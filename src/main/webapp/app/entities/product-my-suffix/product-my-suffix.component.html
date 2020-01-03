@@ -4,27 +4,26 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-my-suffix" [routerLink]="['/product-my-suffix/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="multishopApp.product.home.createLabel">
-            Create a new Product
+            Create new Product
             </span>
         </button>
     </h2>
-    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="products?.length === 0">
         <span jhiTranslate="multishopApp.product.home.notFound">No products found</span>
     </div>
     <div class="table-responsive" *ngIf="products?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-striped">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="title"><span jhiTranslate="multishopApp.product.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="description"><span jhiTranslate="multishopApp.product.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="stock"><span jhiTranslate="multishopApp.product.stock">Stock</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="precioConIva"><span jhiTranslate="multishopApp.product.precioConIva">Precio Con Iva</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="detallePedidoId"><span jhiTranslate="multishopApp.product.detallePedido">Detalle Pedido</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="title"><span jhiTranslate="multishopApp.product.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="multishopApp.product.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="stock"><span jhiTranslate="multishopApp.product.stock">Stock</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="precioConIva"><span jhiTranslate="multishopApp.product.precioConIva">Precio Con Iva</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="detallePedidoId"><span jhiTranslate="multishopApp.product.detallePedido">Detalle Pedido</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +35,7 @@
                 <td>{{product.precioConIva}}</td>
                 <td>
                     <div *ngIf="product.detallePedidoId">
-                        <a [routerLink]="['/detalle-pedido-my-suffix', product.detallePedidoId , 'view' ]" >{{product.detallePedidoId}}</a>
+                        <a [routerLink]="['../detalle-pedido-my-suffix', product.detallePedidoId , 'view' ]" >{{product.detallePedidoId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -53,7 +52,10 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit" (click)="delete(product)"
+                        <button type="submit"
+                                [routerLink]="['/', 'product-my-suffix', { outlets: { popup: product.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
@@ -64,12 +66,12 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="products?.length > 0">
+    <div [hidden]="products?.length === 0">
         <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
     </div>
 </div>

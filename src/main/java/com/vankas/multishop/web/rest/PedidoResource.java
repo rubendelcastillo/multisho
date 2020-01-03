@@ -81,7 +81,6 @@ public class PedidoResource {
     /**
      * {@code GET  /pedidos} : get all the pedidos.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pedidos in body.
      */
     @GetMapping("/pedidos")

@@ -82,7 +82,6 @@ public class DetallePedidoResource {
     /**
      * {@code GET  /detalle-pedidos} : get all the detallePedidos.
      *
-
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of detallePedidos in body.
      */

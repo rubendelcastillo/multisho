@@ -4,7 +4,7 @@
             <h2 id="jhi-pedido-my-suffix-heading" jhiTranslate="multishopApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
                         readonly />
@@ -63,31 +63,31 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.client" for="field_client">Client</label>
+                    <select class="form-control" id="field_client" name="client" formControlName="clientId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackClientById">{{clientOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.modoEnvio" for="field_modoEnvio">Modo Envio</label>
                     <select class="form-control" id="field_modoEnvio" name="modoEnvio" formControlName="modoEnvioId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="modoEnvioOption.id" *ngFor="let modoEnvioOption of modoenvios; trackBy: trackById">{{modoEnvioOption.id}}</option>
+                        <option [ngValue]="modoEnvioOption.id" *ngFor="let modoEnvioOption of modoenvios; trackBy: trackModoEnvioById">{{modoEnvioOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.modoPago" for="field_modoPago">Modo Pago</label>
                     <select class="form-control" id="field_modoPago" name="modoPago" formControlName="modoPagoId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="modoPagoOption.id" *ngFor="let modoPagoOption of modopagos; trackBy: trackById">{{modoPagoOption.id}}</option>
+                        <option [ngValue]="modoPagoOption.id" *ngFor="let modoPagoOption of modopagos; trackBy: trackModoPagoById">{{modoPagoOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="multishopApp.pedido.estadoPedido" for="field_estadoPedido">Estado Pedido</label>
                     <select class="form-control" id="field_estadoPedido" name="estadoPedido" formControlName="estadoPedidoId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="estadoPedidoOption.id" *ngFor="let estadoPedidoOption of estadopedidos; trackBy: trackById">{{estadoPedidoOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="multishopApp.pedido.client" for="field_client">Client</label>
-                    <select class="form-control" id="field_client" name="client" formControlName="clientId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackById">{{clientOption.id}}</option>
+                        <option [ngValue]="estadoPedidoOption.id" *ngFor="let estadoPedidoOption of estadopedidos; trackBy: trackEstadoPedidoById">{{estadoPedidoOption.id}}</option>
                     </select>
                 </div>
             </div>

@@ -46,6 +46,10 @@ public class Pedido implements Serializable {
     @Column(name = "fecha_confirmacion")
     private LocalDate fechaConfirmacion;
 
+    @ManyToOne
+    @JsonIgnoreProperties("pedidos")
+    private Client client;
+
     @OneToOne
     @JoinColumn(unique = true)
     private ModoEnvio modoEnvio;
@@ -60,10 +64,6 @@ public class Pedido implements Serializable {
 
     @OneToMany(mappedBy = "pedido")
     private Set<DetallePedido> idPedidos = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("idClients")
-    private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -178,6 +178,19 @@ public class Pedido implements Serializable {
         this.fechaConfirmacion = fechaConfirmacion;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public Pedido client(Client client) {
+        this.client = client;
+        return this;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public ModoEnvio getModoEnvio() {
         return modoEnvio;
     }
@@ -240,19 +253,6 @@ public class Pedido implements Serializable {
 
     public void setIdPedidos(Set<DetallePedido> detallePedidos) {
         this.idPedidos = detallePedidos;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Pedido client(Client client) {
-        this.client = client;
-        return this;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

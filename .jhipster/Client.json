@@ -50,7 +50,7 @@
             "relationshipName": "idClient"
         }
     ],
-    "changelogDate": "20191231080341",
+    "changelogDate": "20200103191125",
     "javadoc": "The Employee entity.",
     "entityTableName": "client",
     "dto": "mapstruct",

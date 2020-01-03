@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link RegionResource} REST controller.
+ * Integration tests for the {@Link RegionResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class RegionResourceIT {
@@ -158,7 +158,7 @@ public class RegionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(region.getId().intValue())))
-            .andExpect(jsonPath("$.[*].regionName").value(hasItem(DEFAULT_REGION_NAME)));
+            .andExpect(jsonPath("$.[*].regionName").value(hasItem(DEFAULT_REGION_NAME.toString())));
     }
     
     @Test
@@ -172,7 +172,7 @@ public class RegionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(region.getId().intValue()))
-            .andExpect(jsonPath("$.regionName").value(DEFAULT_REGION_NAME));
+            .andExpect(jsonPath("$.regionName").value(DEFAULT_REGION_NAME.toString()));
     }
 
     @Test
@@ -246,5 +246,43 @@ public class RegionResourceIT {
         // Validate the database contains one less item
         List<Region> regionList = regionRepository.findAll();
         assertThat(regionList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Region.class);
+        Region region1 = new Region();
+        region1.setId(1L);
+        Region region2 = new Region();
+        region2.setId(region1.getId());
+        assertThat(region1).isEqualTo(region2);
+        region2.setId(2L);
+        assertThat(region1).isNotEqualTo(region2);
+        region1.setId(null);
+        assertThat(region1).isNotEqualTo(region2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(RegionDTO.class);
+        RegionDTO regionDTO1 = new RegionDTO();
+        regionDTO1.setId(1L);
+        RegionDTO regionDTO2 = new RegionDTO();
+        assertThat(regionDTO1).isNotEqualTo(regionDTO2);
+        regionDTO2.setId(regionDTO1.getId());
+        assertThat(regionDTO1).isEqualTo(regionDTO2);
+        regionDTO2.setId(2L);
+        assertThat(regionDTO1).isNotEqualTo(regionDTO2);
+        regionDTO1.setId(null);
+        assertThat(regionDTO1).isNotEqualTo(regionDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(regionMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(regionMapper.fromId(null)).isNull();
     }
 }

@@ -1,51 +1,65 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IRegionMySuffix } from 'app/shared/model/region-my-suffix.model';
+import { AccountService } from 'app/core';
 import { RegionMySuffixService } from './region-my-suffix.service';
-import { RegionMySuffixDeleteDialogComponent } from './region-my-suffix-delete-dialog.component';
 
 @Component({
   selector: 'jhi-region-my-suffix',
   templateUrl: './region-my-suffix.component.html'
 })
 export class RegionMySuffixComponent implements OnInit, OnDestroy {
-  regions?: IRegionMySuffix[];
-  eventSubscriber?: Subscription;
+  regions: IRegionMySuffix[];
+  currentAccount: any;
+  eventSubscriber: Subscription;
 
-  constructor(protected regionService: RegionMySuffixService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
+  constructor(
+    protected regionService: RegionMySuffixService,
+    protected jhiAlertService: JhiAlertService,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService
+  ) {}
 
-  loadAll(): void {
-    this.regionService.query().subscribe((res: HttpResponse<IRegionMySuffix[]>) => {
-      this.regions = res.body ? res.body : [];
-    });
+  loadAll() {
+    this.regionService
+      .query()
+      .pipe(
+        filter((res: HttpResponse<IRegionMySuffix[]>) => res.ok),
+        map((res: HttpResponse<IRegionMySuffix[]>) => res.body)
+      )
+      .subscribe(
+        (res: IRegionMySuffix[]) => {
+          this.regions = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAll();
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
     this.registerChangeInRegions();
   }
 
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnDestroy() {
+    this.eventManager.destroy(this.eventSubscriber);
   }
 
-  trackId(index: number, item: IRegionMySuffix): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+  trackId(index: number, item: IRegionMySuffix) {
+    return item.id;
   }
 
-  registerChangeInRegions(): void {
-    this.eventSubscriber = this.eventManager.subscribe('regionListModification', () => this.loadAll());
+  registerChangeInRegions() {
+    this.eventSubscriber = this.eventManager.subscribe('regionListModification', response => this.loadAll());
   }
 
-  delete(region: IRegionMySuffix): void {
-    const modalRef = this.modalService.open(RegionMySuffixDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.region = region;
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
   }
 }

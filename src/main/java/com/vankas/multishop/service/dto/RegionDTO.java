@@ -64,7 +64,7 @@ public class RegionDTO implements Serializable {
         return "RegionDTO{" +
             "id=" + getId() +
             ", regionName='" + getRegionName() + "'" +
-            ", countryId=" + getCountryId() +
+            ", country=" + getCountryId() +
             "}";
     }
 }

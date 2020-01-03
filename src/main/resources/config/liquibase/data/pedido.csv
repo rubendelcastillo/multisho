@@ -1,0 +1,11 @@
+id;fecha_pedido;fecha_notificacion;id_modo_pago;cargo_por_coste;gastos_envio;id_modo_envio;job_title;fecha_confirmacion
+1;2020-01-03;2020-01-02;99296;91911;7379;25299;Customer Quality Strategist;2020-01-03
+2;2020-01-03;2020-01-03;62939;21680;69574;29449;District Metrics Orchestrator;2020-01-03
+3;2020-01-03;2020-01-03;90115;73710;4544;91525;Product Usability Representative;2020-01-03
+4;2020-01-02;2020-01-03;45565;10675;62013;33566;Product Directives Officer;2020-01-03
+5;2020-01-03;2020-01-03;35335;22939;58365;26593;Senior Identity Strategist;2020-01-03
+6;2020-01-02;2020-01-03;69816;3231;53609;27976;Product Group Assistant;2020-01-03
+7;2020-01-03;2020-01-03;16261;13318;91092;7620;Internal Factors Representative;2020-01-03
+8;2020-01-03;2020-01-03;61341;91917;41824;8274;Chief Accountability Facilitator;2020-01-03
+9;2020-01-03;2020-01-03;2636;41125;37646;77760;Forward Applications Strategist;2020-01-02
+10;2020-01-03;2020-01-03;59413;74957;38089;39298;Principal Creative Facilitator;2020-01-03

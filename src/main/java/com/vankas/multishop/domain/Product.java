@@ -5,7 +5,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Task entity.\n@author The JHipster team.
+ * Task entity.
+ * @author The JHipster team.
  */
 @Entity
 @Table(name = "product")

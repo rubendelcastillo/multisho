@@ -11,11 +11,11 @@ export interface IPedidoMySuffix {
   idModoEnvio?: number;
   jobTitle?: string;
   fechaConfirmacion?: Moment;
+  clientId?: number;
   modoEnvioId?: number;
   modoPagoId?: number;
   estadoPedidoId?: number;
   idPedidos?: IDetallePedidoMySuffix[];
-  clientId?: number;
 }
 
 export class PedidoMySuffix implements IPedidoMySuffix {
@@ -29,10 +29,10 @@ export class PedidoMySuffix implements IPedidoMySuffix {
     public idModoEnvio?: number,
     public jobTitle?: string,
     public fechaConfirmacion?: Moment,
+    public clientId?: number,
     public modoEnvioId?: number,
     public modoPagoId?: number,
     public estadoPedidoId?: number,
-    public idPedidos?: IDetallePedidoMySuffix[],
-    public clientId?: number
+    public idPedidos?: IDetallePedidoMySuffix[]
   ) {}
 }

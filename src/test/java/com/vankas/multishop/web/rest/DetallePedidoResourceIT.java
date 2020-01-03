@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link DetallePedidoResource} REST controller.
+ * Integration tests for the {@Link DetallePedidoResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class DetallePedidoResourceIT {
@@ -266,5 +266,43 @@ public class DetallePedidoResourceIT {
         // Validate the database contains one less item
         List<DetallePedido> detallePedidoList = detallePedidoRepository.findAll();
         assertThat(detallePedidoList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(DetallePedido.class);
+        DetallePedido detallePedido1 = new DetallePedido();
+        detallePedido1.setId(1L);
+        DetallePedido detallePedido2 = new DetallePedido();
+        detallePedido2.setId(detallePedido1.getId());
+        assertThat(detallePedido1).isEqualTo(detallePedido2);
+        detallePedido2.setId(2L);
+        assertThat(detallePedido1).isNotEqualTo(detallePedido2);
+        detallePedido1.setId(null);
+        assertThat(detallePedido1).isNotEqualTo(detallePedido2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(DetallePedidoDTO.class);
+        DetallePedidoDTO detallePedidoDTO1 = new DetallePedidoDTO();
+        detallePedidoDTO1.setId(1L);
+        DetallePedidoDTO detallePedidoDTO2 = new DetallePedidoDTO();
+        assertThat(detallePedidoDTO1).isNotEqualTo(detallePedidoDTO2);
+        detallePedidoDTO2.setId(detallePedidoDTO1.getId());
+        assertThat(detallePedidoDTO1).isEqualTo(detallePedidoDTO2);
+        detallePedidoDTO2.setId(2L);
+        assertThat(detallePedidoDTO1).isNotEqualTo(detallePedidoDTO2);
+        detallePedidoDTO1.setId(null);
+        assertThat(detallePedidoDTO1).isNotEqualTo(detallePedidoDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(detallePedidoMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(detallePedidoMapper.fromId(null)).isNull();
     }
 }

@@ -5,7 +5,7 @@
         "title": "Detalle Pedidos",
         "createLabel": "Create a new Detalle Pedido",
         "createOrEditLabel": "Create or edit a Detalle Pedido",
-        "notFound": "No Detalle Pedidos found"
+        "notFound": "No Detalle Pedido found"
       },
       "created": "A new Detalle Pedido is created with identifier {{ param }}",
       "updated": "A Detalle Pedido is updated with identifier {{ param }}",
@@ -19,8 +19,8 @@
       "idPedido": "Id Pedido",
       "idProducto": "Id Producto",
       "precioCompra": "Precio Compra",
-      "product": "Product",
-      "pedido": "Pedido"
+      "pedido": "Pedido",
+      "product": "Product"
     }
   }
 }

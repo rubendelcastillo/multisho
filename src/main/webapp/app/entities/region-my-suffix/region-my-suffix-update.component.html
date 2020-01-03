@@ -4,7 +4,7 @@
             <h2 id="jhi-region-my-suffix-heading" jhiTranslate="multishopApp.region.home.createOrEditLabel">Create or edit a Region</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
                         readonly />
@@ -19,7 +19,7 @@
                     <label class="form-control-label" jhiTranslate="multishopApp.region.country" for="field_country">Country</label>
                     <select class="form-control" id="field_country" name="country" formControlName="countryId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="countryOption.id" *ngFor="let countryOption of countries; trackBy: trackById">{{countryOption.id}}</option>
+                        <option [ngValue]="countryOption.id" *ngFor="let countryOption of countries; trackBy: trackCountryById">{{countryOption.id}}</option>
                     </select>
                 </div>
             </div>

@@ -1,39 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
-
+import { JhiAlertService } from 'ng-jhipster';
 import { IPedidoMySuffix, PedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 import { PedidoMySuffixService } from './pedido-my-suffix.service';
-import { IModoEnvioMySuffix } from 'app/shared/model/modo-envio-my-suffix.model';
-import { ModoEnvioMySuffixService } from 'app/entities/modo-envio-my-suffix/modo-envio-my-suffix.service';
-import { IModoPagoMySuffix } from 'app/shared/model/modo-pago-my-suffix.model';
-import { ModoPagoMySuffixService } from 'app/entities/modo-pago-my-suffix/modo-pago-my-suffix.service';
-import { IEstadoPedidoMySuffix } from 'app/shared/model/estado-pedido-my-suffix.model';
-import { EstadoPedidoMySuffixService } from 'app/entities/estado-pedido-my-suffix/estado-pedido-my-suffix.service';
 import { IClientMySuffix } from 'app/shared/model/client-my-suffix.model';
-import { ClientMySuffixService } from 'app/entities/client-my-suffix/client-my-suffix.service';
-
-type SelectableEntity = IModoEnvioMySuffix | IModoPagoMySuffix | IEstadoPedidoMySuffix | IClientMySuffix;
+import { ClientMySuffixService } from 'app/entities/client-my-suffix';
+import { IModoEnvioMySuffix } from 'app/shared/model/modo-envio-my-suffix.model';
+import { ModoEnvioMySuffixService } from 'app/entities/modo-envio-my-suffix';
+import { IModoPagoMySuffix } from 'app/shared/model/modo-pago-my-suffix.model';
+import { ModoPagoMySuffixService } from 'app/entities/modo-pago-my-suffix';
+import { IEstadoPedidoMySuffix } from 'app/shared/model/estado-pedido-my-suffix.model';
+import { EstadoPedidoMySuffixService } from 'app/entities/estado-pedido-my-suffix';
 
 @Component({
   selector: 'jhi-pedido-my-suffix-update',
   templateUrl: './pedido-my-suffix-update.component.html'
 })
 export class PedidoMySuffixUpdateComponent implements OnInit {
-  isSaving = false;
+  isSaving: boolean;
 
-  modoenvios: IModoEnvioMySuffix[] = [];
+  clients: IClientMySuffix[];
 
-  modopagos: IModoPagoMySuffix[] = [];
+  modoenvios: IModoEnvioMySuffix[];
 
-  estadopedidos: IEstadoPedidoMySuffix[] = [];
+  modopagos: IModoPagoMySuffix[];
 
-  clients: IClientMySuffix[] = [];
+  estadopedidos: IEstadoPedidoMySuffix[];
   fechaPedidoDp: any;
   fechaNotificacionDp: any;
   fechaConfirmacionDp: any;
@@ -48,110 +45,113 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
     idModoEnvio: [],
     jobTitle: [],
     fechaConfirmacion: [],
+    clientId: [],
     modoEnvioId: [],
     modoPagoId: [],
-    estadoPedidoId: [],
-    clientId: []
+    estadoPedidoId: []
   });
 
   constructor(
+    protected jhiAlertService: JhiAlertService,
     protected pedidoService: PedidoMySuffixService,
+    protected clientService: ClientMySuffixService,
     protected modoEnvioService: ModoEnvioMySuffixService,
     protected modoPagoService: ModoPagoMySuffixService,
     protected estadoPedidoService: EstadoPedidoMySuffixService,
-    protected clientService: ClientMySuffixService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isSaving = false;
     this.activatedRoute.data.subscribe(({ pedido }) => {
       this.updateForm(pedido);
-
-      this.modoEnvioService
-        .query({ filter: 'pedido-is-null' })
-        .pipe(
-          map((res: HttpResponse<IModoEnvioMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IModoEnvioMySuffix[]) => {
-          if (!pedido.modoEnvioId) {
-            this.modoenvios = resBody;
+    });
+    this.clientService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IClientMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IClientMySuffix[]>) => response.body)
+      )
+      .subscribe((res: IClientMySuffix[]) => (this.clients = res), (res: HttpErrorResponse) => this.onError(res.message));
+    this.modoEnvioService
+      .query({ filter: 'pedido-is-null' })
+      .pipe(
+        filter((mayBeOk: HttpResponse<IModoEnvioMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IModoEnvioMySuffix[]>) => response.body)
+      )
+      .subscribe(
+        (res: IModoEnvioMySuffix[]) => {
+          if (!!this.editForm.get('modoEnvioId').value) {
+            this.modoenvios = res;
           } else {
             this.modoEnvioService
-              .find(pedido.modoEnvioId)
+              .find(this.editForm.get('modoEnvioId').value)
               .pipe(
-                map((subRes: HttpResponse<IModoEnvioMySuffix>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
+                filter((subResMayBeOk: HttpResponse<IModoEnvioMySuffix>) => subResMayBeOk.ok),
+                map((subResponse: HttpResponse<IModoEnvioMySuffix>) => subResponse.body)
               )
-              .subscribe((concatRes: IModoEnvioMySuffix[]) => {
-                this.modoenvios = concatRes;
-              });
+              .subscribe(
+                (subRes: IModoEnvioMySuffix) => (this.modoenvios = [subRes].concat(res)),
+                (subRes: HttpErrorResponse) => this.onError(subRes.message)
+              );
           }
-        });
-
-      this.modoPagoService
-        .query({ filter: 'pedido-is-null' })
-        .pipe(
-          map((res: HttpResponse<IModoPagoMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IModoPagoMySuffix[]) => {
-          if (!pedido.modoPagoId) {
-            this.modopagos = resBody;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    this.modoPagoService
+      .query({ filter: 'pedido-is-null' })
+      .pipe(
+        filter((mayBeOk: HttpResponse<IModoPagoMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IModoPagoMySuffix[]>) => response.body)
+      )
+      .subscribe(
+        (res: IModoPagoMySuffix[]) => {
+          if (!!this.editForm.get('modoPagoId').value) {
+            this.modopagos = res;
           } else {
             this.modoPagoService
-              .find(pedido.modoPagoId)
+              .find(this.editForm.get('modoPagoId').value)
               .pipe(
-                map((subRes: HttpResponse<IModoPagoMySuffix>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
+                filter((subResMayBeOk: HttpResponse<IModoPagoMySuffix>) => subResMayBeOk.ok),
+                map((subResponse: HttpResponse<IModoPagoMySuffix>) => subResponse.body)
               )
-              .subscribe((concatRes: IModoPagoMySuffix[]) => {
-                this.modopagos = concatRes;
-              });
+              .subscribe(
+                (subRes: IModoPagoMySuffix) => (this.modopagos = [subRes].concat(res)),
+                (subRes: HttpErrorResponse) => this.onError(subRes.message)
+              );
           }
-        });
-
-      this.estadoPedidoService
-        .query({ filter: 'pedido-is-null' })
-        .pipe(
-          map((res: HttpResponse<IEstadoPedidoMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IEstadoPedidoMySuffix[]) => {
-          if (!pedido.estadoPedidoId) {
-            this.estadopedidos = resBody;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    this.estadoPedidoService
+      .query({ filter: 'pedido-is-null' })
+      .pipe(
+        filter((mayBeOk: HttpResponse<IEstadoPedidoMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IEstadoPedidoMySuffix[]>) => response.body)
+      )
+      .subscribe(
+        (res: IEstadoPedidoMySuffix[]) => {
+          if (!!this.editForm.get('estadoPedidoId').value) {
+            this.estadopedidos = res;
           } else {
             this.estadoPedidoService
-              .find(pedido.estadoPedidoId)
+              .find(this.editForm.get('estadoPedidoId').value)
               .pipe(
-                map((subRes: HttpResponse<IEstadoPedidoMySuffix>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
+                filter((subResMayBeOk: HttpResponse<IEstadoPedidoMySuffix>) => subResMayBeOk.ok),
+                map((subResponse: HttpResponse<IEstadoPedidoMySuffix>) => subResponse.body)
               )
-              .subscribe((concatRes: IEstadoPedidoMySuffix[]) => {
-                this.estadopedidos = concatRes;
-              });
+              .subscribe(
+                (subRes: IEstadoPedidoMySuffix) => (this.estadopedidos = [subRes].concat(res)),
+                (subRes: HttpErrorResponse) => this.onError(subRes.message)
+              );
           }
-        });
-
-      this.clientService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IClientMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IClientMySuffix[]) => (this.clients = resBody));
-    });
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
-  updateForm(pedido: IPedidoMySuffix): void {
+  updateForm(pedido: IPedidoMySuffix) {
     this.editForm.patchValue({
       id: pedido.id,
       fechaPedido: pedido.fechaPedido,
@@ -162,18 +162,18 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
       idModoEnvio: pedido.idModoEnvio,
       jobTitle: pedido.jobTitle,
       fechaConfirmacion: pedido.fechaConfirmacion,
+      clientId: pedido.clientId,
       modoEnvioId: pedido.modoEnvioId,
       modoPagoId: pedido.modoPagoId,
-      estadoPedidoId: pedido.estadoPedidoId,
-      clientId: pedido.clientId
+      estadoPedidoId: pedido.estadoPedidoId
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 
-  save(): void {
+  save() {
     this.isSaving = true;
     const pedido = this.createFromForm();
     if (pedido.id !== undefined) {
@@ -186,39 +186,51 @@ export class PedidoMySuffixUpdateComponent implements OnInit {
   private createFromForm(): IPedidoMySuffix {
     return {
       ...new PedidoMySuffix(),
-      id: this.editForm.get(['id'])!.value,
-      fechaPedido: this.editForm.get(['fechaPedido'])!.value,
-      fechaNotificacion: this.editForm.get(['fechaNotificacion'])!.value,
-      idModoPago: this.editForm.get(['idModoPago'])!.value,
-      cargoPorCoste: this.editForm.get(['cargoPorCoste'])!.value,
-      gastosEnvio: this.editForm.get(['gastosEnvio'])!.value,
-      idModoEnvio: this.editForm.get(['idModoEnvio'])!.value,
-      jobTitle: this.editForm.get(['jobTitle'])!.value,
-      fechaConfirmacion: this.editForm.get(['fechaConfirmacion'])!.value,
-      modoEnvioId: this.editForm.get(['modoEnvioId'])!.value,
-      modoPagoId: this.editForm.get(['modoPagoId'])!.value,
-      estadoPedidoId: this.editForm.get(['estadoPedidoId'])!.value,
-      clientId: this.editForm.get(['clientId'])!.value
+      id: this.editForm.get(['id']).value,
+      fechaPedido: this.editForm.get(['fechaPedido']).value,
+      fechaNotificacion: this.editForm.get(['fechaNotificacion']).value,
+      idModoPago: this.editForm.get(['idModoPago']).value,
+      cargoPorCoste: this.editForm.get(['cargoPorCoste']).value,
+      gastosEnvio: this.editForm.get(['gastosEnvio']).value,
+      idModoEnvio: this.editForm.get(['idModoEnvio']).value,
+      jobTitle: this.editForm.get(['jobTitle']).value,
+      fechaConfirmacion: this.editForm.get(['fechaConfirmacion']).value,
+      clientId: this.editForm.get(['clientId']).value,
+      modoEnvioId: this.editForm.get(['modoEnvioId']).value,
+      modoPagoId: this.editForm.get(['modoPagoId']).value,
+      estadoPedidoId: this.editForm.get(['estadoPedidoId']).value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPedidoMySuffix>>): void {
-    result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPedidoMySuffix>>) {
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess() {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError(): void {
+  protected onSaveError() {
     this.isSaving = false;
   }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackClientById(index: number, item: IClientMySuffix) {
+    return item.id;
+  }
+
+  trackModoEnvioById(index: number, item: IModoEnvioMySuffix) {
+    return item.id;
+  }
+
+  trackModoPagoById(index: number, item: IModoPagoMySuffix) {
+    return item.id;
+  }
+
+  trackEstadoPedidoById(index: number, item: IEstadoPedidoMySuffix) {
     return item.id;
   }
 }

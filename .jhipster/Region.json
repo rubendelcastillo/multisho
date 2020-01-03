@@ -8,14 +8,13 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "country",
-            "otherEntityRelationshipName": "region",
             "relationshipName": "country",
+            "otherEntityName": "country",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191231080336",
+    "changelogDate": "20200103191120",
     "entityTableName": "region",
     "dto": "mapstruct",
     "pagination": "no",

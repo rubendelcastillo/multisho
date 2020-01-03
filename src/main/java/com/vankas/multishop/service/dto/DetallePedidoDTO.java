@@ -86,7 +86,7 @@ public class DetallePedidoDTO implements Serializable {
             ", idPedido=" + getIdPedido() +
             ", idProducto=" + getIdProducto() +
             ", precioCompra=" + getPrecioCompra() +
-            ", pedidoId=" + getPedidoId() +
+            ", pedido=" + getPedidoId() +
             "}";
     }
 }

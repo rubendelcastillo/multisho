@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { ILocationMySuffix } from 'app/shared/model/location-my-suffix.model';
+import { AccountService } from 'app/core';
 
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { ITEMS_PER_PAGE } from 'app/shared';
 import { LocationMySuffixService } from './location-my-suffix.service';
-import { LocationMySuffixDeleteDialogComponent } from './location-my-suffix-delete-dialog.component';
 
 @Component({
   selector: 'jhi-location-my-suffix',
@@ -16,18 +16,21 @@ import { LocationMySuffixDeleteDialogComponent } from './location-my-suffix-dele
 })
 export class LocationMySuffixComponent implements OnInit, OnDestroy {
   locations: ILocationMySuffix[];
-  eventSubscriber?: Subscription;
+  currentAccount: any;
+  eventSubscriber: Subscription;
   itemsPerPage: number;
   links: any;
-  page: number;
-  predicate: string;
-  ascending: boolean;
+  page: any;
+  predicate: any;
+  reverse: any;
+  totalItems: number;
 
   constructor(
     protected locationService: LocationMySuffixService,
+    protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected accountService: AccountService
   ) {
     this.locations = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -36,70 +39,70 @@ export class LocationMySuffixComponent implements OnInit, OnDestroy {
       last: 0
     };
     this.predicate = 'id';
-    this.ascending = true;
+    this.reverse = true;
   }
 
-  loadAll(): void {
+  loadAll() {
     this.locationService
       .query({
         page: this.page,
         size: this.itemsPerPage,
         sort: this.sort()
       })
-      .subscribe((res: HttpResponse<ILocationMySuffix[]>) => this.paginateLocations(res.body, res.headers));
+      .subscribe(
+        (res: HttpResponse<ILocationMySuffix[]>) => this.paginateLocations(res.body, res.headers),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
-  reset(): void {
+  reset() {
     this.page = 0;
     this.locations = [];
     this.loadAll();
   }
 
-  loadPage(page: number): void {
+  loadPage(page) {
     this.page = page;
     this.loadAll();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAll();
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
     this.registerChangeInLocations();
   }
 
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnDestroy() {
+    this.eventManager.destroy(this.eventSubscriber);
   }
 
-  trackId(index: number, item: ILocationMySuffix): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+  trackId(index: number, item: ILocationMySuffix) {
+    return item.id;
   }
 
-  registerChangeInLocations(): void {
-    this.eventSubscriber = this.eventManager.subscribe('locationListModification', () => this.reset());
+  registerChangeInLocations() {
+    this.eventSubscriber = this.eventManager.subscribe('locationListModification', response => this.reset());
   }
 
-  delete(location: ILocationMySuffix): void {
-    const modalRef = this.modalService.open(LocationMySuffixDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.location = location;
-  }
-
-  sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+  sort() {
+    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
     if (this.predicate !== 'id') {
       result.push('id');
     }
     return result;
   }
 
-  protected paginateLocations(data: ILocationMySuffix[] | null, headers: HttpHeaders): void {
-    const headersLink = headers.get('link');
-    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        this.locations.push(data[i]);
-      }
+  protected paginateLocations(data: ILocationMySuffix[], headers: HttpHeaders) {
+    this.links = this.parseLinks.parse(headers.get('link'));
+    this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
+    for (let i = 0; i < data.length; i++) {
+      this.locations.push(data[i]);
     }
+  }
+
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
   }
 }

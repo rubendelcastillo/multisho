@@ -1,21 +1,45 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from 'app/core';
 
-import { MultishopSharedModule } from 'app/shared/shared.module';
-import { ClientMySuffixComponent } from './client-my-suffix.component';
-import { ClientMySuffixDetailComponent } from './client-my-suffix-detail.component';
-import { ClientMySuffixUpdateComponent } from './client-my-suffix-update.component';
-import { ClientMySuffixDeleteDialogComponent } from './client-my-suffix-delete-dialog.component';
-import { clientRoute } from './client-my-suffix.route';
+import { MultishopSharedModule } from 'app/shared';
+import {
+  ClientMySuffixComponent,
+  ClientMySuffixDetailComponent,
+  ClientMySuffixUpdateComponent,
+  ClientMySuffixDeletePopupComponent,
+  ClientMySuffixDeleteDialogComponent,
+  clientRoute,
+  clientPopupRoute
+} from './';
+
+const ENTITY_STATES = [...clientRoute, ...clientPopupRoute];
 
 @NgModule({
-  imports: [MultishopSharedModule, RouterModule.forChild(clientRoute)],
+  imports: [MultishopSharedModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     ClientMySuffixComponent,
     ClientMySuffixDetailComponent,
     ClientMySuffixUpdateComponent,
-    ClientMySuffixDeleteDialogComponent
+    ClientMySuffixDeleteDialogComponent,
+    ClientMySuffixDeletePopupComponent
   ],
-  entryComponents: [ClientMySuffixDeleteDialogComponent]
+  entryComponents: [
+    ClientMySuffixComponent,
+    ClientMySuffixUpdateComponent,
+    ClientMySuffixDeleteDialogComponent,
+    ClientMySuffixDeletePopupComponent
+  ],
+  providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MultishopClientMySuffixModule {}
+export class MultishopClientMySuffixModule {
+  constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
+    this.languageHelper.language.subscribe((languageKey: string) => {
+      if (languageKey !== undefined) {
+        this.languageService.changeLanguage(languageKey);
+      }
+    });
+  }
+}

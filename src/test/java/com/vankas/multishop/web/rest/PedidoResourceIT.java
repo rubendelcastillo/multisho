@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link PedidoResource} REST controller.
+ * Integration tests for the {@Link PedidoResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class PedidoResourceIT {
@@ -208,7 +208,7 @@ public class PedidoResourceIT {
             .andExpect(jsonPath("$.[*].cargoPorCoste").value(hasItem(DEFAULT_CARGO_POR_COSTE.doubleValue())))
             .andExpect(jsonPath("$.[*].gastosEnvio").value(hasItem(DEFAULT_GASTOS_ENVIO.doubleValue())))
             .andExpect(jsonPath("$.[*].idModoEnvio").value(hasItem(DEFAULT_ID_MODO_ENVIO.intValue())))
-            .andExpect(jsonPath("$.[*].jobTitle").value(hasItem(DEFAULT_JOB_TITLE)))
+            .andExpect(jsonPath("$.[*].jobTitle").value(hasItem(DEFAULT_JOB_TITLE.toString())))
             .andExpect(jsonPath("$.[*].fechaConfirmacion").value(hasItem(DEFAULT_FECHA_CONFIRMACION.toString())));
     }
     
@@ -229,7 +229,7 @@ public class PedidoResourceIT {
             .andExpect(jsonPath("$.cargoPorCoste").value(DEFAULT_CARGO_POR_COSTE.doubleValue()))
             .andExpect(jsonPath("$.gastosEnvio").value(DEFAULT_GASTOS_ENVIO.doubleValue()))
             .andExpect(jsonPath("$.idModoEnvio").value(DEFAULT_ID_MODO_ENVIO.intValue()))
-            .andExpect(jsonPath("$.jobTitle").value(DEFAULT_JOB_TITLE))
+            .andExpect(jsonPath("$.jobTitle").value(DEFAULT_JOB_TITLE.toString()))
             .andExpect(jsonPath("$.fechaConfirmacion").value(DEFAULT_FECHA_CONFIRMACION.toString()));
     }
 
@@ -318,5 +318,43 @@ public class PedidoResourceIT {
         // Validate the database contains one less item
         List<Pedido> pedidoList = pedidoRepository.findAll();
         assertThat(pedidoList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Pedido.class);
+        Pedido pedido1 = new Pedido();
+        pedido1.setId(1L);
+        Pedido pedido2 = new Pedido();
+        pedido2.setId(pedido1.getId());
+        assertThat(pedido1).isEqualTo(pedido2);
+        pedido2.setId(2L);
+        assertThat(pedido1).isNotEqualTo(pedido2);
+        pedido1.setId(null);
+        assertThat(pedido1).isNotEqualTo(pedido2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(PedidoDTO.class);
+        PedidoDTO pedidoDTO1 = new PedidoDTO();
+        pedidoDTO1.setId(1L);
+        PedidoDTO pedidoDTO2 = new PedidoDTO();
+        assertThat(pedidoDTO1).isNotEqualTo(pedidoDTO2);
+        pedidoDTO2.setId(pedidoDTO1.getId());
+        assertThat(pedidoDTO1).isEqualTo(pedidoDTO2);
+        pedidoDTO2.setId(2L);
+        assertThat(pedidoDTO1).isNotEqualTo(pedidoDTO2);
+        pedidoDTO1.setId(null);
+        assertThat(pedidoDTO1).isNotEqualTo(pedidoDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(pedidoMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(pedidoMapper.fromId(null)).isNull();
     }
 }

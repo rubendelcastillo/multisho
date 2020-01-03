@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IPedidoMySuffix, PedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core';
+import { Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { PedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 import { PedidoMySuffixService } from './pedido-my-suffix.service';
 import { PedidoMySuffixComponent } from './pedido-my-suffix.component';
 import { PedidoMySuffixDetailComponent } from './pedido-my-suffix-detail.component';
 import { PedidoMySuffixUpdateComponent } from './pedido-my-suffix-update.component';
+import { PedidoMySuffixDeletePopupComponent } from './pedido-my-suffix-delete-dialog.component';
+import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoMySuffixResolve implements Resolve<IPedidoMySuffix> {
-  constructor(private service: PedidoMySuffixService, private router: Router) {}
+  constructor(private service: PedidoMySuffixService) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IPedidoMySuffix> | Observable<never> {
-    const id = route.params['id'];
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPedidoMySuffix> {
+    const id = route.params['id'] ? route.params['id'] : null;
     if (id) {
       return this.service.find(id).pipe(
-        flatMap((pedido: HttpResponse<PedidoMySuffix>) => {
-          if (pedido.body) {
-            return of(pedido.body);
-          } else {
-            this.router.navigate(['404']);
-            return EMPTY;
-          }
-        })
+        filter((response: HttpResponse<PedidoMySuffix>) => response.ok),
+        map((pedido: HttpResponse<PedidoMySuffix>) => pedido.body)
       );
     }
     return of(new PedidoMySuffix());
@@ -78,5 +73,21 @@ export const pedidoRoute: Routes = [
       pageTitle: 'multishopApp.pedido.home.title'
     },
     canActivate: [UserRouteAccessService]
+  }
+];
+
+export const pedidoPopupRoute: Routes = [
+  {
+    path: ':id/delete',
+    component: PedidoMySuffixDeletePopupComponent,
+    resolve: {
+      pedido: PedidoMySuffixResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'multishopApp.pedido.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
   }
 ];

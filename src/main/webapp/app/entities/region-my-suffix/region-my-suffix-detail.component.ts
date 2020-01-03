@@ -8,17 +8,17 @@ import { IRegionMySuffix } from 'app/shared/model/region-my-suffix.model';
   templateUrl: './region-my-suffix-detail.component.html'
 })
 export class RegionMySuffixDetailComponent implements OnInit {
-  region: IRegionMySuffix | null = null;
+  region: IRegionMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ region }) => {
       this.region = region;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

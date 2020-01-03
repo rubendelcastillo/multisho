@@ -28,8 +28,8 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20191231080340",
-    "javadoc": "Task entity.\\n@author The JHipster team.",
+    "changelogDate": "20200103191124",
+    "javadoc": "Task entity.\n@author The JHipster team.",
     "entityTableName": "product",
     "dto": "mapstruct",
     "pagination": "pagination",

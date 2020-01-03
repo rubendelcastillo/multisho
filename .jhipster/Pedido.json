@@ -36,6 +36,12 @@
     ],
     "relationships": [
         {
+            "relationshipName": "client",
+            "otherEntityName": "client",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
             "relationshipType": "one-to-one",
             "otherEntityName": "modoEnvio",
             "otherEntityRelationshipName": "pedido",
@@ -64,16 +70,9 @@
             "otherEntityName": "detallePedido",
             "otherEntityRelationshipName": "pedido",
             "relationshipName": "idPedido"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "client",
-            "otherEntityRelationshipName": "idClient",
-            "relationshipName": "client",
-            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191231080343",
+    "changelogDate": "20200103191127",
     "entityTableName": "pedido",
     "dto": "mapstruct",
     "pagination": "no",

@@ -1,5 +1,6 @@
+/* tslint:disable max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MultishopTestModule } from '../../../test.module';
@@ -44,7 +45,7 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.detallePedidos && comp.detallePedidos[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.detallePedidos[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
   });
 });

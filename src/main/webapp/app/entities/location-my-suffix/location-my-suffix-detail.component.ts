@@ -8,17 +8,17 @@ import { ILocationMySuffix } from 'app/shared/model/location-my-suffix.model';
   templateUrl: './location-my-suffix-detail.component.html'
 })
 export class LocationMySuffixDetailComponent implements OnInit {
-  location: ILocationMySuffix | null = null;
+  location: ILocationMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ location }) => {
       this.location = location;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

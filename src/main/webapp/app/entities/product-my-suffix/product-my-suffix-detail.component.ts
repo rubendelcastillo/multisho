@@ -8,17 +8,17 @@ import { IProductMySuffix } from 'app/shared/model/product-my-suffix.model';
   templateUrl: './product-my-suffix-detail.component.html'
 })
 export class ProductMySuffixDetailComponent implements OnInit {
-  product: IProductMySuffix | null = null;
+  product: IProductMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ product }) => {
       this.product = product;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

@@ -4,30 +4,29 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-client-my-suffix" [routerLink]="['/client-my-suffix/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="multishopApp.client.home.createLabel">
-            Create a new Client
+            Create new Client
             </span>
         </button>
     </h2>
-    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="clients?.length === 0">
         <span jhiTranslate="multishopApp.client.home.notFound">No clients found</span>
     </div>
     <div class="table-responsive" *ngIf="clients?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-striped">
             <thead>
             <tr>
-            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.firstName">First Name</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.lastName">Last Name</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.email">Email</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.phoneNumber">Phone Number</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.creationDate">Creation Date</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.endDate">End Date</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.documentId">Document Id</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.client.documentType">Document Type</span></th>
-            <th scope="col"></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="multishopApp.client.firstName">First Name</span></th>
+            <th><span jhiTranslate="multishopApp.client.lastName">Last Name</span></th>
+            <th><span jhiTranslate="multishopApp.client.email">Email</span></th>
+            <th><span jhiTranslate="multishopApp.client.phoneNumber">Phone Number</span></th>
+            <th><span jhiTranslate="multishopApp.client.creationDate">Creation Date</span></th>
+            <th><span jhiTranslate="multishopApp.client.endDate">End Date</span></th>
+            <th><span jhiTranslate="multishopApp.client.documentId">Document Id</span></th>
+            <th><span jhiTranslate="multishopApp.client.documentType">Document Type</span></th>
+            <th></th>
             </tr>
             </thead>
             <tbody>
@@ -55,7 +54,10 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit" (click)="delete(client)"
+                        <button type="submit"
+                                [routerLink]="['/', 'client-my-suffix', { outlets: { popup: client.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

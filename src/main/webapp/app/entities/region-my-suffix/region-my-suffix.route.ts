@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IRegionMySuffix, RegionMySuffix } from 'app/shared/model/region-my-suffix.model';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core';
+import { Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { RegionMySuffix } from 'app/shared/model/region-my-suffix.model';
 import { RegionMySuffixService } from './region-my-suffix.service';
 import { RegionMySuffixComponent } from './region-my-suffix.component';
 import { RegionMySuffixDetailComponent } from './region-my-suffix-detail.component';
 import { RegionMySuffixUpdateComponent } from './region-my-suffix-update.component';
+import { RegionMySuffixDeletePopupComponent } from './region-my-suffix-delete-dialog.component';
+import { IRegionMySuffix } from 'app/shared/model/region-my-suffix.model';
 
 @Injectable({ providedIn: 'root' })
 export class RegionMySuffixResolve implements Resolve<IRegionMySuffix> {
-  constructor(private service: RegionMySuffixService, private router: Router) {}
+  constructor(private service: RegionMySuffixService) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IRegionMySuffix> | Observable<never> {
-    const id = route.params['id'];
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IRegionMySuffix> {
+    const id = route.params['id'] ? route.params['id'] : null;
     if (id) {
       return this.service.find(id).pipe(
-        flatMap((region: HttpResponse<RegionMySuffix>) => {
-          if (region.body) {
-            return of(region.body);
-          } else {
-            this.router.navigate(['404']);
-            return EMPTY;
-          }
-        })
+        filter((response: HttpResponse<RegionMySuffix>) => response.ok),
+        map((region: HttpResponse<RegionMySuffix>) => region.body)
       );
     }
     return of(new RegionMySuffix());
@@ -78,5 +73,21 @@ export const regionRoute: Routes = [
       pageTitle: 'multishopApp.region.home.title'
     },
     canActivate: [UserRouteAccessService]
+  }
+];
+
+export const regionPopupRoute: Routes = [
+  {
+    path: ':id/delete',
+    component: RegionMySuffixDeletePopupComponent,
+    resolve: {
+      region: RegionMySuffixResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'multishopApp.region.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
   }
 ];

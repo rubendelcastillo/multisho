@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { filter, map } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 import { IRegionMySuffix, RegionMySuffix } from 'app/shared/model/region-my-suffix.model';
 import { RegionMySuffixService } from './region-my-suffix.service';
 import { ICountryMySuffix } from 'app/shared/model/country-my-suffix.model';
-import { CountryMySuffixService } from 'app/entities/country-my-suffix/country-my-suffix.service';
+import { CountryMySuffixService } from 'app/entities/country-my-suffix';
 
 @Component({
   selector: 'jhi-region-my-suffix-update',
   templateUrl: './region-my-suffix-update.component.html'
 })
 export class RegionMySuffixUpdateComponent implements OnInit {
-  isSaving = false;
+  isSaving: boolean;
 
-  countries: ICountryMySuffix[] = [];
+  countries: ICountryMySuffix[];
 
   editForm = this.fb.group({
     id: [],
@@ -27,28 +26,28 @@ export class RegionMySuffixUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected jhiAlertService: JhiAlertService,
     protected regionService: RegionMySuffixService,
     protected countryService: CountryMySuffixService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isSaving = false;
     this.activatedRoute.data.subscribe(({ region }) => {
       this.updateForm(region);
-
-      this.countryService
-        .query()
-        .pipe(
-          map((res: HttpResponse<ICountryMySuffix[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: ICountryMySuffix[]) => (this.countries = resBody));
     });
+    this.countryService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<ICountryMySuffix[]>) => mayBeOk.ok),
+        map((response: HttpResponse<ICountryMySuffix[]>) => response.body)
+      )
+      .subscribe((res: ICountryMySuffix[]) => (this.countries = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(region: IRegionMySuffix): void {
+  updateForm(region: IRegionMySuffix) {
     this.editForm.patchValue({
       id: region.id,
       regionName: region.regionName,
@@ -56,11 +55,11 @@ export class RegionMySuffixUpdateComponent implements OnInit {
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 
-  save(): void {
+  save() {
     this.isSaving = true;
     const region = this.createFromForm();
     if (region.id !== undefined) {
@@ -73,29 +72,29 @@ export class RegionMySuffixUpdateComponent implements OnInit {
   private createFromForm(): IRegionMySuffix {
     return {
       ...new RegionMySuffix(),
-      id: this.editForm.get(['id'])!.value,
-      regionName: this.editForm.get(['regionName'])!.value,
-      countryId: this.editForm.get(['countryId'])!.value
+      id: this.editForm.get(['id']).value,
+      regionName: this.editForm.get(['regionName']).value,
+      countryId: this.editForm.get(['countryId']).value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IRegionMySuffix>>): void {
-    result.subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IRegionMySuffix>>) {
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess() {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError(): void {
+  protected onSaveError() {
     this.isSaving = false;
   }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
 
-  trackById(index: number, item: ICountryMySuffix): any {
+  trackCountryById(index: number, item: ICountryMySuffix) {
     return item.id;
   }
 }

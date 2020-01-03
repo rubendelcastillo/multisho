@@ -3,8 +3,8 @@ export interface IDetallePedidoMySuffix {
   idPedido?: number;
   idProducto?: number;
   precioCompra?: number;
-  productId?: number;
   pedidoId?: number;
+  productId?: number;
 }
 
 export class DetallePedidoMySuffix implements IDetallePedidoMySuffix {
@@ -13,7 +13,7 @@ export class DetallePedidoMySuffix implements IDetallePedidoMySuffix {
     public idPedido?: number,
     public idProducto?: number,
     public precioCompra?: number,
-    public productId?: number,
-    public pedidoId?: number
+    public pedidoId?: number,
+    public productId?: number
   ) {}
 }

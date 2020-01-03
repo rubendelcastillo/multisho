@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.vankas.multishop.domain.enumeration.DocumentType;
 /**
- * Integration tests for the {@link ClientResource} REST controller.
+ * Integration tests for the {@Link ClientResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class ClientResourceIT {
@@ -205,13 +205,13 @@ public class ClientResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(client.getId().intValue())))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].documentId").value(hasItem(DEFAULT_DOCUMENT_ID)))
+            .andExpect(jsonPath("$.[*].documentId").value(hasItem(DEFAULT_DOCUMENT_ID.toString())))
             .andExpect(jsonPath("$.[*].documentType").value(hasItem(DEFAULT_DOCUMENT_TYPE.toString())));
     }
     
@@ -226,13 +226,13 @@ public class ClientResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(client.getId().intValue()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
+            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER.toString()))
             .andExpect(jsonPath("$.creationDate").value(DEFAULT_CREATION_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.documentId").value(DEFAULT_DOCUMENT_ID))
+            .andExpect(jsonPath("$.documentId").value(DEFAULT_DOCUMENT_ID.toString()))
             .andExpect(jsonPath("$.documentType").value(DEFAULT_DOCUMENT_TYPE.toString()));
     }
 
@@ -321,5 +321,43 @@ public class ClientResourceIT {
         // Validate the database contains one less item
         List<Client> clientList = clientRepository.findAll();
         assertThat(clientList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Client.class);
+        Client client1 = new Client();
+        client1.setId(1L);
+        Client client2 = new Client();
+        client2.setId(client1.getId());
+        assertThat(client1).isEqualTo(client2);
+        client2.setId(2L);
+        assertThat(client1).isNotEqualTo(client2);
+        client1.setId(null);
+        assertThat(client1).isNotEqualTo(client2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(ClientDTO.class);
+        ClientDTO clientDTO1 = new ClientDTO();
+        clientDTO1.setId(1L);
+        ClientDTO clientDTO2 = new ClientDTO();
+        assertThat(clientDTO1).isNotEqualTo(clientDTO2);
+        clientDTO2.setId(clientDTO1.getId());
+        assertThat(clientDTO1).isEqualTo(clientDTO2);
+        clientDTO2.setId(2L);
+        assertThat(clientDTO1).isNotEqualTo(clientDTO2);
+        clientDTO1.setId(null);
+        assertThat(clientDTO1).isNotEqualTo(clientDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(clientMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(clientMapper.fromId(null)).isNull();
     }
 }

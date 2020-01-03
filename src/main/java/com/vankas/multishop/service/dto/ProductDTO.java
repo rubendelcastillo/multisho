@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link com.vankas.multishop.domain.Product} entity.
  */
-@ApiModel(description = "Task entity.\n@author The JHipster team.")
+@ApiModel(description = "Task entity. @author The JHipster team.")
 public class ProductDTO implements Serializable {
 
     private Long id;
@@ -99,7 +99,7 @@ public class ProductDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", stock=" + getStock() +
             ", precioConIva=" + getPrecioConIva() +
-            ", detallePedidoId=" + getDetallePedidoId() +
+            ", detallePedido=" + getDetallePedidoId() +
             "}";
     }
 }

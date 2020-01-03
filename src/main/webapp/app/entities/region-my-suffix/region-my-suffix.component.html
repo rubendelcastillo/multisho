@@ -4,24 +4,23 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-region-my-suffix" [routerLink]="['/region-my-suffix/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="multishopApp.region.home.createLabel">
-            Create a new Region
+            Create new Region
             </span>
         </button>
     </h2>
-    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="regions?.length === 0">
         <span jhiTranslate="multishopApp.region.home.notFound">No regions found</span>
     </div>
     <div class="table-responsive" *ngIf="regions?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-striped">
             <thead>
             <tr>
-            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.region.regionName">Region Name</span></th>
-            <th scope="col" ><span jhiTranslate="multishopApp.region.country">Country</span></th>
-            <th scope="col"></th>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="multishopApp.region.regionName">Region Name</span></th>
+            <th><span jhiTranslate="multishopApp.region.country">Country</span></th>
+            <th></th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +29,7 @@
                 <td>{{region.regionName}}</td>
                 <td>
                     <div *ngIf="region.countryId">
-                        <a [routerLink]="['/country-my-suffix', region.countryId , 'view' ]" >{{region.countryId}}</a>
+                        <a [routerLink]="['../country-my-suffix', region.countryId , 'view' ]" >{{region.countryId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -47,7 +46,10 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit" (click)="delete(region)"
+                        <button type="submit"
+                                [routerLink]="['/', 'region-my-suffix', { outlets: { popup: region.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

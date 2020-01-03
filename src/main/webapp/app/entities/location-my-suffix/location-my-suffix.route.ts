@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { ILocationMySuffix, LocationMySuffix } from 'app/shared/model/location-my-suffix.model';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core';
+import { Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { LocationMySuffix } from 'app/shared/model/location-my-suffix.model';
 import { LocationMySuffixService } from './location-my-suffix.service';
 import { LocationMySuffixComponent } from './location-my-suffix.component';
 import { LocationMySuffixDetailComponent } from './location-my-suffix-detail.component';
 import { LocationMySuffixUpdateComponent } from './location-my-suffix-update.component';
+import { LocationMySuffixDeletePopupComponent } from './location-my-suffix-delete-dialog.component';
+import { ILocationMySuffix } from 'app/shared/model/location-my-suffix.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocationMySuffixResolve implements Resolve<ILocationMySuffix> {
-  constructor(private service: LocationMySuffixService, private router: Router) {}
+  constructor(private service: LocationMySuffixService) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<ILocationMySuffix> | Observable<never> {
-    const id = route.params['id'];
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILocationMySuffix> {
+    const id = route.params['id'] ? route.params['id'] : null;
     if (id) {
       return this.service.find(id).pipe(
-        flatMap((location: HttpResponse<LocationMySuffix>) => {
-          if (location.body) {
-            return of(location.body);
-          } else {
-            this.router.navigate(['404']);
-            return EMPTY;
-          }
-        })
+        filter((response: HttpResponse<LocationMySuffix>) => response.ok),
+        map((location: HttpResponse<LocationMySuffix>) => location.body)
       );
     }
     return of(new LocationMySuffix());
@@ -78,5 +73,21 @@ export const locationRoute: Routes = [
       pageTitle: 'multishopApp.location.home.title'
     },
     canActivate: [UserRouteAccessService]
+  }
+];
+
+export const locationPopupRoute: Routes = [
+  {
+    path: ':id/delete',
+    component: LocationMySuffixDeletePopupComponent,
+    resolve: {
+      location: LocationMySuffixResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'multishopApp.location.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
   }
 ];

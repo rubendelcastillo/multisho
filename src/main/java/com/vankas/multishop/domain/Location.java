@@ -54,7 +54,7 @@ public class Location implements Serializable {
     private Region country;
 
     @ManyToOne
-    @JsonIgnoreProperties("countries")
+    @JsonIgnoreProperties("locations")
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

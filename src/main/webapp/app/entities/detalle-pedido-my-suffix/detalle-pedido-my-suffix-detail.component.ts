@@ -8,17 +8,17 @@ import { IDetallePedidoMySuffix } from 'app/shared/model/detalle-pedido-my-suffi
   templateUrl: './detalle-pedido-my-suffix-detail.component.html'
 })
 export class DetallePedidoMySuffixDetailComponent implements OnInit {
-  detallePedido: IDetallePedidoMySuffix | null = null;
+  detallePedido: IDetallePedidoMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ detallePedido }) => {
       this.detallePedido = detallePedido;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

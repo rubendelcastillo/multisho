@@ -52,14 +52,13 @@
             "ownerSide": true
         },
         {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "client",
-            "otherEntityRelationshipName": "country",
             "relationshipName": "client",
+            "otherEntityName": "client",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191231080338",
+    "changelogDate": "20200103191122",
     "javadoc": "not an ignored comment",
     "entityTableName": "location",
     "dto": "mapstruct",

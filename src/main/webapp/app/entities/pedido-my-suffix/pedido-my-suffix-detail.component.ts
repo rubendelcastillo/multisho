@@ -8,17 +8,17 @@ import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
   templateUrl: './pedido-my-suffix-detail.component.html'
 })
 export class PedidoMySuffixDetailComponent implements OnInit {
-  pedido: IPedidoMySuffix | null = null;
+  pedido: IPedidoMySuffix;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ pedido }) => {
       this.pedido = pedido;
     });
   }
 
-  previousState(): void {
+  previousState() {
     window.history.back();
   }
 }

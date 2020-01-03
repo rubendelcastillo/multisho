@@ -175,8 +175,8 @@ public class LocationDTO implements Serializable {
             ", postalCode='" + getPostalCode() + "'" +
             ", city='" + getCity() + "'" +
             ", stateProvince='" + getStateProvince() + "'" +
-            ", countryId=" + getCountryId() +
-            ", clientId=" + getClientId() +
+            ", country=" + getCountryId() +
+            ", client=" + getClientId() +
             "}";
     }
 }

@@ -4,7 +4,7 @@
             <h2 id="jhi-detalle-pedido-my-suffix-heading" jhiTranslate="multishopApp.detallePedido.home.createOrEditLabel">Create or edit a Detalle Pedido</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
                         readonly />
@@ -29,7 +29,7 @@
                     <label class="form-control-label" jhiTranslate="multishopApp.detallePedido.pedido" for="field_pedido">Pedido</label>
                     <select class="form-control" id="field_pedido" name="pedido" formControlName="pedidoId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="pedidoOption.id" *ngFor="let pedidoOption of pedidos; trackBy: trackById">{{pedidoOption.id}}</option>
+                        <option [ngValue]="pedidoOption.id" *ngFor="let pedidoOption of pedidos; trackBy: trackPedidoById">{{pedidoOption.id}}</option>
                     </select>
                 </div>
             </div>

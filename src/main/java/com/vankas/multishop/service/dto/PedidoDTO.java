@@ -27,13 +27,13 @@ public class PedidoDTO implements Serializable {
     private LocalDate fechaConfirmacion;
 
 
+    private Long clientId;
+
     private Long modoEnvioId;
 
     private Long modoPagoId;
 
     private Long estadoPedidoId;
-
-    private Long clientId;
 
     public Long getId() {
         return id;
@@ -107,6 +107,14 @@ public class PedidoDTO implements Serializable {
         this.fechaConfirmacion = fechaConfirmacion;
     }
 
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
     public Long getModoEnvioId() {
         return modoEnvioId;
     }
@@ -129,14 +137,6 @@ public class PedidoDTO implements Serializable {
 
     public void setEstadoPedidoId(Long estadoPedidoId) {
         this.estadoPedidoId = estadoPedidoId;
-    }
-
-    public Long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
     }
 
     @Override
@@ -172,10 +172,10 @@ public class PedidoDTO implements Serializable {
             ", idModoEnvio=" + getIdModoEnvio() +
             ", jobTitle='" + getJobTitle() + "'" +
             ", fechaConfirmacion='" + getFechaConfirmacion() + "'" +
-            ", modoEnvioId=" + getModoEnvioId() +
-            ", modoPagoId=" + getModoPagoId() +
-            ", estadoPedidoId=" + getEstadoPedidoId() +
-            ", clientId=" + getClientId() +
+            ", client=" + getClientId() +
+            ", modoEnvio=" + getModoEnvioId() +
+            ", modoPago=" + getModoPagoId() +
+            ", estadoPedido=" + getEstadoPedidoId() +
             "}";
     }
 }

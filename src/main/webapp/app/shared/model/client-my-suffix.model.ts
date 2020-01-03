@@ -1,7 +1,13 @@
 import { Moment } from 'moment';
 import { ILocationMySuffix } from 'app/shared/model/location-my-suffix.model';
 import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
-import { DocumentType } from 'app/shared/model/enumerations/document-type.model';
+
+export const enum DocumentType {
+  PASSPORT = 'PASSPORT',
+  IDENTITY_CARD = 'IDENTITY_CARD',
+  SOCIAL_SECURITY_NUMBER = 'SOCIAL_SECURITY_NUMBER',
+  NIF = 'NIF'
+}
 
 export interface IClientMySuffix {
   id?: number;

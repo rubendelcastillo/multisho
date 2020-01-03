@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for the {@link ProductResource} REST controller.
+ * Integration tests for the {@Link ProductResource} REST controller.
  */
 @SpringBootTest(classes = MultishopApp.class)
 public class ProductResourceIT {
@@ -176,8 +176,8 @@ public class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(product.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK.intValue())))
             .andExpect(jsonPath("$.[*].precioConIva").value(hasItem(DEFAULT_PRECIO_CON_IVA.doubleValue())));
     }
@@ -193,8 +193,8 @@ public class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(product.getId().intValue()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.stock").value(DEFAULT_STOCK.intValue()))
             .andExpect(jsonPath("$.precioConIva").value(DEFAULT_PRECIO_CON_IVA.doubleValue()));
     }
@@ -276,5 +276,43 @@ public class ProductResourceIT {
         // Validate the database contains one less item
         List<Product> productList = productRepository.findAll();
         assertThat(productList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Product.class);
+        Product product1 = new Product();
+        product1.setId(1L);
+        Product product2 = new Product();
+        product2.setId(product1.getId());
+        assertThat(product1).isEqualTo(product2);
+        product2.setId(2L);
+        assertThat(product1).isNotEqualTo(product2);
+        product1.setId(null);
+        assertThat(product1).isNotEqualTo(product2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(ProductDTO.class);
+        ProductDTO productDTO1 = new ProductDTO();
+        productDTO1.setId(1L);
+        ProductDTO productDTO2 = new ProductDTO();
+        assertThat(productDTO1).isNotEqualTo(productDTO2);
+        productDTO2.setId(productDTO1.getId());
+        assertThat(productDTO1).isEqualTo(productDTO2);
+        productDTO2.setId(2L);
+        assertThat(productDTO1).isNotEqualTo(productDTO2);
+        productDTO1.setId(null);
+        assertThat(productDTO1).isNotEqualTo(productDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(productMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(productMapper.fromId(null)).isNull();
     }
 }

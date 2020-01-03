@@ -37,6 +37,12 @@
                 <dd>
                     <span>{{pedido.fechaConfirmacion}}</span>
                 </dd>
+                <dt><span jhiTranslate="multishopApp.pedido.client">Client</span></dt>
+                <dd>
+                    <div *ngIf="pedido.clientId">
+                        <a [routerLink]="['/client-my-suffix', pedido.clientId, 'view']">{{pedido.clientId}}</a>
+                    </div>
+                </dd>
                 <dt><span jhiTranslate="multishopApp.pedido.modoEnvio">Modo Envio</span></dt>
                 <dd>
                     <div *ngIf="pedido.modoEnvioId">
@@ -53,12 +59,6 @@
                 <dd>
                     <div *ngIf="pedido.estadoPedidoId">
                         <a [routerLink]="['/estado-pedido-my-suffix', pedido.estadoPedidoId, 'view']">{{pedido.estadoPedidoId}}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="multishopApp.pedido.client">Client</span></dt>
-                <dd>
-                    <div *ngIf="pedido.clientId">
-                        <a [routerLink]="['/client-my-suffix', pedido.clientId, 'view']">{{pedido.clientId}}</a>
                     </div>
                 </dd>
             </dl>

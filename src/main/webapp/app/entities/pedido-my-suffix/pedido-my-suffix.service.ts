@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { map } from 'rxjs/operators';
+
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
+import { createRequestOption } from 'app/shared';
 import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
 
 type EntityResponseType = HttpResponse<IPedidoMySuffix>;
@@ -46,26 +45,26 @@ export class PedidoMySuffixService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(pedido: IPedidoMySuffix): IPedidoMySuffix {
     const copy: IPedidoMySuffix = Object.assign({}, pedido, {
-      fechaPedido: pedido.fechaPedido && pedido.fechaPedido.isValid() ? pedido.fechaPedido.format(DATE_FORMAT) : undefined,
+      fechaPedido: pedido.fechaPedido != null && pedido.fechaPedido.isValid() ? pedido.fechaPedido.format(DATE_FORMAT) : null,
       fechaNotificacion:
-        pedido.fechaNotificacion && pedido.fechaNotificacion.isValid() ? pedido.fechaNotificacion.format(DATE_FORMAT) : undefined,
+        pedido.fechaNotificacion != null && pedido.fechaNotificacion.isValid() ? pedido.fechaNotificacion.format(DATE_FORMAT) : null,
       fechaConfirmacion:
-        pedido.fechaConfirmacion && pedido.fechaConfirmacion.isValid() ? pedido.fechaConfirmacion.format(DATE_FORMAT) : undefined
+        pedido.fechaConfirmacion != null && pedido.fechaConfirmacion.isValid() ? pedido.fechaConfirmacion.format(DATE_FORMAT) : null
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fechaPedido = res.body.fechaPedido ? moment(res.body.fechaPedido) : undefined;
-      res.body.fechaNotificacion = res.body.fechaNotificacion ? moment(res.body.fechaNotificacion) : undefined;
-      res.body.fechaConfirmacion = res.body.fechaConfirmacion ? moment(res.body.fechaConfirmacion) : undefined;
+      res.body.fechaPedido = res.body.fechaPedido != null ? moment(res.body.fechaPedido) : null;
+      res.body.fechaNotificacion = res.body.fechaNotificacion != null ? moment(res.body.fechaNotificacion) : null;
+      res.body.fechaConfirmacion = res.body.fechaConfirmacion != null ? moment(res.body.fechaConfirmacion) : null;
     }
     return res;
   }
@@ -73,9 +72,9 @@ export class PedidoMySuffixService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((pedido: IPedidoMySuffix) => {
-        pedido.fechaPedido = pedido.fechaPedido ? moment(pedido.fechaPedido) : undefined;
-        pedido.fechaNotificacion = pedido.fechaNotificacion ? moment(pedido.fechaNotificacion) : undefined;
-        pedido.fechaConfirmacion = pedido.fechaConfirmacion ? moment(pedido.fechaConfirmacion) : undefined;
+        pedido.fechaPedido = pedido.fechaPedido != null ? moment(pedido.fechaPedido) : null;
+        pedido.fechaNotificacion = pedido.fechaNotificacion != null ? moment(pedido.fechaNotificacion) : null;
+        pedido.fechaConfirmacion = pedido.fechaConfirmacion != null ? moment(pedido.fechaConfirmacion) : null;
       });
     }
     return res;

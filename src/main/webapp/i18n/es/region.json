@@ -5,7 +5,7 @@
         "title": "Regions",
         "createLabel": "Crear nuevo Region",
         "createOrEditLabel": "Crear o editar Region",
-        "notFound": "Ningún Regions encontrado"
+        "notFound": "No Region found"
       },
       "created": "Un nuevo Region ha sido creado con el identificador {{ param }}",
       "updated": "Un Region ha sido actualizado con el identificador {{ param }}",

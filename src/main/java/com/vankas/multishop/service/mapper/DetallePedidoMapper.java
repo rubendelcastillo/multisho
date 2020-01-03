@@ -14,8 +14,8 @@ public interface DetallePedidoMapper extends EntityMapper<DetallePedidoDTO, Deta
     @Mapping(source = "pedido.id", target = "pedidoId")
     DetallePedidoDTO toDto(DetallePedido detallePedido);
 
-    @Mapping(target = "product", ignore = true)
     @Mapping(source = "pedidoId", target = "pedido")
+    @Mapping(target = "product", ignore = true)
     DetallePedido toEntity(DetallePedidoDTO detallePedidoDTO);
 
     default DetallePedido fromId(Long id) {

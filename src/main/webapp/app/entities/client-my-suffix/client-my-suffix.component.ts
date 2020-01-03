@@ -1,51 +1,65 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IClientMySuffix } from 'app/shared/model/client-my-suffix.model';
+import { AccountService } from 'app/core';
 import { ClientMySuffixService } from './client-my-suffix.service';
-import { ClientMySuffixDeleteDialogComponent } from './client-my-suffix-delete-dialog.component';
 
 @Component({
   selector: 'jhi-client-my-suffix',
   templateUrl: './client-my-suffix.component.html'
 })
 export class ClientMySuffixComponent implements OnInit, OnDestroy {
-  clients?: IClientMySuffix[];
-  eventSubscriber?: Subscription;
+  clients: IClientMySuffix[];
+  currentAccount: any;
+  eventSubscriber: Subscription;
 
-  constructor(protected clientService: ClientMySuffixService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
+  constructor(
+    protected clientService: ClientMySuffixService,
+    protected jhiAlertService: JhiAlertService,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService
+  ) {}
 
-  loadAll(): void {
-    this.clientService.query().subscribe((res: HttpResponse<IClientMySuffix[]>) => {
-      this.clients = res.body ? res.body : [];
-    });
+  loadAll() {
+    this.clientService
+      .query()
+      .pipe(
+        filter((res: HttpResponse<IClientMySuffix[]>) => res.ok),
+        map((res: HttpResponse<IClientMySuffix[]>) => res.body)
+      )
+      .subscribe(
+        (res: IClientMySuffix[]) => {
+          this.clients = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAll();
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
     this.registerChangeInClients();
   }
 
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnDestroy() {
+    this.eventManager.destroy(this.eventSubscriber);
   }
 
-  trackId(index: number, item: IClientMySuffix): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+  trackId(index: number, item: IClientMySuffix) {
+    return item.id;
   }
 
-  registerChangeInClients(): void {
-    this.eventSubscriber = this.eventManager.subscribe('clientListModification', () => this.loadAll());
+  registerChangeInClients() {
+    this.eventSubscriber = this.eventManager.subscribe('clientListModification', response => this.loadAll());
   }
 
-  delete(client: IClientMySuffix): void {
-    const modalRef = this.modalService.open(ClientMySuffixDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.client = client;
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
   }
 }

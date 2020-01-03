@@ -1,51 +1,65 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, map } from 'rxjs/operators';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IPedidoMySuffix } from 'app/shared/model/pedido-my-suffix.model';
+import { AccountService } from 'app/core';
 import { PedidoMySuffixService } from './pedido-my-suffix.service';
-import { PedidoMySuffixDeleteDialogComponent } from './pedido-my-suffix-delete-dialog.component';
 
 @Component({
   selector: 'jhi-pedido-my-suffix',
   templateUrl: './pedido-my-suffix.component.html'
 })
 export class PedidoMySuffixComponent implements OnInit, OnDestroy {
-  pedidos?: IPedidoMySuffix[];
-  eventSubscriber?: Subscription;
+  pedidos: IPedidoMySuffix[];
+  currentAccount: any;
+  eventSubscriber: Subscription;
 
-  constructor(protected pedidoService: PedidoMySuffixService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
+  constructor(
+    protected pedidoService: PedidoMySuffixService,
+    protected jhiAlertService: JhiAlertService,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService
+  ) {}
 
-  loadAll(): void {
-    this.pedidoService.query().subscribe((res: HttpResponse<IPedidoMySuffix[]>) => {
-      this.pedidos = res.body ? res.body : [];
-    });
+  loadAll() {
+    this.pedidoService
+      .query()
+      .pipe(
+        filter((res: HttpResponse<IPedidoMySuffix[]>) => res.ok),
+        map((res: HttpResponse<IPedidoMySuffix[]>) => res.body)
+      )
+      .subscribe(
+        (res: IPedidoMySuffix[]) => {
+          this.pedidos = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAll();
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
     this.registerChangeInPedidos();
   }
 
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+  ngOnDestroy() {
+    this.eventManager.destroy(this.eventSubscriber);
   }
 
-  trackId(index: number, item: IPedidoMySuffix): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+  trackId(index: number, item: IPedidoMySuffix) {
+    return item.id;
   }
 
-  registerChangeInPedidos(): void {
-    this.eventSubscriber = this.eventManager.subscribe('pedidoListModification', () => this.loadAll());
+  registerChangeInPedidos() {
+    this.eventSubscriber = this.eventManager.subscribe('pedidoListModification', response => this.loadAll());
   }
 
-  delete(pedido: IPedidoMySuffix): void {
-    const modalRef = this.modalService.open(PedidoMySuffixDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.pedido = pedido;
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
   }
 }
