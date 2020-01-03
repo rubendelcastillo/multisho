@@ -36,7 +36,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         },
         {
             test: /\.scss$/,
-            use: ['to-string-loader', 'css-loader', 'postcss-loader', {
+            use: ['to-string-loader', 'css-loader', {
                 loader: 'sass-loader',
                 options: { implementation: sass }
             }],
@@ -104,7 +104,8 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
                         inline: true,
                         join_vars: true,
                         ecma: 6,
-                        module: true
+                        module: true,
+                        toplevel: true
                     },
                     output: {
                         comments: false,
@@ -151,7 +152,6 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         new WorkboxPlugin.GenerateSW({
           clientsClaim: true,
           skipWaiting: true,
-          exclude: [/swagger-ui/]
         })
     ],
     mode: 'production'

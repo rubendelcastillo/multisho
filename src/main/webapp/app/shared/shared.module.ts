@@ -1,22 +1,17 @@
-import { NgModule } from '@angular/core';
-import { MultishopSharedLibsModule } from './shared-libs.module';
-import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
-import { AlertComponent } from './alert/alert.component';
-import { AlertErrorComponent } from './alert/alert-error.component';
-import { LoginModalComponent } from './login/login.component';
-import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MultishopSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
 
 @NgModule({
-  imports: [MultishopSharedLibsModule],
-  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
-  entryComponents: [LoginModalComponent],
-  exports: [
-    MultishopSharedLibsModule,
-    FindLanguageFromKeyPipe,
-    AlertComponent,
-    AlertErrorComponent,
-    LoginModalComponent,
-    HasAnyAuthorityDirective
-  ]
+  imports: [MultishopSharedCommonModule],
+  declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
+  entryComponents: [JhiLoginModalComponent],
+  exports: [MultishopSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MultishopSharedModule {}
+export class MultishopSharedModule {
+  static forRoot() {
+    return {
+      ngModule: MultishopSharedModule
+    };
+  }
+}

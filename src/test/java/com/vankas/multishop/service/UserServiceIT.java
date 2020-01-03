@@ -7,8 +7,7 @@ import com.vankas.multishop.domain.User;
 import com.vankas.multishop.repository.PersistentTokenRepository;
 import com.vankas.multishop.repository.UserRepository;
 import com.vankas.multishop.service.dto.UserDTO;
-
-import io.github.jhipster.security.RandomUtil;
+import com.vankas.multishop.service.util.RandomUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;

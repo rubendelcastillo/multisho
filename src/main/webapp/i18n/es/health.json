@@ -4,10 +4,10 @@
     "refresh.button": "Refrescar",
     "stacktrace": "Stacktrace",
     "details": {
-      "details": "Detalles",
-      "properties": "Propiedades",
-      "name": "Nombre",
-      "value": "Valor",
+      "details": "Details",
+      "properties": "Properties",
+      "name": "Name",
+      "value": "Value",
       "error": "Error"
     },
     "indicator": {

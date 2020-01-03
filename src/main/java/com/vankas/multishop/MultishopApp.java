@@ -1,8 +1,8 @@
 package com.vankas.multishop;
 
 import com.vankas.multishop.config.ApplicationProperties;
+import com.vankas.multishop.config.DefaultProfileUtil;
 
-import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;

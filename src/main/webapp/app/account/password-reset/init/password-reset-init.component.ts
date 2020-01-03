@@ -1,8 +1,7 @@
-import { Component, AfterViewInit, Renderer, ElementRef, ViewChild } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { EMAIL_NOT_FOUND_TYPE } from 'app/shared/constants/error.constants';
+import { EMAIL_NOT_FOUND_TYPE } from 'app/shared';
 import { PasswordResetInitService } from './password-reset-init.service';
 
 @Component({
@@ -10,35 +9,38 @@ import { PasswordResetInitService } from './password-reset-init.service';
   templateUrl: './password-reset-init.component.html'
 })
 export class PasswordResetInitComponent implements AfterViewInit {
-  @ViewChild('email', { static: false })
-  email?: ElementRef;
-
-  error = false;
-  errorEmailNotExists = false;
-  success = false;
+  error: string;
+  errorEmailNotExists: string;
+  success: string;
   resetRequestForm = this.fb.group({
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]]
   });
 
-  constructor(private passwordResetInitService: PasswordResetInitService, private renderer: Renderer, private fb: FormBuilder) {}
+  constructor(
+    private passwordResetInitService: PasswordResetInitService,
+    private elementRef: ElementRef,
+    private renderer: Renderer,
+    private fb: FormBuilder
+  ) {}
 
-  ngAfterViewInit(): void {
-    if (this.email) {
-      this.renderer.invokeElementMethod(this.email.nativeElement, 'focus', []);
-    }
+  ngAfterViewInit() {
+    this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#email'), 'focus', []);
   }
 
-  requestReset(): void {
-    this.error = false;
-    this.errorEmailNotExists = false;
+  requestReset() {
+    this.error = null;
+    this.errorEmailNotExists = null;
 
-    this.passwordResetInitService.save(this.resetRequestForm.get(['email'])!.value).subscribe(
-      () => (this.success = true),
-      (response: HttpErrorResponse) => {
+    this.passwordResetInitService.save(this.resetRequestForm.get(['email']).value).subscribe(
+      () => {
+        this.success = 'OK';
+      },
+      response => {
+        this.success = null;
         if (response.status === 400 && response.error.type === EMAIL_NOT_FOUND_TYPE) {
-          this.errorEmailNotExists = true;
+          this.errorEmailNotExists = 'ERROR';
         } else {
-          this.error = true;
+          this.error = 'ERROR';
         }
       }
     );

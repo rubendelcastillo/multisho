@@ -16,8 +16,8 @@
 logging:
   level:
     ROOT: INFO
-    io.github.jhipster: INFO
     com.vankas.multishop: INFO
+    io.github.jhipster: INFO
 
 management:
   metrics:
@@ -49,12 +49,6 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
-      # modify batch size as necessary
-      hibernate.jdbc.batch_size: 25
-      hibernate.order_inserts: true
-      hibernate.order_updates: true
-      hibernate.query.fail_on_pagination_over_collection_fetch: true
-      hibernate.query.in_clause_parameter_padding: true
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: prod
@@ -107,6 +101,7 @@ jhipster:
       # security key (this key should be unique for your application, and kept secret)
       key: 722124f03198758da74b96b47b3c74be935e47fb3b98325e30b94bcd9736f5d0ee0a7cda04455f1fb4ff9a028ab0797e082e
   mail: # specific JHipster mail property, for standard properties see MailProperties
+    from: multishop@localhost
     base-url: http://my-server-url-to-change # Modify according to your server's URL
   metrics:
     logs: # Reports metrics in the logs
@@ -119,9 +114,6 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
-  audit-events:
-    retention-period: 30 # Number of days before audit events are deleted.
-
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

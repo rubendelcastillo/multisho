@@ -7,16 +7,6 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "regionMySuffix": "Region",
-        "countryMySuffix": "Country",
-        "locationMySuffix": "Location",
-        "modoEnvioMySuffix": "Modo Envio",
-        "productMySuffix": "Product",
-        "clientMySuffix": "Client",
-        "modoPagoMySuffix": "Modo Pago",
-        "pedidoMySuffix": "Pedido",
-        "detallePedidoMySuffix": "Detalle Pedido",
-        "estadoPedidoMySuffix": "Estado Pedido",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -140,11 +130,7 @@
     "userexists": "Login name already used!",
     "emailexists": "Email is already in use!",
     "idexists": "A new {{ entityName }} cannot already have an ID",
-    "idnull": "Invalid ID",
-    "file": {
-      "could.not.extract": "Could not extract file",
-      "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
-    }
+    "idnull": "Invalid ID"
   },
   "footer": "This is your footer"
 }

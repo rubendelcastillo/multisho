@@ -1,7 +1,6 @@
 package com.vankas.multishop;
 
-import io.github.jhipster.config.DefaultProfileUtil;
-
+import com.vankas.multishop.config.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

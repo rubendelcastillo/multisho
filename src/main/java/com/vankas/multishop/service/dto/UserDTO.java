@@ -5,6 +5,9 @@ import com.vankas.multishop.config.Constants;
 import com.vankas.multishop.domain.Authority;
 import com.vankas.multishop.domain.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;

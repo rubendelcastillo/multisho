@@ -1,7 +1,7 @@
 package com.vankas.multishop.cucumber;
 
 import com.vankas.multishop.MultishopApp;
-import io.cucumber.java.Before;
+import cucumber.api.java.Before;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;

@@ -1,16 +1,16 @@
 export interface GuinessCompatibleSpy extends jasmine.Spy {
   /** By chaining the spy with and.returnValue, all calls to the function will return a specific
    * value. */
-  andReturn(val: any): GuinessCompatibleSpy;
+  andReturn(val: any): void;
   /** By chaining the spy with and.callFake, all calls to the spy will delegate to the supplied
    * function. */
   andCallFake(fn: Function): GuinessCompatibleSpy;
   /** removes all recorded calls */
-  reset(): void;
+  reset();
 }
 
 export class SpyObject {
-  static stub(object: any = null, config: any = null, overrides: any = null): any {
+  static stub(object = null, config = null, overrides = null) {
     if (!(object instanceof SpyObject)) {
       overrides = config;
       config = object;
@@ -26,8 +26,7 @@ export class SpyObject {
     return object;
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  constructor(type: any = null) {
+  constructor(type = null) {
     if (type) {
       Object.keys(type.prototype).forEach(prop => {
         let m = null;
@@ -46,19 +45,23 @@ export class SpyObject {
     }
   }
 
-  spy(name: string): GuinessCompatibleSpy {
+  spy(name) {
     if (!this[name]) {
       this[name] = this._createGuinnessCompatibleSpy(name);
     }
     return this[name];
   }
 
+  prop(name, value) {
+    this[name] = value;
+  }
+
   /** @internal */
-  _createGuinnessCompatibleSpy(name: string): GuinessCompatibleSpy {
-    const newSpy: GuinessCompatibleSpy = jasmine.createSpy(name) as any;
-    newSpy.andCallFake = newSpy.and.callFake as any;
-    newSpy.andReturn = newSpy.and.returnValue as any;
-    newSpy.reset = newSpy.calls.reset as any;
+  _createGuinnessCompatibleSpy(name): GuinessCompatibleSpy {
+    const newSpy: GuinessCompatibleSpy = <any>jasmine.createSpy(name);
+    newSpy.andCallFake = <any>newSpy.and.callFake;
+    newSpy.andReturn = <any>newSpy.and.returnValue;
+    newSpy.reset = <any>newSpy.calls.reset;
     // revisit return null here (previously needed for rtts_assert).
     newSpy.and.returnValue(null);
     return newSpy;

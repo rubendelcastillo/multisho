@@ -1,38 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from 'app/core';
 import { Session } from './session.model';
 import { SessionsService } from './sessions.service';
-import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-sessions',
   templateUrl: './sessions.component.html'
 })
 export class SessionsComponent implements OnInit {
-  account: Account | null = null;
-  error = false;
-  success = false;
-  sessions: Session[] = [];
+  account: any;
+  error: string;
+  success: string;
+  sessions: Session[];
 
   constructor(private sessionsService: SessionsService, private accountService: AccountService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.sessionsService.findAll().subscribe(sessions => (this.sessions = sessions));
 
-    this.accountService.identity().subscribe(account => (this.account = account));
+    this.accountService.identity().then(account => {
+      this.account = account;
+    });
   }
 
-  invalidate(series: string): void {
-    this.error = false;
-    this.success = false;
-
-    this.sessionsService.delete(encodeURIComponent(series)).subscribe(
-      () => {
-        this.success = true;
+  invalidate(series) {
+    this.sessionsService.delete(encodeURIComponent(series)).subscribe(response => {
+      if (response.status === 200) {
+        this.error = null;
+        this.success = 'OK';
         this.sessionsService.findAll().subscribe(sessions => (this.sessions = sessions));
-      },
-      () => (this.error = true)
-    );
+      } else {
+        this.success = null;
+        this.error = 'ERROR';
+      }
+    });
   }
 }

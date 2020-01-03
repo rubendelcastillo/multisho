@@ -1,35 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { Login } from 'app/core/login/login.model';
-
-export const LOGOUT_URL = SERVER_API_URL + 'api/logout';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
   constructor(private http: HttpClient) {}
 
-  login(credentials: Login): Observable<{}> {
+  login(credentials): Observable<any> {
     const data =
       `username=${encodeURIComponent(credentials.username)}` +
       `&password=${encodeURIComponent(credentials.password)}` +
       `&remember-me=${credentials.rememberMe}` +
-      '&submit=Login';
-
+      `&submit=Login`;
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
     return this.http.post(SERVER_API_URL + 'api/authentication', data, { headers });
   }
 
-  logout(): Observable<void> {
+  logout(): Observable<any> {
     // logout from the server
-    return this.http.post(LOGOUT_URL, {}).pipe(
-      map(() => {
+    return this.http.post(SERVER_API_URL + 'api/logout', {}, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
         // to get a new csrf token call the api
-        this.http.get(SERVER_API_URL + 'api/account').subscribe();
+        this.http.get(SERVER_API_URL + 'api/account').subscribe(() => {}, () => {});
+        return response;
       })
     );
   }

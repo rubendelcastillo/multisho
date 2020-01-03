@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { MultishopTestModule } from '../../../test.module';
 import { Session } from 'app/account/sessions/session.model';
@@ -13,7 +13,7 @@ describe('Component Tests', () => {
   let fixture: ComponentFixture<SessionsComponent>;
   let comp: SessionsComponent;
 
-  describe('SessionsComponent', () => {
+  describe('SessionsComponent', function() {
     beforeEach(() => {
       sessions = [new Session('xxxxxx==', new Date(2015, 10, 15), '0:0:0:0:0:0:0:1', 'Mozilla/5.0')];
 
@@ -30,7 +30,7 @@ describe('Component Tests', () => {
       [AccountService, SessionsService],
       fakeAsync((mockAccountService: MockAccountService, service: SessionsService) => {
         mockAccountService.spy('identity').and.returnValue(
-          of({
+          Promise.resolve({
             id: 'fuzzer'
           })
         );
@@ -41,8 +41,8 @@ describe('Component Tests', () => {
 
         expect(mockAccountService.identitySpy).toHaveBeenCalled();
         expect(service.findAll).toHaveBeenCalled();
-        expect(comp.success).toBe(false);
-        expect(comp.error).toBe(false);
+        expect(comp.success).toBeUndefined();
+        expect(comp.error).toBeUndefined();
         expect(comp.account).toEqual({
           id: 'fuzzer'
         });
@@ -54,7 +54,7 @@ describe('Component Tests', () => {
       [AccountService, SessionsService],
       fakeAsync((mockAccountService: MockAccountService, service: SessionsService) => {
         mockAccountService.spy('identity').and.returnValue(
-          of({
+          Promise.resolve({
             id: 'fuzzer'
           })
         );
@@ -73,19 +73,23 @@ describe('Component Tests', () => {
       [AccountService, SessionsService],
       fakeAsync((mockAccountService: MockAccountService, service: SessionsService) => {
         mockAccountService.spy('identity').and.returnValue(
-          of({
+          Promise.resolve({
             id: 'fuzzer'
           })
         );
         spyOn(service, 'findAll').and.returnValue(of(sessions));
-        spyOn(service, 'delete').and.returnValue(throwError({}));
+        spyOn(service, 'delete').and.returnValue(
+          of({
+            status: 400
+          })
+        );
 
         comp.ngOnInit();
         comp.invalidate('xyz');
         tick();
 
-        expect(comp.success).toBe(false);
-        expect(comp.error).toBe(true);
+        expect(comp.success).toBeNull();
+        expect(comp.error).toBe('ERROR');
       })
     ));
 
@@ -93,19 +97,23 @@ describe('Component Tests', () => {
       [AccountService, SessionsService],
       fakeAsync((mockAccountService: MockAccountService, service: SessionsService) => {
         mockAccountService.spy('identity').and.returnValue(
-          of({
+          Promise.resolve({
             id: 'fuzzer'
           })
         );
         spyOn(service, 'findAll').and.returnValue(of(sessions));
-        spyOn(service, 'delete').and.returnValue(of({}));
+        spyOn(service, 'delete').and.returnValue(
+          of({
+            status: 200
+          })
+        );
 
         comp.ngOnInit();
         comp.invalidate('xyz');
         tick();
 
-        expect(comp.error).toBe(false);
-        expect(comp.success).toBe(true);
+        expect(comp.error).toBeNull();
+        expect(comp.success).toBe('OK');
       })
     ));
   });
